@@ -11,25 +11,7 @@
 #define TILE_SIZE 16		// 가로 세로 16픽셀
 
 class Image;
-enum class BlockType
-{
-	CantDestroyBlock, CanDestroyBlock, ItemBlock, Coin, Flag, BackGround, CastleDoor
-};
 
-struct SampleTile
-{
-	RECT rc;
-	int frameX;
-	int frameY;
-};
-
-struct TILE
-{
-	BlockType type;
-	RECT rc;
-	int frameX;
-	int frameY;
- };
 
 class MyTileMapTool : public GameEntity
 {

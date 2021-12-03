@@ -78,3 +78,24 @@ extern HINSTANCE g_hInstance;
 extern POINT g_ptMouse;
 extern int windowX;
 extern int windowY;
+
+
+enum class BlockType
+{
+	CantDestroyBlock, CanDestroyBlock, ItemBlock, Coin, Flag, BackGround, CastleDoor
+};
+
+struct SampleTile
+{
+	RECT rc;
+	int frameX;
+	int frameY;
+};
+
+struct TILE
+{
+	BlockType type;
+	RECT rc;
+	int frameX;
+	int frameY;
+};
