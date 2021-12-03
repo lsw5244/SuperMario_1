@@ -48,7 +48,7 @@ HRESULT MyTileMapTool::Init()
             SetRect(&sampleTileInfo[i][j].rc,
                 j * TILE_SIZE,                        
                 i * TILE_SIZE + SPRITE_START_Y,
-                j * TILE_SIZE + TILE_SIZE,      
+                j * TILE_SIZE + TILE_SIZE,
                 i * TILE_SIZE + TILE_SIZE + SPRITE_START_Y);
 
             sampleTileInfo[i][j].frameX = j;
@@ -132,6 +132,18 @@ void MyTileMapTool::Render(HDC hdc)
             );
         }
     }
+
+    //for (int i = 0; i < TILE_SPRITE_HEIGHT; i++)
+    //{
+    //    for (int j = 0; j < TILE_SPRITE_WIDTH; j++)
+    //    {
+    //        // l t r b
+    //        Rectangle(hdc, sampleTileInfo[i][j].rc.left,
+    //            sampleTileInfo[i][j].rc.top,
+    //            sampleTileInfo[i][j].rc.right,
+    //            sampleTileInfo[i][j].rc.bottom);
+    //    }
+    //}
 
     // 스프라이트 이미지 영역
     mapSpriteImg->Render(hdc,

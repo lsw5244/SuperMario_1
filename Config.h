@@ -30,10 +30,6 @@ typedef struct ArgumentFuncPtr
 #include "KeyManager.h"
 #include "SceneManager.h"
 
-
-
-
-
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
 extern POINT g_ptMouse;

@@ -2,8 +2,6 @@
 #include "GameEntity.h"
 #include "Config.h"
 
-
-
 class Image;
 class MyTileMapTool : public GameEntity
 {
