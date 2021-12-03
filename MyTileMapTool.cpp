@@ -44,10 +44,17 @@ HRESULT MyTileMapTool::Init()
     {
         for (int j = 0; j < TILE_SPRITE_WIDTH; j++)
         {
-            SetRect(&sampleTileInfo[i][j].rc,
-                j * TILE_SIZE,                        
+            /*SetRect(&sampleTileInfo[i][j].rc,
+                j * TILE_SIZE + WIN_SIZE_X,
                 i * TILE_SIZE + SPRITE_START_Y,
                 j * TILE_SIZE + TILE_SIZE,
+                i * TILE_SIZE + TILE_SIZE + SPRITE_START_Y);*/
+
+
+            SetRect(&sampleTileInfo[i][j].rc,
+                j * TILE_SIZE  + (WIN_SIZE_X - mapSpriteImg->GetWidth()),
+                i * TILE_SIZE + SPRITE_START_Y,
+                j * TILE_SIZE + TILE_SIZE + (WIN_SIZE_X - mapSpriteImg->GetWidth()),
                 i * TILE_SIZE + TILE_SIZE + SPRITE_START_Y);
 
             sampleTileInfo[i][j].frameX = j;
@@ -131,17 +138,17 @@ void MyTileMapTool::Update()
 
 void MyTileMapTool::Render(HDC hdc)
 {
-    // 타일 맵 찍을 영역
+    // 실제 찍힌 맵을 랜더
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
         for (int j = 0; j < MAP_WIDTH_PER_PAGE; j++)
-        {            
+        {
             //int b = MAP_WIDTH_PER_PAGE * page + j;
-            if (MAP_WIDTH_PER_PAGE * page + j < MAP_WIDTH) // 
+            if (MAP_WIDTH_PER_PAGE * page + j < MAP_WIDTH)
             {
                 mapSpriteImg->Render(hdc,
-                    map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.left + TILE_SIZE / 2,
-                    map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.top + TILE_SIZE / 2,
+                    map[i][j].rc.left + TILE_SIZE / 2,
+                    map[i][j].rc.top + TILE_SIZE / 2,
                     map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameX,
                     map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameY
                 );
@@ -161,6 +168,20 @@ void MyTileMapTool::Render(HDC hdc)
     //    }
     //}
 
+
+    for (int i = 0; i < TILE_SPRITE_HEIGHT; i++)
+    {
+        for (int j = 0; j < TILE_SPRITE_WIDTH; j++)
+        {
+            Rectangle(hdc, sampleTileInfo[i][j].rc.left
+            , sampleTileInfo[i][j].rc.top
+            , sampleTileInfo[i][j].rc.right
+            , sampleTileInfo[i][j].rc.bottom);
+        }
+    }
+
+
+
     // 스프라이트 이미지 영역
     mapSpriteImg->Render(hdc,
         WIN_SIZE_X - mapSpriteImg->GetWidth() + mapSpriteImg->GetWidth() / 2, // 시작지점 x
@@ -168,8 +189,8 @@ void MyTileMapTool::Render(HDC hdc)
 
     // 선택한 타일 보기
     mapSpriteImg->Render(hdc,
-        WIN_SIZE_X/* - TILE_SIZE*/ / 2,
-        WIN_SIZE_X - TILE_SIZE,
+        WIN_SIZE_X / 2,
+        WIN_SIZE_Y / 2,
         selectTile.frameX,
         selectTile.frameY);
 }
