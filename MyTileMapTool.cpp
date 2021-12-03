@@ -172,12 +172,12 @@ void MyTileMapTool::Save(int saveIndex)
         NULL);
 
     // 쓰기
-    DWORD byteSize = sizeof(tagTile) * MAP_WIDTH * MAP_HEIGHT;
+    DWORD byteSize = sizeof(TILE) * MAP_WIDTH * MAP_HEIGHT;
 
     DWORD writtenByte;
     if (WriteFile(hFile,    // 파일 핸들
         map,       // 메모리 시작주소
-        sizeof(tagTile) * MAP_WIDTH * MAP_HEIGHT,  // 메모리 크기
+        sizeof(TILE) * MAP_WIDTH * MAP_HEIGHT,  // 메모리 크기
         &writtenByte,   // 실제 쓰여진 파일 용량
         NULL) == false)          // ???
     {
@@ -203,7 +203,7 @@ void MyTileMapTool::Load(int loadIndex)
 
     // 읽기
     DWORD readByte;
-    if (ReadFile(hFile, map, sizeof(tagTile) * MAP_WIDTH * MAP_HEIGHT,
+    if (ReadFile(hFile, map, sizeof(TILE) * MAP_WIDTH * MAP_HEIGHT,
         &readByte, NULL) == false)
     {
         MessageBox(g_hWnd, "맵 데이터 로드에 실패했습니다.", "에러", MB_OK);
