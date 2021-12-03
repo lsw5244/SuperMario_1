@@ -37,7 +37,6 @@ HRESULT MyTileMapTool::Init()
                 map[i][j].type = BlockType::BackGround;
             }
         }
-
     }
 
     // 타일맵 이미지 영역 초기화
@@ -58,6 +57,7 @@ HRESULT MyTileMapTool::Init()
     
     selectTile.frameX = 0;
     selectTile.frameY = 0;
+
 	return S_OK;
 }
 
@@ -113,7 +113,7 @@ void MyTileMapTool::Update()
     if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
     {
         ++page;
-        page = min(page, 4);
+        page = min(page, maxPage);
         cout << page << endl;
     }
 
@@ -134,14 +134,18 @@ void MyTileMapTool::Render(HDC hdc)
     // 타일 맵 찍을 영역
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
-        for (int j = 0; j < MAP_WIDTH_PER_PAGE; j++)        // 페이지에 따라 당겨와야 함 ?
-        {
-            mapSpriteImg->Render(hdc,
-                map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.left + TILE_SIZE / 2,
-                map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.top + TILE_SIZE / 2,
-                map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameX,
-                map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameY
-            );
+        for (int j = 0; j < MAP_WIDTH_PER_PAGE; j++)
+        {            
+            //int b = MAP_WIDTH_PER_PAGE * page + j;
+            if (MAP_WIDTH_PER_PAGE * page + j < MAP_WIDTH) // 
+            {
+                mapSpriteImg->Render(hdc,
+                    map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.left + TILE_SIZE / 2,
+                    map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.top + TILE_SIZE / 2,
+                    map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameX,
+                    map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameY
+                );
+            }
         }
     }
 

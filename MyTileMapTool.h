@@ -12,6 +12,7 @@ private:
 	SampleTile sampleTileInfo[TILE_SPRITE_HEIGHT][TILE_SPRITE_WIDTH] = {};
 	SampleTile selectTile = {};
 
+	const int maxPage = 4;
 	int page = 0;
 
 public:
