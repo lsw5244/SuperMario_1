@@ -48,7 +48,7 @@ typedef struct ArgumentFuncPtr
 #include "KeyManager.h"
 #include "SceneManager.h"
 
-#define TILE_SIZE	(8 / 2)
+//#define TILE_SIZE	(8 / 2)
 #define TILE_COUNT	(26)
 #define SAMPLE_TILE_COUNT	(11*2)
 enum class Terrain {
@@ -79,6 +79,17 @@ extern POINT g_ptMouse;
 extern int windowX;
 extern int windowY;
 
+/*------------------*/
+
+#define MAP_WIDTH_PER_PAGE 40
+
+#define MAP_WIDTH 211
+#define MAP_HEIGHT 15
+
+#define TILE_SPRITE_WIDTH 11
+#define TILE_SPRITE_HEIGHT 13
+
+#define TILE_SIZE 16		// 가로 세로 16픽셀
 
 enum class BlockType
 {

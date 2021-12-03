@@ -24,10 +24,19 @@ HRESULT MyTileMapTool::Init()
                 j * TILE_SIZE + TILE_SIZE,        // right
                 i * TILE_SIZE + TILE_SIZE);       // bottom
 
-            map[i][j].frameX = 4;
-            map[i][j].frameY = 0;
-
-            map[i][j].type = BlockType::BackGround;
+            if (i < MAP_HEIGHT - 2)
+            {
+                map[i][j].frameX = 4;
+                map[i][j].frameY = 0;
+                map[i][j].type = BlockType::BackGround;
+            }
+            else
+            {
+                map[i][j].frameX = 0;
+                map[i][j].frameY = 0;
+                map[i][j].type = BlockType::BackGround;
+            }
+            
         }
     }
 

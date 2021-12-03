@@ -2,17 +2,9 @@
 #include "GameEntity.h"
 #include "Config.h"
 
-#define MAP_WIDTH 40//211
-#define MAP_HEIGHT 15
 
-#define TILE_SPRITE_WIDTH 11
-#define TILE_SPRITE_HEIGHT 13
-
-#define TILE_SIZE 16		// 가로 세로 16픽셀
 
 class Image;
-
-
 class MyTileMapTool : public GameEntity
 {
 private:
@@ -22,6 +14,7 @@ private:
 	SampleTile sampleTileInfo[TILE_SPRITE_HEIGHT][TILE_SPRITE_WIDTH] = {};
 	SampleTile selectTile = {};
 
+	int page = 0;
 
 public:
 	virtual HRESULT Init() override;
