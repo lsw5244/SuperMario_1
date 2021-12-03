@@ -36,8 +36,8 @@ HRESULT MyTileMapTool::Init()
                 map[i][j].frameY = 0;
                 map[i][j].type = BlockType::BackGround;
             }
-            
         }
+
     }
 
     // 타일맵 이미지 영역 초기화
@@ -94,7 +94,7 @@ void MyTileMapTool::Update()
         if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
         {
             int posX = g_ptMouse.x;
-            int selectIdxX = posX / TILE_SIZE;
+            int selectIdxX = (posX / TILE_SIZE) + (page * MAP_WIDTH_PER_PAGE);
 
             int posY = g_ptMouse.y;
             int selectIdxY = posY / TILE_SIZE;
@@ -104,6 +104,18 @@ void MyTileMapTool::Update()
         }
     }
 
+    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT))
+    {
+        --page;
+        page = max(page, 0);
+        cout << page << endl;
+    }
+    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
+    {
+        ++page;
+        page = min(page, 4);
+        cout << page << endl;
+    }
 
     if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
     {
@@ -122,13 +134,13 @@ void MyTileMapTool::Render(HDC hdc)
     // 타일 맵 찍을 영역
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
-        for (int j = 0; j < MAP_WIDTH; j++)
+        for (int j = 0; j < MAP_WIDTH_PER_PAGE; j++)        // 페이지에 따라 당겨와야 함 ?
         {
             mapSpriteImg->Render(hdc,
-                map[i][j].rc.left + TILE_SIZE / 2,
-                map[i][j].rc.top + TILE_SIZE / 2,
-                map[i][j].frameX,
-                map[i][j].frameY
+                map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.left + TILE_SIZE / 2,
+                map[i][j/* + (page * MAP_WIDTH_PER_PAGE)*/].rc.top + TILE_SIZE / 2,
+                map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameX,
+                map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameY
             );
         }
     }
@@ -156,15 +168,6 @@ void MyTileMapTool::Render(HDC hdc)
         WIN_SIZE_X - TILE_SIZE,
         selectTile.frameX,
         selectTile.frameY);
-
-
-    //RECT spriteImgArea;
-    //spriteImgArea.left = WIN_SIZE_X - mapSpriteImg->GetWidth();
-    //spriteImgArea.right = WIN_SIZE_X;
-    //spriteImgArea.top = SPRITE_START_Y;
-    //spriteImgArea.bottom = SPRITE_START_Y + mapSpriteImg->GetHeight();
-
-    //Rectangle(hdc, spriteImgArea.left, spriteImgArea.top, spriteImgArea.right, spriteImgArea.bottom);
 }
 
 void MyTileMapTool::Release()

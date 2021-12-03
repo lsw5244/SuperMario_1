@@ -38,7 +38,7 @@ extern int windowY;
 
 /*------------------*/
 
-#define MAP_WIDTH_PER_PAGE 40
+#define MAP_WIDTH_PER_PAGE 50
 
 #define MAP_WIDTH 211
 #define MAP_HEIGHT 15
