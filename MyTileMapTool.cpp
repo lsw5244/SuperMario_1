@@ -180,8 +180,6 @@ void MyTileMapTool::Render(HDC hdc)
         }
     }
 
-
-
     // 스프라이트 이미지 영역
     mapSpriteImg->Render(hdc,
         WIN_SIZE_X - mapSpriteImg->GetWidth() + mapSpriteImg->GetWidth() / 2, // 시작지점 x
