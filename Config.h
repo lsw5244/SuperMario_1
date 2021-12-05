@@ -75,4 +75,6 @@ struct TILE
 	RECT rc;
 	int frameX;
 	int frameY;
+	int animationFrameX;
+	int maxAnimationFrameX;
 };
