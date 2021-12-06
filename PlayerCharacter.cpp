@@ -106,7 +106,6 @@ HRESULT PlayerCharacter::Init()
     pos.y = WIN_SIZE_Y / 2;
 
     return S_OK;
-	return S_OK;
 }
 
 void PlayerCharacter::Update()

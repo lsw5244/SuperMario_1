@@ -10,13 +10,22 @@ private:
 
 	Image* mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile_real.bmp");
 	SampleTile sampleTileInfo[TILE_SPRITE_HEIGHT][TILE_SPRITE_WIDTH] = {};
-	SampleTile selectTile = {};
+	TILE selectTile = {};
 
 	const int maxPage = 4;
 	int page = 0;
 
 	void InputTileInfo(int r, int c);
 
+	void SelectTileInfoSet(int frameX, int frameY);
+
+	void TileInfoSetting(TILE& tile, BlockType type, int animationFrameX, int maxAnimationFrameX, int itemCount, bool isCollider);
+
+	//BlockType type;
+	//int animationFrameX;
+	//int maxAnimationFrameX;
+	//int itemCount;
+	//bool isCollider;
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

@@ -4,6 +4,10 @@
 
 #define SPRITE_START_Y 500
 
+/*
+    샘플 이미지에 정보를 넣고 맵에 찍을 때 샘플 이미지에 있는 정보를 맵 배열에도 넣어주기
+*/
+
 void MyTileMapTool::InputTileInfo(int r, int c)
 {
     // Brick 0.0   0.2  2.0~5  3.0~5  4.0~1    6~10. 10
@@ -40,6 +44,122 @@ void MyTileMapTool::InputTileInfo(int r, int c)
 
 }
 
+void MyTileMapTool::SelectTileInfoSet(int frameX, int frameY)
+{
+    selectTile.frameX = frameX;
+    selectTile.frameY = frameY;
+
+    // Brick 0. 0,2   2.0~5  3.0~5  4.0~1    6~10. 10
+    if (
+        (frameX == 0 || frameX == 2)
+            && frameY == 0 ||
+
+        (frameX == 0 || frameX == 1 || frameX == 2 || frameX == 3 || frameX == 4 || frameX == 5) 
+            && (frameY == 2 || frameY == 3) ||
+
+        (frameX == 0 || frameX == 1) 
+            && frameY == 4 ||
+
+        frameX == 10 
+            && (frameY == 6 || frameY == 7 || frameY == 8 || frameY == 9 || frameY == 10)
+        )
+    {
+        TileInfoSetting(selectTile, BlockType::Brick, 0, 0, 0, true);
+    }
+
+    // CanDestroyBrick  0.1
+    else if (frameX == 1 && frameY == 0)
+    {
+        TileInfoSetting(selectTile, BlockType::CanDestroyBrick, 0, 0, 0, true);
+    }
+
+    // ItemBlock  6.7
+    else if (frameX == 7 && frameY == 6)
+    {
+        TileInfoSetting(selectTile, BlockType::ItemBlock, 0, 2, 1, true);
+    }
+
+    // CoinBlock  7.7
+    else if (frameX == 7 && frameY == 7)
+    {
+        TileInfoSetting(selectTile, BlockType::CoinBlock, 0, 2, 1, true);
+    }
+
+    // StarBlock  10. 7
+    else if (frameX == 7 && frameY == 10)
+    {
+        TileInfoSetting(selectTile, BlockType::StarBlock, 0, 2, 1, true);
+    }
+    // HiddenCoinBlcok 8. 9
+    else if (frameX == 9 && frameY == 8)
+    {
+        TileInfoSetting(selectTile, BlockType::HiddenCoinBlcok, 0, 0, 3, true);
+    }
+    // HiddenStarBlock 9. 9
+    else if (frameX == 9 && frameY == 9)
+    {
+        TileInfoSetting(selectTile, BlockType::HiddenStarBlock, 0, 0, 1, true);
+    }
+
+
+    // Coin  0, 3
+    else if (frameX == 3 && frameY == 0)
+    {
+        TileInfoSetting(selectTile, BlockType::Coin, 0, 0, 0, false);
+    }
+
+    // Flag 11, 1
+    else if (frameX == 1 && frameY == 11)
+    {
+        TileInfoSetting(selectTile, BlockType::Flag, 0, 0, 0, false);
+    }
+
+    // FlagPole 12, 1
+    else if (frameX == 1 && frameY == 12)
+    {
+        TileInfoSetting(selectTile, BlockType::FlagPole, 0, 0, 0, false);
+    }
+
+    // FlagTop  10, 1
+    else if (frameX == 1 && frameY == 10)
+    {
+        TileInfoSetting(selectTile, BlockType::FlagTop, 0, 0, 0, false);
+    }
+
+    // FlagEnd 11, 0
+    else if (frameX == 0 && frameY == 11)
+    {
+        TileInfoSetting(selectTile, BlockType::FlagEnd, 0, 0, 0, false);
+    }
+
+    // LateRenderBlock   3, 9   4, 9,  3, 10    4, 10
+    else if (
+        frameX == 9
+        && (frameY == 3 || frameY == 4) ||
+
+        frameX == 10
+        && (frameY == 3 || frameY == 4)
+        )
+    {
+        TileInfoSetting(selectTile, BlockType::LateRenderBlock, 0, 0, 0, false);
+    }
+
+    // 그외 Background
+    else
+    {
+        TileInfoSetting(selectTile, BlockType::Background, 0, 0, 0, false);
+    }
+}
+
+void MyTileMapTool::TileInfoSetting(TILE& tile, BlockType type, int animationFrameX, int maxAnimationFrameX, int itemCount, bool isCollider)
+{
+    tile.type = type;
+    tile.animationFrameX = animationFrameX;
+    tile.maxAnimationFrameX = maxAnimationFrameX;
+    tile.itemCount = itemCount;
+    tile.isCollider = isCollider;
+}
+
 HRESULT MyTileMapTool::Init()
 {
     if (mapSpriteImg == nullptr)
@@ -62,13 +182,13 @@ HRESULT MyTileMapTool::Init()
             {
                 map[i][j].frameX = 4;
                 map[i][j].frameY = 0;
-                //map[i][j].type = BlockType::BackGround;
+                map[i][j].type = BlockType::Brick;
             }
             else
             {
                 map[i][j].frameX = 0;
                 map[i][j].frameY = 0;
-                //map[i][j].type = BlockType::BackGround;
+                map[i][j].type = BlockType::Background;
             }
         }
     }
@@ -78,13 +198,6 @@ HRESULT MyTileMapTool::Init()
     {
         for (int j = 0; j < TILE_SPRITE_WIDTH; j++)
         {
-            /*SetRect(&sampleTileInfo[i][j].rc,
-                j * TILE_SIZE + WIN_SIZE_X,
-                i * TILE_SIZE + SPRITE_START_Y,
-                j * TILE_SIZE + TILE_SIZE,
-                i * TILE_SIZE + TILE_SIZE + SPRITE_START_Y);*/
-
-
             SetRect(&sampleTileInfo[i][j].rc,
                 j * TILE_SIZE  + (WIN_SIZE_X - mapSpriteImg->GetWidth()),
                 i * TILE_SIZE + SPRITE_START_Y,
@@ -98,6 +211,7 @@ HRESULT MyTileMapTool::Init()
     
     selectTile.frameX = 0;
     selectTile.frameY = 0;
+    
 
 	return S_OK;
 }
@@ -120,8 +234,9 @@ void MyTileMapTool::Update()
             int posY = g_ptMouse.y - spriteImgArea.top;
             int selectIdxY = posY / TILE_SIZE;
 
-            selectTile.frameX = selectIdxX;
-            selectTile.frameY = selectIdxY;
+            /*selectTile.frameX = selectIdxX;
+            selectTile.frameY = selectIdxY;*/
+            SelectTileInfoSet(selectIdxX, selectIdxY);
         }
     }
     RECT mapArea;
@@ -189,19 +304,6 @@ void MyTileMapTool::Render(HDC hdc)
             }
         }
     }
-
-    //for (int i = 0; i < TILE_SPRITE_HEIGHT; i++)
-    //{
-    //    for (int j = 0; j < TILE_SPRITE_WIDTH; j++)
-    //    {
-    //        // l t r b
-    //        Rectangle(hdc, sampleTileInfo[i][j].rc.left,
-    //            sampleTileInfo[i][j].rc.top,
-    //            sampleTileInfo[i][j].rc.right,
-    //            sampleTileInfo[i][j].rc.bottom);
-    //    }
-    //}
-
 
     for (int i = 0; i < TILE_SPRITE_HEIGHT; i++)
     {
