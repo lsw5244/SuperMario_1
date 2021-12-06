@@ -5,7 +5,7 @@
 HRESULT TempScene::Init()
 {
     //SetWindowSize(300, 20, WIN_SIZE_X, WIN_SIZE_Y);
-    SetWindowSize(300, 20, 800, 800);
+    SetWindowSize(300, 20, 400, 400);
 
     mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile_real.bmp");
     Load();
