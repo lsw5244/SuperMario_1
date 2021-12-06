@@ -7,7 +7,7 @@ void PlayerCharacter::AnimationFrameChanger()
     /*
     FrameX                              FrameY
     0. 서 있기                           0. 오른쪽 바라보기
-    1. 달리기 1                         1. 왼쪽 바라보기
+    1. 달리기 1                          1. 왼쪽 바라보기
     2. 달리기 2
     3. 달리기 3
     4. 달리다 방향 전환하기

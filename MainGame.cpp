@@ -13,7 +13,7 @@ HRESULT MainGame::Init()
 
 	//SceneManager::GetSingleton()->AddLoadingScene("LoadingScene", new LoadingScene());
 
-	SceneManager::GetSingleton()->ChangeScene("MyTileMapTool");
+	SceneManager::GetSingleton()->ChangeScene("TempScene");
 
 	//srand((unsigned int) time(nullptr));
 
