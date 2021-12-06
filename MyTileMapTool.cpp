@@ -4,10 +4,6 @@
 
 #define SPRITE_START_Y 500
 
-/*
-    샘플 이미지에 정보를 넣고 맵에 찍을 때 샘플 이미지에 있는 정보를 맵 배열에도 넣어주기
-*/
-
 void MyTileMapTool::InputTileInfo(int r, int c)
 {
     // Brick 0.0   0.2  2.0~5  3.0~5  4.0~1    6~10. 10
@@ -46,7 +42,6 @@ void MyTileMapTool::InputTileInfo(int r, int c)
 
 void MyTileMapTool::SelectTileInfoSet(int frameX, int frameY)
 {
-
     // Brick 0. 0,2   2.0~5  3.0~5  4.0~1    6~10. 10
     if (
         (frameX == 0 || frameX == 2)
@@ -151,17 +146,19 @@ void MyTileMapTool::SelectTileInfoSet(int frameX, int frameY)
 
 void MyTileMapTool::TileInfoSetting(TILE& tile, BlockType type, int frameX, int frameY, int animationFrameX, int maxAnimationFrameX, int itemCount, bool isCollider)
 {
-    tile.frameX = frameX;
-    tile.frameY = frameY;
-    tile.type = type;
-    tile.animationFrameX = animationFrameX;
+    tile.frameX             = frameX;
+    tile.frameY             = frameY;
+    tile.type               = type;
+    tile.animationFrameX    = animationFrameX;
     tile.maxAnimationFrameX = maxAnimationFrameX;
-    tile.itemCount = itemCount;
-    tile.isCollider = isCollider;
+    tile.itemCount          = itemCount;
+    tile.isCollider         = isCollider;
 }
 
 HRESULT MyTileMapTool::Init()
 {
+    mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile_real.bmp");
+
     if (mapSpriteImg == nullptr)
     {
         cout << "이미지 스프라이트 없음" << endl;
@@ -288,7 +285,7 @@ void MyTileMapTool::Update()
     if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
     {
         ++page;
-        page = min(page, maxPage);
+        page = min(page, MAX_PAGE);
         cout << page << endl;
     }
 
