@@ -1,6 +1,7 @@
 #include "TempScene.h"
 #include "CommonFunction.h"
 #include "Image.h"
+#include "Input.h"
 
 HRESULT TempScene::Init()
 {
@@ -24,7 +25,7 @@ void TempScene::Update()
     mario.Update();
     mushroom.Update();
 
-    if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+    if (Input::GetButtonDown(VK_RIGHT))
     {
         for (int i = 0; i < MAP_HEIGHT; i++)
         {

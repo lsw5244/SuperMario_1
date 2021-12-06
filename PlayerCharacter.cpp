@@ -1,6 +1,6 @@
 #include "PlayerCharacter.h"
 #include "Image.h"
-
+#include "Input.h"
 void PlayerCharacter::AnimationFrameChanger()
 {
     // 14 * 2
@@ -54,13 +54,13 @@ void PlayerCharacter::AnimationFrameChanger()
     switch (direction)
     {
     case MoveDirection::Left:
-        if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+        if (Input::GetButtonDown(VK_RIGHT))
         {
             frameX = 4;
         }
         break;
     case MoveDirection::Right:
-        if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
+        if (Input::GetButtonDown(VK_LEFT))
         {
             frameX = 4;
         }
@@ -68,7 +68,7 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 앉아있기
-    if (KeyManager::GetSingleton()->IsStayKeyDown(VK_DOWN))
+    if (Input::GetButtonDown(VK_DOWN))
     {
         if (level != 1)
         {
@@ -90,7 +90,7 @@ void PlayerCharacter::AnimationFrameChanger()
     // 커지기
 
     // 공격하기
-    if (KeyManager::GetSingleton()->IsOnceKeyDown('X'))
+    if (Input::GetButtonDown('X'))
     {
         frameX = 11;
     }
@@ -113,7 +113,7 @@ void PlayerCharacter::Update()
     if (isDead == true)
         return;
 
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
+    if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
         isDead = true;
         AnimationFrameChanger();
@@ -138,11 +138,11 @@ void PlayerCharacter::Update()
         jumpEnd = false;
     }
 
-    if (KeyManager::GetSingleton()->IsOnceKeyUp('Z'))
+    if (Input::GetButtonUp('Z'))
     {
         jumpEnd = true;
     }
-    if (KeyManager::GetSingleton()->IsStayKeyDown('Z') && jumpEnd == false)
+    if (Input::GetButtonDown('Z') && jumpEnd == false)
     {
         isGround = false;
         currJumpPower += jumpPower;
@@ -155,12 +155,12 @@ void PlayerCharacter::Update()
 
     if (isGround)
     {
-        if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+        if (Input::GetButtonDown(VK_RIGHT))
         {
             currSpeed += speed;
             currSpeed = min(currSpeed, maxSpeed);
         }
-        else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
+        else if (Input::GetButtonDown(VK_LEFT))
         {
             currSpeed -= speed;
             currSpeed = max(currSpeed, -maxSpeed);

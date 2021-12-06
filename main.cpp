@@ -5,6 +5,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <stdio.h>
 #include <crtdbg.h>
+#include "Input.h"
 
 #ifdef UNICODE
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
@@ -99,6 +100,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		if (isUpdate)
 		{
 			g_mainGame.Update();		
+			Input::Update();
 		}
 
 		break;

@@ -75,6 +75,9 @@
     <ClCompile Include="MyTileMapTool.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>2D Framework\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="MyTileMapTool.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>2D Framework\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
