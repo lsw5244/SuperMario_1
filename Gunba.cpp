@@ -1,5 +1,7 @@
 #include "Gunba.h"
 #include "Image.h"
+#include "Input.h"
+
 void Gunba::AutoMove()
 {
     moveSpeed *= -1.0f;
@@ -42,7 +44,7 @@ HRESULT Gunba::Init()
 void Gunba::Update()
 {
     AnimationFrameChanger();
-    if (KeyManager::GetSingleton()->IsOnceKeyDown('C') && isDead == false)
+    if (Input::GetButtonDown('C') && isDead == false)
     {
         AutoMove();
     }
