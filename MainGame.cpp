@@ -1,29 +1,21 @@
 #include "MainGame.h"
 #include "Image.h"
 #include "ImageManager.h"
-#include "TempScene.h"
-#include "MyTileMapTool.h"
+
 HRESULT MainGame::Init()
 {
 	KeyManager::GetSingleton()->Init();
 	ImageManager::GetSingleton()->Init();
-	{
-		ImageManager::GetSingleton()->AddImage("Image/SamllRedMario.bmp", 224, 64, 14, 2, true, RGB(255, 0, 255));
-		ImageManager::GetSingleton()->AddImage("Image/Gunba.bmp", 64, 32, 4, 2, true, RGB(255, 0, 255));
-		ImageManager::GetSingleton()->AddImage("Image/mario_overwordTile_real.bmp", 176, 208, 11, 13, true, RGB(255, 0, 255));
-	}
+
 	// 이미지 초기화
 	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
-
-	SceneManager::GetSingleton()->AddScene("TempScene", new TempScene());
-	SceneManager::GetSingleton()->AddScene("MyTileMapTool", new MyTileMapTool());
 
 	//SceneManager::GetSingleton()->AddLoadingScene("LoadingScene", new LoadingScene());
 
 	SceneManager::GetSingleton()->ChangeScene("MyTileMapTool");
 
-	srand((unsigned int) time(nullptr));
+	//srand((unsigned int) time(nullptr));
 
 	// 타이머 셋팅
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);

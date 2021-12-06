@@ -3,6 +3,9 @@
 
 void ImageManager::Init()
 {
+	ImageManager::GetSingleton()->AddImage("Image/SamllRedMario.bmp", 224, 64, 14, 2, true, RGB(255, 0, 255));
+	ImageManager::GetSingleton()->AddImage("Image/Gunba.bmp", 64, 32, 4, 2, true, RGB(255, 0, 255));
+	ImageManager::GetSingleton()->AddImage("Image/mario_overwordTile_real.bmp", 176, 208, 11, 13, true, RGB(255, 0, 255));
 }
 
 void ImageManager::Release()
