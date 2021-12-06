@@ -15,6 +15,8 @@ private:
 	const int maxPage = 4;
 	int page = 0;
 
+	void InputTileInfo(int r, int c);
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

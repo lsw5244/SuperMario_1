@@ -4,10 +4,44 @@
 
 #define SPRITE_START_Y 500
 
+void MyTileMapTool::InputTileInfo(int r, int c)
+{
+    // Brick 0.0   0.2  2.0~5  3.0~5  4.0~1    6~10. 10
+
+    // CanDestroyBrick  0.1
+
+    // ItemBlock  6.7
+
+    // CoinBlock  7.7
+
+    // StarBlock  10. 7
+
+    // HiddenCoinBlcok 8. 9
+
+    // HiddenStarBlock 9. 9
+
+
+    // Coin  0, 3
+
+
+    // Flag 11, 1
+
+    // FlagPole 12, 1
+
+    // FlagTop  10, 1
+
+    // FlagEnd 11, 0
+
+
+    // LateRenderBlock   3, 9   4, 9,  3, 10    4, 10
+
+
+    // 그외 Background
+
+}
+
 HRESULT MyTileMapTool::Init()
 {
-    //SetWindowSize(20, 20, WinX, WinY);
-
     if (mapSpriteImg == nullptr)
     {
         cout << "이미지 스프라이트 없음" << endl;
@@ -28,13 +62,13 @@ HRESULT MyTileMapTool::Init()
             {
                 map[i][j].frameX = 4;
                 map[i][j].frameY = 0;
-                map[i][j].type = BlockType::BackGround;
+                //map[i][j].type = BlockType::BackGround;
             }
             else
             {
                 map[i][j].frameX = 0;
                 map[i][j].frameY = 0;
-                map[i][j].type = BlockType::BackGround;
+                //map[i][j].type = BlockType::BackGround;
             }
         }
     }

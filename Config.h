@@ -67,6 +67,10 @@ struct SampleTile
 	RECT rc;
 	int frameX;
 	int frameY;
+	int animationFrameX;
+	int maxAnimationFrameX;
+	int itemCount;
+	bool isCollider;
 };
 
 struct TILE
@@ -77,4 +81,6 @@ struct TILE
 	int frameY;
 	int animationFrameX;
 	int maxAnimationFrameX;
+	int itemCount;
+	bool isCollider;
 };
