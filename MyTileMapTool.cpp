@@ -46,8 +46,6 @@ void MyTileMapTool::InputTileInfo(int r, int c)
 
 void MyTileMapTool::SelectTileInfoSet(int frameX, int frameY)
 {
-    selectTile.frameX = frameX;
-    selectTile.frameY = frameY;
 
     // Brick 0. 0,2   2.0~5  3.0~5  4.0~1    6~10. 10
     if (
@@ -64,72 +62,72 @@ void MyTileMapTool::SelectTileInfoSet(int frameX, int frameY)
             && (frameY == 6 || frameY == 7 || frameY == 8 || frameY == 9 || frameY == 10)
         )
     {
-        TileInfoSetting(selectTile, BlockType::Brick, 0, 0, 0, true);
+        TileInfoSetting(selectTile, BlockType::Brick, frameX, frameY, 0, 0, 0, true);
     }
 
     // CanDestroyBrick  0.1
     else if (frameX == 1 && frameY == 0)
     {
-        TileInfoSetting(selectTile, BlockType::CanDestroyBrick, 0, 0, 0, true);
+        TileInfoSetting(selectTile, BlockType::CanDestroyBrick, frameX, frameY, 0, 0, 0, true);
     }
 
     // ItemBlock  6.7
     else if (frameX == 7 && frameY == 6)
     {
-        TileInfoSetting(selectTile, BlockType::ItemBlock, 0, 2, 1, true);
+        TileInfoSetting(selectTile, BlockType::ItemBlock, frameX, frameY, 0, 2, 1, true);
     }
 
     // CoinBlock  7.7
     else if (frameX == 7 && frameY == 7)
     {
-        TileInfoSetting(selectTile, BlockType::CoinBlock, 0, 2, 1, true);
+        TileInfoSetting(selectTile, BlockType::CoinBlock, frameX, frameY, 0, 2, 1, true);
     }
 
     // StarBlock  10. 7
     else if (frameX == 7 && frameY == 10)
     {
-        TileInfoSetting(selectTile, BlockType::StarBlock, 0, 2, 1, true);
+        TileInfoSetting(selectTile, BlockType::StarBlock, frameX, frameY, 0, 2, 1, true);
     }
     // HiddenCoinBlcok 8. 9
     else if (frameX == 9 && frameY == 8)
     {
-        TileInfoSetting(selectTile, BlockType::HiddenCoinBlcok, 0, 0, 3, true);
+        TileInfoSetting(selectTile, BlockType::HiddenCoinBlcok, frameX, frameY, 0, 0, 3, true);
     }
     // HiddenStarBlock 9. 9
     else if (frameX == 9 && frameY == 9)
     {
-        TileInfoSetting(selectTile, BlockType::HiddenStarBlock, 0, 0, 1, true);
+        TileInfoSetting(selectTile, BlockType::HiddenStarBlock, frameX, frameY, 0, 0, 1, true);
     }
 
 
     // Coin  0, 3
     else if (frameX == 3 && frameY == 0)
     {
-        TileInfoSetting(selectTile, BlockType::Coin, 0, 0, 0, false);
+        TileInfoSetting(selectTile, BlockType::Coin, frameX, frameY, 0, 0, 0, false);
     }
 
     // Flag 11, 1
     else if (frameX == 1 && frameY == 11)
     {
-        TileInfoSetting(selectTile, BlockType::Flag, 0, 0, 0, false);
+        TileInfoSetting(selectTile, BlockType::Flag, frameX, frameY, 0, 0, 0, false);
     }
 
     // FlagPole 12, 1
     else if (frameX == 1 && frameY == 12)
     {
-        TileInfoSetting(selectTile, BlockType::FlagPole, 0, 0, 0, false);
+        TileInfoSetting(selectTile, BlockType::FlagPole, frameX, frameY, 0, 0, 0, false);
     }
 
     // FlagTop  10, 1
     else if (frameX == 1 && frameY == 10)
     {
-        TileInfoSetting(selectTile, BlockType::FlagTop, 0, 0, 0, false);
+        TileInfoSetting(selectTile, BlockType::FlagTop, frameX, frameY, 0, 0, 0, false);
     }
 
     // FlagEnd 11, 0
     else if (frameX == 0 && frameY == 11)
     {
-        TileInfoSetting(selectTile, BlockType::FlagEnd, 0, 0, 0, false);
+        TileInfoSetting(selectTile, BlockType::FlagEnd, frameX, frameY, 0, 0, 0, false);
     }
 
     // LateRenderBlock   3, 9   4, 9,  3, 10    4, 10
@@ -141,18 +139,20 @@ void MyTileMapTool::SelectTileInfoSet(int frameX, int frameY)
         && (frameY == 3 || frameY == 4)
         )
     {
-        TileInfoSetting(selectTile, BlockType::LateRenderBlock, 0, 0, 0, false);
+        TileInfoSetting(selectTile, BlockType::LateRenderBlock, frameX, frameY, 0, 0, 0, false);
     }
 
     // ±×¿Ü Background
     else
     {
-        TileInfoSetting(selectTile, BlockType::Background, 0, 0, 0, false);
+        TileInfoSetting(selectTile, BlockType::Background, frameX, frameY, 0, 0, 0, false);
     }
 }
 
-void MyTileMapTool::TileInfoSetting(TILE& tile, BlockType type, int animationFrameX, int maxAnimationFrameX, int itemCount, bool isCollider)
+void MyTileMapTool::TileInfoSetting(TILE& tile, BlockType type, int frameX, int frameY, int animationFrameX, int maxAnimationFrameX, int itemCount, bool isCollider)
 {
+    tile.frameX = frameX;
+    tile.frameY = frameY;
     tile.type = type;
     tile.animationFrameX = animationFrameX;
     tile.maxAnimationFrameX = maxAnimationFrameX;
@@ -237,6 +237,19 @@ void MyTileMapTool::Update()
             /*selectTile.frameX = selectIdxX;
             selectTile.frameY = selectIdxY;*/
             SelectTileInfoSet(selectIdxX, selectIdxY);
+
+            //switch (selectTile.type)
+            //{
+            //case BlockType::Brick:
+            //    cout << "BRICK @@@@" << endl;
+            //    break;
+            //default:
+            //    break;
+            //}
+            //cout << selectTile.frameX << endl;
+            //cout << selectTile.frameY << endl;
+
+            //cout << "-------------------------------\n";
         }
     }
     RECT mapArea;
@@ -255,8 +268,14 @@ void MyTileMapTool::Update()
             int posY = g_ptMouse.y;
             int selectIdxY = posY / TILE_SIZE;
 
-            map[selectIdxY][selectIdxX].frameX = selectTile.frameX;
-            map[selectIdxY][selectIdxX].frameY = selectTile.frameY;
+            /*map[selectIdxY][selectIdxX].frameX = selectTile.frameX;
+            map[selectIdxY][selectIdxX].frameY = selectTile.frameY;*/
+            TileInfoSetting(map[selectIdxY][selectIdxX],
+                selectTile.type, 
+                selectTile.frameX, selectTile.frameY,
+                selectTile.animationFrameX, 
+                selectTile.maxAnimationFrameX, 
+                selectTile.itemCount, selectTile.isCollider);
         }
     }
 

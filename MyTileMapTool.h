@@ -19,7 +19,7 @@ private:
 
 	void SelectTileInfoSet(int frameX, int frameY);
 
-	void TileInfoSetting(TILE& tile, BlockType type, int animationFrameX, int maxAnimationFrameX, int itemCount, bool isCollider);
+	void TileInfoSetting(TILE& tile, BlockType type, int frameX, int frameY, int animationFrameX, int maxAnimationFrameX, int itemCount, bool isCollider);
 
 	//BlockType type;
 	//int animationFrameX;
