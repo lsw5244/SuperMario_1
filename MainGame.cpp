@@ -25,8 +25,6 @@ HRESULT MainGame::Init()
 
 	// 백버퍼
 	backBuffer = new Image;
-	//int maxSizeX = WIN_SIZE_X > TILEMAPTOOL_SIZE_X ? WIN_SIZE_X : TILEMAPTOOL_SIZE_X;
-	//int maxSizeY = WIN_SIZE_Y > TILEMAPTOOL_SIZE_Y ? WIN_SIZE_Y : TILEMAPTOOL_SIZE_Y;
 
 	backBuffer->Init("Image/mapImage.bmp",800, 800);
 
@@ -36,11 +34,6 @@ HRESULT MainGame::Init()
 void MainGame::Update()
 {
 	TimerManager::GetSingleton()->Update();
-
-	//if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_TAB))
-	//{
-	//	SceneManager::GetSingleton()->ChangeScene("TotalScene");
-	//}
 
 	SceneManager::GetSingleton()->Update();
 
@@ -54,8 +47,6 @@ void MainGame::Render(HDC hdc)
 	PatBlt(hBackBufferDC, 0, 0, backBuffer->GetWidth(), backBuffer->GetHeight(), WHITENESS);
 
 	SceneManager::GetSingleton()->Render(hBackBufferDC);
-
-	//TimerManager::GetSingleton()->Render(hBackBufferDC);
 
 	backBuffer->Render(hdc);
 }
@@ -104,10 +95,6 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_LBUTTONDOWN:
 		clickedMousePosX = LOWORD(lParam);
 		clickedMousePosY = HIWORD(lParam);
-		break;
-	case WM_LBUTTONUP:
-		break;
-	case WM_RBUTTONDOWN:
 		break;
 	case WM_MOUSEMOVE:
 		g_ptMouse.x = LOWORD(lParam);

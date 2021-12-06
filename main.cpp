@@ -18,8 +18,6 @@ HINSTANCE	g_hInstance;
 HWND		g_hWnd;
 LPSTR		g_lpszClass = (LPSTR)TEXT("윈메인의 시작");
 MainGame	g_mainGame;
-int windowX;
-int windowY;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
 	WPARAM wParam, LPARAM lParam);
@@ -33,8 +31,6 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _DEBUG
 
-	windowX = WIN_SIZE_X;
-	windowY = WIN_SIZE_Y;
 	// 윈도우를 생성하기 위한 기본 셋팅
 	g_hInstance = _hInstance;
 	WNDCLASS wndClass;
@@ -95,7 +91,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case VK_RETURN:
-			//isUpdate = !isUpdate;
+			isUpdate = !isUpdate;
 			break;
 		}
 		break;
@@ -111,7 +107,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		RECT rect;
 		SetMapMode(hdc, MM_ANISOTROPIC); //표준화면으로
 
-		SetWindowExtEx(hdc, windowX, windowY, NULL); //화면에 맞춰주고 내가 조절해준다.
+		SetWindowExtEx(hdc, WIN_SIZE_X, WIN_SIZE_Y, NULL); //화면에 맞춰주고 내가 조절해준다.
 
 		GetClientRect(g_hWnd, &rect);
 		SetViewportExtEx(hdc, rect.right, rect.bottom, NULL);

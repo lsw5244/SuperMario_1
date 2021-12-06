@@ -8,16 +8,16 @@ class MainGame : public GameEntity
 {
 private:
 	// 타이머
-	HANDLE hTimer;
+	HANDLE hTimer = {};
 
 	// UI
 	char text[128];
 
-	int clickedMousePosX;
-	int clickedMousePosY;
+	int clickedMousePosX = {};
+	int clickedMousePosY = {};
 
 	// 백버퍼
-	Image* backBuffer;
+	Image* backBuffer = {};
 
 public:
 	virtual HRESULT Init() override;
