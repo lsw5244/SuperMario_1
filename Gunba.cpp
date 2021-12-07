@@ -48,8 +48,8 @@ void Gunba::Update()
     {
         AutoMove();
     }
-    cout << moveSpeed << endl;
-    cout << frameY << endl;
+    /*cout << moveSpeed << endl;
+    cout << frameY << endl;*/
     pos.x += moveSpeed;
 }
 

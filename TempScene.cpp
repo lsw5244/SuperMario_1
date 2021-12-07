@@ -10,11 +10,9 @@ HRESULT TempScene::Init()
     mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
     Load();
 
-    //pos.x = WIN_SIZE_X / 2;
-    //pos.y = WIN_SIZE_Y / 2;
-
     mario.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
+    
 
     return S_OK;
 }
@@ -42,9 +40,14 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
+            //TILE *map = GameDataContainer::GetSingleton()->GetMap();
+
             mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top + TILE_SIZE / 2
-            , map[i][j].frameX, map[i][j].frameY);
-            //map[i][j]
+                , map[i][j].frameX, map[i][j].frameY);
+
+            //mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top + TILE_SIZE / 2
+            //, map[i][j].frameX, map[i][j].frameY);
+            
         }
     }
 

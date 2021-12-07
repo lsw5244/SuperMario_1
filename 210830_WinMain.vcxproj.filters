@@ -79,7 +79,7 @@
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameDataContainer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>2D Framework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +138,7 @@
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameDataContainer.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>2D Framework\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
