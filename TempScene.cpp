@@ -8,7 +8,7 @@ HRESULT TempScene::Init()
     //SetWindowSize(300, 20, WIN_SIZE_X, WIN_SIZE_Y);
     SetWindowSize(300, 20, 400, 400);
 
-    mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile_real.bmp");
+    mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
     Load();
 
     //pos.x = WIN_SIZE_X / 2;
@@ -25,7 +25,7 @@ void TempScene::Update()
     mario.Update();
     mushroom.Update();
 
-    if (Input::GetButtonDown(VK_RIGHT))
+    if (Input::GetButton(VK_RIGHT))
     {
         for (int i = 0; i < MAP_HEIGHT; i++)
         {

@@ -142,7 +142,7 @@ void PlayerCharacter::Update()
     {
         jumpEnd = true;
     }
-    if (Input::GetButtonDown('Z') && jumpEnd == false)
+    if (Input::GetButton('Z') && jumpEnd == false)
     {
         isGround = false;
         currJumpPower += jumpPower;
@@ -155,12 +155,12 @@ void PlayerCharacter::Update()
 
     if (isGround)
     {
-        if (Input::GetButtonDown(VK_RIGHT))
+        if (Input::GetButton(VK_RIGHT))
         {
             currSpeed += speed;
             currSpeed = min(currSpeed, maxSpeed);
         }
-        else if (Input::GetButtonDown(VK_LEFT))
+        else if (Input::GetButton(VK_LEFT))
         {
             currSpeed -= speed;
             currSpeed = max(currSpeed, -maxSpeed);

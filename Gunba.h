@@ -5,7 +5,7 @@ class Image;
 class Gunba : public GameEntity
 {
 private:
-	Image* img = ImageManager::GetSingleton()->FindImage("Image/Gunba.bmp");
+	Image* img = ImageManager::GetSingleton()->FindImage("Image/Monster/Gunba.bmp");
 
 	POINTFLOAT pos = { 0,0 };
 
