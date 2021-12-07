@@ -5,8 +5,7 @@
 
 HRESULT TempScene::Init()
 {
-    //SetWindowSize(300, 20, WIN_SIZE_X, WIN_SIZE_Y);
-    SetWindowSize(300, 20, 400, 400);
+    SetWindowSize(300, 20, WIN_SIZE_X * 3, WIN_SIZE_Y * 3);
 
     mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
     Load();
@@ -43,7 +42,7 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top
+            mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top + TILE_SIZE / 2
             , map[i][j].frameX, map[i][j].frameY);
             //map[i][j]
         }

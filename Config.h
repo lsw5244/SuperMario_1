@@ -13,8 +13,9 @@ using namespace std;
 
 #define WIN_START_POS_X	400
 #define WIN_START_POS_Y	100
-#define WIN_SIZE_X	480//800 //240(게임으로 할 때 사용)// 16 * 16
-#define WIN_SIZE_Y	160//800 //240			// 16 * 14
+// 3 : 2로 함
+#define WIN_SIZE_X	256//800 //240(게임으로 할 때 사용)// 16 * 16
+#define WIN_SIZE_Y	240//800 //240			// 16 * 14
 
 #define SAFE_RELEASE(p)	{ if (p) { p->Release(); delete p; p = nullptr; } }
 #define SAFE_DELETE(p)	{ if (p) { delete p; p = nullptr; } }
