@@ -157,7 +157,7 @@ void MyTileMapTool::TileInfoSetting(TILE& tile, BlockType type, int frameX, int 
 
 HRESULT MyTileMapTool::Init()
 {
-    mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile_real.bmp");
+    mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
 
     if (mapSpriteImg == nullptr)
     {

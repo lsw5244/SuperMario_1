@@ -78,6 +78,9 @@
     <ClCompile Include="Input.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="GameDataContainer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDataContainer.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

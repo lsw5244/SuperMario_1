@@ -6,7 +6,9 @@ class Image;
 class PlayerCharacter : public GameEntity
 {
 private:
+	//Image* img = ImageManager::GetSingleton()->FindImage("Image/Character/SamllRedMario.bmp");
 	Image* img = ImageManager::GetSingleton()->FindImage("Image/Character/SamllRedMario.bmp");
+	
 	POINTFLOAT pos = { 0, 0 };
 
 	float maxSpeed = 1.0f;

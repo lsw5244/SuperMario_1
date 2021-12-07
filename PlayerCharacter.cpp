@@ -157,8 +157,11 @@ void PlayerCharacter::Update()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            currSpeed += speed;
-            currSpeed = min(currSpeed, maxSpeed);
+            if (pos.x < WIN_SIZE_X / 2)
+            {
+                currSpeed += speed;
+                currSpeed = min(currSpeed, maxSpeed);
+            }
         }
         else if (Input::GetButton(VK_LEFT))
         {

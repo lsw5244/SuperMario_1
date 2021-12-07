@@ -5,7 +5,7 @@
 
 HRESULT TempScene::Init()
 {
-    SetWindowSize(300, 20, WIN_SIZE_X * 3, WIN_SIZE_Y * 3);
+    SetWindowSize(300, 20, GAME_SCENE_WIN_SIZE_X, GAME_SCENE_WIN_SIZE_Y);
 
     mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
     Load();
@@ -24,16 +24,16 @@ void TempScene::Update()
     mario.Update();
     mushroom.Update();
 
-    if (Input::GetButton(VK_RIGHT))
-    {
-        for (int i = 0; i < MAP_HEIGHT; i++)
-        {
-            for (int j = 0; j < MAP_WIDTH; j++)
-            {
-                map[i][j].rc.left -= 10;
-            }
-        }
-    }
+    //if (Input::GetButton(VK_RIGHT))
+    //{
+    //    for (int i = 0; i < MAP_HEIGHT; i++)
+    //    {
+    //        for (int j = 0; j < MAP_WIDTH; j++)
+    //        {
+    //            map[i][j].rc.left -= 10;
+    //        }
+    //    }
+    //}
 }
 
 void TempScene::Render(HDC hdc)

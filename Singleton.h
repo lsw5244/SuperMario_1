@@ -43,3 +43,20 @@ inline void Singleton<T>::ReleaseSingleton()
 		instance = nullptr;
 	}
 }
+
+
+//template <typename T>
+//class Singleton abstract
+//{
+//public:
+//	virtual ~Singleton() = default;
+//
+//	static T* GetInstance()
+//	{
+//		static T instance;
+//
+//		return &instance;
+//	}
+//protected:
+//	Singleton() = default;
+//};

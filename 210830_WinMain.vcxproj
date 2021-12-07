@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameDataContainer.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gunba.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="GameDataContainer.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gunba.h" />

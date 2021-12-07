@@ -13,10 +13,13 @@ using namespace std;
 
 #define WIN_START_POS_X	400
 #define WIN_START_POS_Y	100
-// 3 : 2로 함
-#define WIN_SIZE_X	256//800 //240(게임으로 할 때 사용)// 16 * 16
-#define WIN_SIZE_Y	240//800 //240			// 16 * 14
 
+#define WIN_SIZE_X	256//타일 맵 툴 이용 시 800
+#define WIN_SIZE_Y	240//타일 맵 툴 이용 시 800
+
+#define GAME_SCENE_WIN_SIZE_X WIN_SIZE_X * 3
+#define GAME_SCENE_WIN_SIZE_Y WIN_SIZE_Y * 3
+						  
 #define SAFE_RELEASE(p)	{ if (p) { p->Release(); delete p; p = nullptr; } }
 #define SAFE_DELETE(p)	{ if (p) { delete p; p = nullptr; } }
 
@@ -41,8 +44,8 @@ extern POINT g_ptMouse;
 
 #define MAP_WIDTH_PER_PAGE 50
 
-#define MAP_WIDTH 211
-#define MAP_HEIGHT 15
+#define MAP_WIDTH 211		// 211 칸
+#define MAP_HEIGHT 15		// 15 칸
 
 #define TILE_SPRITE_WIDTH 11
 #define TILE_SPRITE_HEIGHT 13
