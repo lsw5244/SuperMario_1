@@ -1,6 +1,7 @@
 #pragma once
 #include "GameEntity.h"
-#include "Config.h"
+#include "HeaderCollection.h"
+
 class Image;
 class Gunba : public GameEntity
 {

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameEntity.h"
-#include "Config.h"
+#include "MacroCollection.h"
+#include "StructCollection.h"
 
 class Image;
 class MyTileMapTool : public GameEntity

@@ -1,5 +1,10 @@
 #pragma once
-#include "Config.h"
+#include "EnumClassCollection.h"
+#include "GlobalVariableCollection.h"
+#include "HeaderCollection.h"
+#include "MacroCollection.h"
+#include "StructCollection.h"
+
 #include "Singleton.h"
 
 class Image;

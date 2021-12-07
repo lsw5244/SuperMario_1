@@ -1,6 +1,8 @@
 #pragma once
 #include "Config.h"
 #include "GameEntity.h"
+#include "HeaderCollection.h"
+#include "EnumClassCollection.h"
 
 class Image;
 class PlayerCharacter : public GameEntity

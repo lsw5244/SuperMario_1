@@ -1,5 +1,6 @@
 #include "ImageManager.h"
 #include "Image.h"
+#include "MacroCollection.h"
 
 void ImageManager::Init()
 {

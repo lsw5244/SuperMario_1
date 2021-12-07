@@ -1,6 +1,8 @@
 #include "MainGame.h"
 #include "Image.h"
 #include "ImageManager.h"
+#include "GlobalVariableCollection.h"
+#include "MacroCollection.h"
 
 HRESULT MainGame::Init()
 {

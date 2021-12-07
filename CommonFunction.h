@@ -1,9 +1,9 @@
 // CommonFunction.h
 
 #pragma once
-#include "Config.h"
 #include <Windows.h>
 #include <math.h>
+#include "GlobalVariableCollection.h"
 
 inline float GetDistance(const POINTFLOAT& pos1, const POINTFLOAT& pos2)
 {

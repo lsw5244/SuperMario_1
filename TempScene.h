@@ -1,12 +1,11 @@
 #pragma once
-#include "Config.h"
 #include "GameEntity.h"
-#include "Physics.h"
 #include "Gunba.h"
 #include "PlayerCharacter.h"
+#include "MacroCollection.h"
+#include "StructCollection.h"
 
 class Image;
-//class Gunba;
 class TempScene : public GameEntity
 {
 private:

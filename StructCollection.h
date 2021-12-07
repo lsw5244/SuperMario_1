@@ -2,11 +2,11 @@
 #include "HeaderCollection.h"
 #include "EnumClassCollection.h"
 
-typedef struct ArgumentFuncPtr
-{
-	string sceneName;
-	string loadingSceneName;
-} ARGUMENT_PTR, * LPARGUMENT_PTR;
+//typedef struct ArgumentFuncPtr
+//{
+//	string sceneName;
+//	string loadingSceneName;
+//} ARGUMENT_PTR, * LPARGUMENT_PTR;
 
 struct SampleTile
 {

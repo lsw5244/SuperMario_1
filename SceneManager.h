@@ -1,6 +1,6 @@
 #pragma once
-#include "Config.h"
 #include "Singleton.h"
+#include "HeaderCollection.h"
 
 class GameEntity;
 class SceneManager : public Singleton<SceneManager>

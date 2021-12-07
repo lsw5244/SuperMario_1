@@ -2,10 +2,11 @@
 #include <Windows.h>
 #include "CommonFunction.h"
 #include "MainGame.h"
-#define _CRTDBG_MAP_ALLOC
+//#define _CRTDBG_MAP_ALLOC
 #include <stdio.h>
 #include <crtdbg.h>
 #include "Input.h"
+#include "MacroCollection.h"
 
 #ifdef UNICODE
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
