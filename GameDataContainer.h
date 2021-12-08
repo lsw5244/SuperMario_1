@@ -2,15 +2,17 @@
 #include "Singleton.h"
 #include "PlayerCharacter.h"
 #include "StructCollection.h"
+#include "MacroCollection.h"
 
 class GameDataContainer : public Singleton<GameDataContainer>
 {
 private:
 	PlayerCharacter* player = nullptr;
 
-	TILE* map				= nullptr;
 
 public:
+	TILE(*map)[MAP_WIDTH] = nullptr;
+
 	void SetPlayer(PlayerCharacter* player)
 	{
 		this->player = player;
@@ -19,14 +21,15 @@ public:
 	{
 		return this->player;
 	}
+	//void SetTileInfo(TILE_INFO(*info)[TILE_COUNT]) { this->tileInfo = info; }
 
-	void SetMap(TILE* map)
+	void SetMap(TILE(*map)[MAP_WIDTH])
 	{
 		this->map = map;
 	}
-	TILE* GetMap()
-	{
-		return map;
-	}
+	//TILE/*[MAP_HEIGHT][MAP_WIDTH]*/ GetMap()
+	//{
+	//	return map;
+	//}
 };
 
