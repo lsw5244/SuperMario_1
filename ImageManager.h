@@ -1,17 +1,19 @@
 #pragma once
-#include "EnumClassCollection.h"
-#include "GlobalVariableCollection.h"
-#include "HeaderCollection.h"
-#include "MacroCollection.h"
-#include "StructCollection.h"
+//#include "EnumClassCollection.h"
+//#include "GlobalVariableCollection.h"
+//#include "HeaderCollection.h"
+//#include "MacroCollection.h"
+//#include "StructCollection.h"
 
+#include "HeaderCollection.h"
 #include "Singleton.h"
 
 class Image;
 class ImageManager : public Singleton<ImageManager>
 {
 private:
-	map<string, Image*>	mapImages;
+	//map<string, Image*>	mapImages;
+	map<string, Image*> mapImages;
 	//map<string, map<int, int>>	mapTest;
 
 	//"enemy_3_bullet"
