@@ -43,7 +43,11 @@
 //		instance = nullptr;
 //	}
 //}
+// 
+// 
 
+
+#pragma once
 
 template <typename T>
 class Singleton abstract

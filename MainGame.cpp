@@ -7,16 +7,16 @@
 
 HRESULT MainGame::Init()
 {
-	KeyManager::GetSingleton()->Init();
-	ImageManager::GetSingleton()->Init();
+	KeyManager::GetInstance()->Init();
+	ImageManager::GetInstance()->Init();
 
 	// 이미지 초기화
-	TimerManager::GetSingleton()->Init();
-	SceneManager::GetSingleton()->Init();
+	TimerManager::GetInstance()->Init();
+	SceneManager::GetInstance()->Init();
 
 	//SceneManager::GetSingleton()->AddLoadingScene("LoadingScene", new LoadingScene());
 
-	SceneManager::GetSingleton()->ChangeScene("TempScene");
+	SceneManager::GetInstance()->ChangeScene("TempScene");
 
 	//srand((unsigned int) time(nullptr));
 
@@ -36,9 +36,9 @@ HRESULT MainGame::Init()
 
 void MainGame::Update()
 {
-	TimerManager::GetSingleton()->Update();
+	TimerManager::GetInstance()->Update();
 
-	SceneManager::GetSingleton()->Update();
+	SceneManager::GetInstance()->Update();
 
 	InvalidateRect(g_hWnd, NULL, false);
 }
@@ -49,7 +49,7 @@ void MainGame::Render(HDC hdc)
 
 	PatBlt(hBackBufferDC, 0, 0, backBuffer->GetWidth(), backBuffer->GetHeight(), WHITENESS);
 
-	SceneManager::GetSingleton()->Render(hBackBufferDC);
+	SceneManager::GetInstance()->Render(hBackBufferDC);
 
 	backBuffer->Render(hdc);
 }
@@ -58,20 +58,15 @@ void MainGame::Release()
 {
 	SAFE_RELEASE(backBuffer);
 
-	TimerManager::GetSingleton()->Release();
-	TimerManager::GetSingleton()->ReleaseSingleton();
+	TimerManager::GetInstance()->Release();
 
-	ImageManager::GetSingleton()->Release();
-	ImageManager::GetSingleton()->ReleaseSingleton();
+	ImageManager::GetInstance()->Release();
 
-	KeyManager::GetSingleton()->Release();
-	KeyManager::GetSingleton()->ReleaseSingleton();
+	KeyManager::GetInstance()->Release();
 
-	SceneManager::GetSingleton()->Release();
-	SceneManager::GetSingleton()->ReleaseSingleton();
+	SceneManager::GetInstance()->Release();
 
-	GameDataContainer::GetSingleton()->Release();
-	GameDataContainer::GetSingleton()->ReleaseSingleton();
+	GameDataContainer::GetInstance()->Release();
 
 	// 타이머 객체 삭제
 	KillTimer(g_hWnd, 0);

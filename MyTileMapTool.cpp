@@ -157,7 +157,7 @@ void MyTileMapTool::TileInfoSetting(TILE& tile, BlockType type, int frameX, int 
 
 HRESULT MyTileMapTool::Init()
 {
-    mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
+    mapSpriteImg = ImageManager::GetInstance()->FindImage("Image/mario_overwordTile.bmp");
 
     if (mapSpriteImg == nullptr)
     {
@@ -223,7 +223,7 @@ void MyTileMapTool::Update()
 
     if (PtInRect(&(spriteImgArea), g_ptMouse))
     {
-        if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LBUTTON))
         {
             int posX = g_ptMouse.x - spriteImgArea.left;  // spriteImgArea의 어떤 좌표에 있는지 구하기
             int selectIdxX = posX / TILE_SIZE;
@@ -257,7 +257,7 @@ void MyTileMapTool::Update()
 
     if (PtInRect(&(mapArea), g_ptMouse))
     {
-        if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
+        if (KeyManager::GetInstance()->IsStayKeyDown(VK_LBUTTON))
         {
             int posX = g_ptMouse.x;
             int selectIdxX = (posX / TILE_SIZE) + (page * MAP_WIDTH_PER_PAGE);
@@ -276,25 +276,25 @@ void MyTileMapTool::Update()
         }
     }
 
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
     {
         --page;
         page = max(page, 0);
         cout << page << endl;
     }
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
     {
         ++page;
         page = min(page, MAX_PAGE);
         cout << page << endl;
     }
 
-    if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
+    if (KeyManager::GetInstance()->IsOnceKeyUp('S'))
     {
         Save();
     }
 
-    if (KeyManager::GetSingleton()->IsOnceKeyUp('L'))
+    if (KeyManager::GetInstance()->IsOnceKeyUp('L'))
     {
         Load();
     }

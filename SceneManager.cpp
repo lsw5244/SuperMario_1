@@ -22,8 +22,8 @@ DWORD CALLBACK LoadingThread(LPVOID pvParam)
 
 void SceneManager::Init()
 {
-	SceneManager::GetSingleton()->AddScene("TempScene", new TempScene());
-	SceneManager::GetSingleton()->AddScene("MyTileMapTool", new MyTileMapTool());
+	SceneManager::GetInstance()->AddScene("TempScene", new TempScene());
+	SceneManager::GetInstance()->AddScene("MyTileMapTool", new MyTileMapTool());
 }
 
 void SceneManager::Release()

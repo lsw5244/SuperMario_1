@@ -8,7 +8,7 @@ class PlayerCharacter : public GameEntity
 {
 private:
 	//Image* img = ImageManager::GetSingleton()->FindImage("Image/Character/SamllRedMario.bmp");
-	Image* img = ImageManager::GetSingleton()->FindImage("Image/Character/SamllRedMario.bmp");
+	Image* img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
 	
 	POINTFLOAT pos = { 0, 0 };
 

@@ -8,12 +8,12 @@ HRESULT TempScene::Init()
 {
     SetWindowSize(300, 20, GAME_SCENE_WIN_SIZE_X, GAME_SCENE_WIN_SIZE_Y);
 
-    mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
+    mapSpriteImg = ImageManager::GetInstance()->FindImage("Image/mario_overwordTile.bmp");
     Load();
-    GameDataContainer::GetSingleton()->map = map;
+    GameDataContainer::GetInstance()->map = map;
     
     mario.SetPos({ WIN_SIZE_X / 3, WIN_SIZE_Y / 2 });
-    GameDataContainer::GetSingleton()->SetPlayer(&mario);
+    GameDataContainer::GetInstance()->SetPlayer(&mario);
 
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
@@ -26,7 +26,7 @@ void TempScene::Update()
     mushroom.Update();
    
     if (Input::GetButton(VK_RIGHT) &&
-        GameDataContainer::GetSingleton()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
+        GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     {
         for (int i = 0; i < MAP_HEIGHT; i++)
         {
@@ -57,8 +57,8 @@ void TempScene::Render(HDC hdc)
 void TempScene::Release()
 {
     //delete[] GameDataContainer::GetSingleton()->map;
-    GameDataContainer::GetSingleton()->Release();
-    GameDataContainer::GetSingleton()->ReleaseSingleton();
+    //GameDataContainer::GetSingleton()->Release();
+    //GameDataContainer::GetSingleton()->ReleaseSingleton();
 }
 
 void TempScene::Load(int loadIndex)
