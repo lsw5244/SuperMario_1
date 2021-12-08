@@ -32,8 +32,8 @@ void TempScene::Update()
         {
             for (int j = 0; j < MAP_WIDTH; j++)
             {
-                map[i][j].rc.left   -= mario.GetCurrSpeed();
-                map[i][j].rc.right  -= mario.GetCurrSpeed();
+                map[i][j].rc.left   -= (LONG)mario.GetCurrSpeed();
+                map[i][j].rc.right  -= (LONG)mario.GetCurrSpeed();
             }
         }
     }

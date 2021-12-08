@@ -203,7 +203,7 @@ void PlayerCharacter::Update()
 
 void PlayerCharacter::Render(HDC hdc)
 {
-    img->Render(hdc, pos.x, pos.y, frameX, frameY);
+    img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
 }
 
 void PlayerCharacter::Release()
