@@ -159,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonFunction.h" />
-    <ClInclude Include="Config.h" />
     <ClInclude Include="EnumClassCollection.h" />
     <ClInclude Include="GameDataContainer.h" />
     <ClInclude Include="GameEntity.h" />

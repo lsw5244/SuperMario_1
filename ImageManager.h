@@ -1,9 +1,4 @@
 #pragma once
-//#include "EnumClassCollection.h"
-//#include "GlobalVariableCollection.h"
-//#include "HeaderCollection.h"
-//#include "MacroCollection.h"
-//#include "StructCollection.h"
 
 #include "HeaderCollection.h"
 #include "Singleton.h"

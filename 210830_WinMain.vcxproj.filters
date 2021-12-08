@@ -140,9 +140,6 @@
     <ClInclude Include="Gunba.h">
       <Filter>MainGame\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>헤더 파일\Config</Filter>
-    </ClInclude>
     <ClInclude Include="CommonFunction.h">
       <Filter>헤더 파일\Config</Filter>
     </ClInclude>

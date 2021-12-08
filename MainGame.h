@@ -1,5 +1,4 @@
 #pragma once
-#include "Config.h"
 #include "GameEntity.h"
 
 // 우리가 구성할 게임 월드
