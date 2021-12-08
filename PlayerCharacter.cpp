@@ -102,7 +102,7 @@ void PlayerCharacter::AnimationFrameChanger()
 
 HRESULT PlayerCharacter::Init()
 {
-    img = ImageManager::GetSingleton()->FindImage("Image/SamllRedMario.bmp");
+    img = ImageManager::GetInstance()->FindImage("Image/SamllRedMario.bmp");
 
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
