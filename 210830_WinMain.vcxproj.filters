@@ -28,6 +28,12 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{706cb441-4046-4339-a016-95a5dfe9d76c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Monster">
+      <UniqueIdentifier>{c2e00541-f90b-4f50-a66a-f2e5d3558394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Config">
+      <UniqueIdentifier>{edcc45a6-44b9-416a-bf83-243aa4262e60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,9 +72,6 @@
     <ClCompile Include="Physics.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Gunba.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerCharacter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -81,14 +84,11 @@
     <ClCompile Include="GameDataContainer.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Gunba.cpp">
+      <Filter>MainGame\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Config.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonFunction.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GameEntity.h">
       <Filter>2D Framework</Filter>
     </ClInclude>
@@ -125,9 +125,6 @@
     <ClInclude Include="Physics.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Gunba.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerCharacter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -139,6 +136,27 @@
     </ClInclude>
     <ClInclude Include="GameDataContainer.h">
       <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Gunba.h">
+      <Filter>MainGame\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonFunction.h">
+      <Filter>헤더 파일\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderCollection.h">
+      <Filter>헤더 파일\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="MacroCollection.h">
+      <Filter>헤더 파일\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumClassCollection.h">
+      <Filter>헤더 파일\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="StructCollection.h">
+      <Filter>헤더 파일\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariableCollection.h">
+      <Filter>헤더 파일\Config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,6 @@
 #include "Image.h"
+#include "GlobalVariableCollection.h"
+
 
 HRESULT Image::Init(int width, int height)
 {

@@ -159,21 +159,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonFunction.h" />
-    <ClInclude Include="Config.h" />
+    <ClInclude Include="EnumClassCollection.h" />
     <ClInclude Include="GameDataContainer.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GlobalVariableCollection.h" />
     <ClInclude Include="Gunba.h" />
+    <ClInclude Include="HeaderCollection.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="MacroCollection.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MyTileMapTool.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="PlayerCharacter.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="StructCollection.h" />
     <ClInclude Include="TempScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />

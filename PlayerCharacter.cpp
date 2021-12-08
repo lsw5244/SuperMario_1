@@ -1,6 +1,8 @@
 #include "PlayerCharacter.h"
 #include "Image.h"
 #include "Input.h"
+#include "MacroCollection.h"
+
 void PlayerCharacter::AnimationFrameChanger()
 {
     // 14 * 2

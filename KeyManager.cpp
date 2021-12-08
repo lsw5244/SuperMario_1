@@ -1,4 +1,5 @@
 #include "KeyManager.h"
+#include <Windows.h>
 
 void KeyManager::Init()
 {

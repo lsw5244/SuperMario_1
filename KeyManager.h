@@ -1,5 +1,4 @@
 #pragma once
-#include "Config.h"
 #include <vector>
 #include <bitset>	// stl자료구조 vector
 #include "Singleton.h"

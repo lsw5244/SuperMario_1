@@ -1,7 +1,8 @@
 #pragma once
 #include "Singleton.h"
 #include "PlayerCharacter.h"
-#include "Config.h"
+#include "StructCollection.h"
+
 class GameDataContainer : public Singleton<GameDataContainer>
 {
 private:
