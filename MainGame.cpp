@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include "Image.h"
 #include "ImageManager.h"
+#include "GameDataContainer.h"
 #include "GlobalVariableCollection.h"
 #include "MacroCollection.h"
 
@@ -68,6 +69,9 @@ void MainGame::Release()
 
 	SceneManager::GetSingleton()->Release();
 	SceneManager::GetSingleton()->ReleaseSingleton();
+
+	GameDataContainer::GetSingleton()->Release();
+	GameDataContainer::GetSingleton()->ReleaseSingleton();
 
 	// 타이머 객체 삭제
 	KillTimer(g_hWnd, 0);

@@ -11,7 +11,11 @@ private:
 
 
 public:
-	TILE(*map)[MAP_WIDTH] = nullptr;
+	TILE(*map)[MAP_WIDTH] = {};
+
+
+	void Init();
+	void Release();
 
 	void SetPlayer(PlayerCharacter* player)
 	{
@@ -31,5 +35,6 @@ public:
 	//{
 	//	return map;
 	//}
+	virtual ~GameDataContainer() = default;
 };
 

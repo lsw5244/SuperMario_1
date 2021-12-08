@@ -2,6 +2,7 @@
 #include "CommonFunction.h"
 #include "Image.h"
 #include "Input.h"
+#include "GameDataContainer.h"
 
 HRESULT TempScene::Init()
 {
@@ -9,11 +10,11 @@ HRESULT TempScene::Init()
 
     mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
     Load();
+    GameDataContainer::GetSingleton()->map = map;
 
     mario.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
-    
-
+    //GameDataContainer::GetSingleton()->SetMap(map);
     return S_OK;
 }
 
@@ -32,6 +33,12 @@ void TempScene::Update()
     //        }
     //    }
     //}
+
+    if (Input::GetButtonDown(VK_SPACE))
+    {
+        cout << &map << endl;
+        cout << GameDataContainer::GetSingleton()->map << endl;
+    }
 }
 
 void TempScene::Render(HDC hdc)
@@ -40,13 +47,14 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            //TILE *map = GameDataContainer::GetSingleton()->GetMap();
+            //mapSpriteImg->Render(hdc, GameDataContainer::GetSingleton()->map[i][j].rc.left,                 
+            //    GameDataContainer::GetSingleton()->map[i][j].rc.top + TILE_SIZE / 2
+
+            //    , GameDataContainer::GetSingleton()->map[i][j].frameX,
+            //    GameDataContainer::GetSingleton()->map[i][j].frameY);
 
             mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top + TILE_SIZE / 2
-                , map[i][j].frameX, map[i][j].frameY);
-
-            //mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top + TILE_SIZE / 2
-            //, map[i][j].frameX, map[i][j].frameY);
+            , map[i][j].frameX, map[i][j].frameY);
             
         }
     }
@@ -57,6 +65,9 @@ void TempScene::Render(HDC hdc)
 
 void TempScene::Release()
 {
+    //delete[] GameDataContainer::GetSingleton()->map;
+    GameDataContainer::GetSingleton()->Release();
+    GameDataContainer::GetSingleton()->ReleaseSingleton();
 }
 
 void TempScene::Load(int loadIndex)
