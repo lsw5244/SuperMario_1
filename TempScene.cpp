@@ -11,10 +11,12 @@ HRESULT TempScene::Init()
     mapSpriteImg = ImageManager::GetSingleton()->FindImage("Image/mario_overwordTile.bmp");
     Load();
     GameDataContainer::GetSingleton()->map = map;
+    
+    mario.SetPos({ WIN_SIZE_X / 3, WIN_SIZE_Y / 2 });
+    GameDataContainer::GetSingleton()->SetPlayer(&mario);
 
-    mario.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
-    //GameDataContainer::GetSingleton()->SetMap(map);
+
     return S_OK;
 }
 
@@ -22,22 +24,18 @@ void TempScene::Update()
 {
     mario.Update();
     mushroom.Update();
-
-    //if (Input::GetButton(VK_RIGHT))
-    //{
-    //    for (int i = 0; i < MAP_HEIGHT; i++)
-    //    {
-    //        for (int j = 0; j < MAP_WIDTH; j++)
-    //        {
-    //            map[i][j].rc.left -= 10;
-    //        }
-    //    }
-    //}
-
-    if (Input::GetButtonDown(VK_SPACE))
+   
+    if (Input::GetButton(VK_RIGHT) &&
+        GameDataContainer::GetSingleton()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     {
-        cout << &map << endl;
-        cout << GameDataContainer::GetSingleton()->map << endl;
+        for (int i = 0; i < MAP_HEIGHT; i++)
+        {
+            for (int j = 0; j < MAP_WIDTH; j++)
+            {
+                map[i][j].rc.left   -= mario.GetCurrSpeed();
+                map[i][j].rc.right  -= mario.GetCurrSpeed();
+            }
+        }
     }
 }
 
@@ -47,15 +45,8 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            //mapSpriteImg->Render(hdc, GameDataContainer::GetSingleton()->map[i][j].rc.left,                 
-            //    GameDataContainer::GetSingleton()->map[i][j].rc.top + TILE_SIZE / 2
-
-            //    , GameDataContainer::GetSingleton()->map[i][j].frameX,
-            //    GameDataContainer::GetSingleton()->map[i][j].frameY);
-
             mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top + TILE_SIZE / 2
-            , map[i][j].frameX, map[i][j].frameY);
-            
+            , map[i][j].frameX, map[i][j].frameY); 
         }
     }
 

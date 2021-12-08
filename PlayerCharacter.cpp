@@ -194,7 +194,10 @@ void PlayerCharacter::Update()
 
     AnimationFrameChanger();
 
-    pos.x += currSpeed;
+    if (pos.x < WIN_SIZE_X / 2 || currSpeed < 0)
+    {
+        pos.x += currSpeed;
+    }
     pos.y -= currJumpPower;
 }
 

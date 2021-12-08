@@ -8,11 +8,10 @@ class GameDataContainer : public Singleton<GameDataContainer>
 {
 private:
 	PlayerCharacter* player = nullptr;
-
+	int globalPos			= 0;
 
 public:
 	TILE(*map)[MAP_WIDTH] = {};
-
 
 	void Init();
 	void Release();
@@ -35,6 +34,15 @@ public:
 	//{
 	//	return map;
 	//}
-	virtual ~GameDataContainer() = default;
+
+	void SetGlobalPos(int pos)
+	{
+		this->globalPos = pos;
+	}
+
+	int GetGlobalPos()
+	{
+		return this->globalPos;
+	}
 };
 

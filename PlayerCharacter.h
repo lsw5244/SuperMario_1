@@ -50,5 +50,14 @@ public:
 	{
 		this->pos = pos;
 	}
+	POINTFLOAT GetPos()
+	{
+		return this->pos;
+	}
+
+	float GetCurrSpeed()
+	{
+		return currSpeed;
+	}
 };
 

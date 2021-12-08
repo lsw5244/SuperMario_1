@@ -21,3 +21,5 @@
 #define TILE_SPRITE_HEIGHT 13
 
 #define TILE_SIZE 16		// 가로 세로 16픽셀
+
+#define DELETA_TIME TimerManager::GetSingleton()->GetDeltaTime()

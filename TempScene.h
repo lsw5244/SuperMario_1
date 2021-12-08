@@ -14,8 +14,7 @@ private:
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
 
-	void AnimationFrameChanger();	
-	void AnimationFrameChanger(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용
+	int globalPos = 0;
 
 public:
 	virtual HRESULT Init() override;
