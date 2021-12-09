@@ -22,7 +22,7 @@ private:
 	float currJumpPower	 = 0.0f;
 	float jumpPower		 = 0.1f;
 	float gravity		 = 0.001f;
-
+	float maxGravity	 = 0.1f;
 	bool isGround		 = true;
 	bool jumpEnd		 = false;
 

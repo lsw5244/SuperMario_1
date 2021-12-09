@@ -210,6 +210,7 @@ void PlayerCharacter::Update()
     {
         currJumpPower -= gravity;
         gravity += 0.002f;
+        gravity = min(gravity, maxGravity);
     }
 
     AnimationFrameChanger();
@@ -225,7 +226,9 @@ void PlayerCharacter::Update()
             GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
         }
     }
-    pos.y -= currJumpPower;
+
+     pos.y -= currJumpPower;
+    
 }
 
 void PlayerCharacter::Render(HDC hdc)
