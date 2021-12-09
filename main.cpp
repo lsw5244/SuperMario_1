@@ -67,11 +67,29 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 
 
 	// 메시지 큐에 있는 메시지 처리
+	//MSG message;
+	//while (GetMessage(&message, 0, 0, 0))
+	//{
+	//	TranslateMessage(&message);
+	//	DispatchMessage(&message);
+	//}
 	MSG message;
-	while (GetMessage(&message, 0, 0, 0))
+	while (TRUE)
 	{
-		TranslateMessage(&message);
-		DispatchMessage(&message);
+		if (PeekMessage(&message, nullptr, NULL, NULL, PM_REMOVE))
+		{
+			if (message.message == WM_QUIT)
+			{
+				break;
+			}
+			TranslateMessage(&message);
+			DispatchMessage(&message);
+		}
+		else
+		{
+			g_mainGame.Update();
+			Input::Update();
+		}
 	}
 
 	// 메인게임 해제
@@ -98,11 +116,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_TIMER:
-		if (isUpdate)
-		{
-			g_mainGame.Update();		
-			Input::Update();
-		}
+		//if (isUpdate)
+		//{
+		//	g_mainGame.Update();		
+		//	Input::Update();
+		//}
 
 		break;
 	case WM_PAINT:		// 윈도우 화면이 다시 그려지는 경우 발생하는 메시지
