@@ -7,7 +7,7 @@ class MainGame : public GameEntity
 {
 private:
 	// UI
-	char text[128];
+	char text[128] = {};
 
 	//int clickedMousePosX = {};
 	//int clickedMousePosY = {};
