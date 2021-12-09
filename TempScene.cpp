@@ -28,14 +28,7 @@ void TempScene::Update()
     if (Input::GetButton(VK_RIGHT) &&
         GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     {
-        for (int i = 0; i < MAP_HEIGHT; i++)
-        {
-            for (int j = 0; j < MAP_WIDTH; j++)
-            {
-                map[i][j].rc.left   -= (LONG)mario.GetCurrSpeed();
-                map[i][j].rc.right  -= (LONG)mario.GetCurrSpeed();
-            }
-        }
+        globalPos += GameDataContainer::GetInstance()->GetPlayer()->GetCurrSpeed();
     }
 }
 
@@ -45,8 +38,9 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mapSpriteImg->Render(hdc, map[i][j].rc.left, map[i][j].rc.top + TILE_SIZE / 2
-            , map[i][j].frameX, map[i][j].frameY); 
+            mapSpriteImg->Render(hdc, map[i][j].rc.left - globalPos
+                , map[i][j].rc.top + TILE_SIZE / 2
+                , map[i][j].frameX, map[i][j].frameY); 
         }
     }
 

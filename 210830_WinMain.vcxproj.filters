@@ -34,6 +34,9 @@
     <Filter Include="헤더 파일\Config">
       <UniqueIdentifier>{edcc45a6-44b9-416a-bf83-243aa4262e60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Character">
+      <UniqueIdentifier>{f1749f4c-d5a8-41e8-9093-dfe9d347e35b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,9 +75,6 @@
     <ClCompile Include="Physics.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCharacter.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="MyTileMapTool.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
@@ -86,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="Gunba.cpp">
       <Filter>MainGame\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCharacter.cpp">
+      <Filter>MainGame\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +128,6 @@
     <ClInclude Include="Physics.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerCharacter.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="MyTileMapTool.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
@@ -157,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="GlobalVariableCollection.h">
       <Filter>헤더 파일\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCharacter.h">
+      <Filter>MainGame\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
