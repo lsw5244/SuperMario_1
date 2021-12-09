@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "Input.h"
 #include "MacroCollection.h"
+#include "GameDataContainer.h"
 
 void PlayerCharacter::AnimationFrameChanger()
 {
@@ -112,6 +113,9 @@ HRESULT PlayerCharacter::Init()
 
 void PlayerCharacter::Update()
 {
+    nowTileIndexX = (pos.x + GLOBAL_POS) / TILE_SIZE;
+    nowTileIndexY = pos.y / TILE_SIZE;
+
     if (isDead == true)
         return;
 
@@ -131,6 +135,21 @@ void PlayerCharacter::Update()
     {
         direction = MoveDirection::Right;
     }
+
+
+    // 1. 아래 블럭이 collider 있어야 함
+    // 2. 현재 pos.y가 현재 블럭의 bottom보다 작아야 함
+    //cout << TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider;
+    /*if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true
+        && pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom)
+    {
+        cout << "@@@" << endl;
+        isGround = true;
+        gravity = 0.1f;
+        currJumpPower = 0;
+        jumpEnd = false;
+    }*/
+    
 
     if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
     {
@@ -159,11 +178,8 @@ void PlayerCharacter::Update()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            if (pos.x < WIN_SIZE_X / 2)
-            {
-                currSpeed += speed;
-                currSpeed = min(currSpeed, maxSpeed);
-            }
+            currSpeed += speed;
+            currSpeed = min(currSpeed, maxSpeed);        
         }
         else if (Input::GetButton(VK_LEFT))
         {
@@ -194,9 +210,16 @@ void PlayerCharacter::Update()
 
     AnimationFrameChanger();
 
-    if (pos.x < WIN_SIZE_X / 2 || currSpeed < 0)
+    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
     {
         pos.x += currSpeed;
+    }
+    else
+    {
+        if (currSpeed > 0)  // 전진 할 때만 globalPos 변경
+        {
+            GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+        }
     }
     pos.y -= currJumpPower;
 }
