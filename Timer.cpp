@@ -20,12 +20,14 @@ void Timer::Init()
 	{
 		isHardware = true;
 		QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
+		lastTime = currTime;
 		timeScale = 1.0f / periodFrequency;
 	}
 	else
 	{
 		isHardware = false;
 		currTime = timeGetTime();
+		lastTime = currTime;
 		timeScale = 0.001f;
 	}
 

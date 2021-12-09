@@ -14,6 +14,7 @@ HRESULT TempScene::Init()
     
     mario.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 3 });
     GameDataContainer::GetInstance()->SetPlayer(&mario);
+    mario.Init();
 
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
