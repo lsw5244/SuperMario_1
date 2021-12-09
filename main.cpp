@@ -87,8 +87,8 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 		}
 		else
 		{
-			g_mainGame.Update();
 			Input::Update();
+			g_mainGame.Update();
 		}
 	}
 

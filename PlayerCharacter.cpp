@@ -139,6 +139,7 @@ void PlayerCharacter::Update()
 
     // 1. 아래 블럭이 collider 있어야 함
     // 2. 현재 pos.y가 현재 블럭의 bottom보다 작아야 함
+    // 3. TODO : 보정 해 주어야 함
     //cout << TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider;
     if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true
         && pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom)
@@ -167,6 +168,7 @@ void PlayerCharacter::Update()
     {
         jumpEnd = true;
     }
+    // TODO : 점프 최대높이 지정하기 
     if (Input::GetButton('Z') && jumpEnd == false)
     {
         isGround = false;
@@ -211,6 +213,7 @@ void PlayerCharacter::Update()
         currJumpPower -= gravity;
         gravity += 0.002f;
         gravity = min(gravity, maxGravity);
+        cout << gravity << endl;
     }
 
     AnimationFrameChanger();
