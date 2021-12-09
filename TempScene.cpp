@@ -17,6 +17,8 @@ HRESULT TempScene::Init()
 
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
+
+    GameDataContainer::GetInstance()->SetGlobalPos(0);
     return S_OK;
 }
 
@@ -28,7 +30,7 @@ void TempScene::Update()
     if (Input::GetButton(VK_RIGHT) &&
         GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     {
-        globalPos += GameDataContainer::GetInstance()->GetPlayer()->GetCurrSpeed();
+        GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + GameDataContainer::GetInstance()->GetPlayer()->GetCurrSpeed());
     }
 }
 
@@ -38,7 +40,7 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mapSpriteImg->Render(hdc, map[i][j].rc.left - globalPos
+            mapSpriteImg->Render(hdc, map[i][j].rc.left - GLOBAL_POS
                 , map[i][j].rc.top + TILE_SIZE / 2
                 , map[i][j].frameX, map[i][j].frameY); 
         }

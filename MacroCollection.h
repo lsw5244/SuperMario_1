@@ -22,4 +22,6 @@
 
 #define TILE_SIZE 16		// 가로 세로 16픽셀
 
-#define DELETA_TIME TimerManager::GetSingleton()->GetDeltaTime()
+#define DELETA_TIME TimerManager::GetInstance()->GetDeltaTime()
+#define TILE_DATA GameDataContainer::GetInstance()->map()
+#define GLOBAL_POS GameDataContainer::GetInstance()->GetGlobalPos()

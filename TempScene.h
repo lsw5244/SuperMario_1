@@ -14,7 +14,7 @@ private:
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
 
-	int globalPos = 0;
+	//int globalPos = 0;
 
 public:
 	virtual HRESULT Init() override;
