@@ -103,9 +103,7 @@ void PlayerCharacter::AnimationFrameChanger()
 
 HRESULT PlayerCharacter::Init()
 {
-    img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
-
-    cout << DELTA_TIME << endl;
+    //img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
 
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
@@ -142,24 +140,28 @@ void PlayerCharacter::Update()
     // 1. 아래 블럭이 collider 있어야 함
     // 2. 현재 pos.y가 현재 블럭의 bottom보다 작아야 함
     //cout << TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider;
-    /*if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true
+    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true
         && pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom)
     {
         cout << "@@@" << endl;
         isGround = true;
-        gravity = 0.1f;
-        currJumpPower = 0;
-        jumpEnd = false;
-    }*/
-    
-
-    if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
-    {
-        isGround = true;
-        gravity = 0.1f;
+        gravity = 0.01f;
         currJumpPower = 0;
         jumpEnd = false;
     }
+    else
+    {
+        isGround = false;
+    }
+    
+
+    //if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
+    //{
+    //    isGround = true;
+    //    gravity = 0.1f;
+    //    currJumpPower = 0;
+    //    jumpEnd = false;
+    //}
 
     if (Input::GetButtonUp('Z'))
     {
