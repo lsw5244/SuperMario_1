@@ -169,6 +169,7 @@ HRESULT MyTileMapTool::Init()
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
+            //SetRect(&map[i][j].rc,) MAP_WIDTH_PER_PAGE
             SetRect(&map[i][j].rc,
                 j * TILE_SIZE,                          // left
                 i * TILE_SIZE,                          // top

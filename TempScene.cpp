@@ -46,6 +46,14 @@ void TempScene::Render(HDC hdc)
             mapSpriteImg->Render(hdc, map[i][j].rc.left - GLOBAL_POS
                 , map[i][j].rc.top + TILE_SIZE / 2
                 , map[i][j].frameX, map[i][j].frameY); 
+
+            //if (i == 0)
+            //{
+            //    Rectangle(hdc, map[i][j].rc.left,
+            //        map[i][j].rc.top, 
+            //        map[i][j].rc.right/* - TILE_SIZE / 2*/,
+            //        map[i][j].rc.bottom);
+            //}
         }
     }
 

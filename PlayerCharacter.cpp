@@ -4,6 +4,24 @@
 #include "MacroCollection.h"
 #include "GameDataContainer.h"
 
+void PlayerCharacter::UpdateCollider()
+{
+    SetRect(&collider, pos.x - img->GetFrameWidth() / 2,
+        pos.y - img->GetFrameHeight() / 2,
+        pos.x + img->GetFrameWidth() / 2,
+        pos.y + img->GetFrameHeight() / 2);
+}
+
+bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
+{
+    if (rc1.left > rc2.right)	return false;
+    if (rc1.right < rc2.left)	return false;
+    if (rc1.top > rc2.bottom)	return false;
+    if (rc1.bottom < rc2.top)	return false;
+
+    return true;
+}
+
 void PlayerCharacter::AnimationFrameChanger()
 {
     // 14 * 2
@@ -103,10 +121,12 @@ void PlayerCharacter::AnimationFrameChanger()
 
 HRESULT PlayerCharacter::Init()
 {
-    //img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
+    img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
 
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
+
+    UpdateCollider();
 
     return S_OK;
 }
@@ -115,6 +135,8 @@ void PlayerCharacter::Update()
 {
     nowTileIndexX = (pos.x + GLOBAL_POS) / TILE_SIZE;
     nowTileIndexY = pos.y / TILE_SIZE;
+
+    UpdateCollider();
 
     if (isDead == true)
         return;
@@ -165,6 +187,15 @@ void PlayerCharacter::Update()
     {
         isGround = false;
         currJumpPower += jumpPower;
+        if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
+            pos.y > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
+            )
+        {
+            jumpEnd = true;
+            currJumpPower = 0.0f;
+        }
+
+        // 점프 최대높이
         if (currJumpPower >= maxJumpPower)
         {
             jumpEnd = true;
@@ -219,7 +250,8 @@ void PlayerCharacter::Update()
 
     AnimationFrameChanger();
 
-    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
+    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2 
+        && OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == false)
     {
         pos.x += currSpeed;
     }
