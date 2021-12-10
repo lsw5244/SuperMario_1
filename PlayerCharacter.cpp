@@ -7,9 +7,11 @@
 void PlayerCharacter::UpdateCollider()
 {
     SetRect(&collider, pos.x - img->GetFrameWidth() / 2,
-        pos.y - img->GetFrameHeight() / 2,
+        pos.y - (img->GetFrameWidth() * 0),  // 크기에 따라 나누는 수 달라야 함
         pos.x + img->GetFrameWidth() / 2,
         pos.y + img->GetFrameHeight() / 2);
+
+
 }
 
 bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
@@ -136,6 +138,8 @@ void PlayerCharacter::Update()
     nowTileIndexX = (pos.x + GLOBAL_POS) / TILE_SIZE;
     nowTileIndexY = pos.y / TILE_SIZE;
 
+    //cout << img->GetFrameHeight() << endl;
+    cout << img->GetHeight() << endl;
     UpdateCollider();
 
     if (isDead == true)
@@ -271,7 +275,10 @@ void PlayerCharacter::Update()
 
 void PlayerCharacter::Render(HDC hdc)
 {
+
+    Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
+
 }
 
 void PlayerCharacter::Release()
