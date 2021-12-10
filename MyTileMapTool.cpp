@@ -177,15 +177,13 @@ HRESULT MyTileMapTool::Init()
 
             if (i < MAP_HEIGHT - 2)
             {
-                map[i][j].frameX = 4;
-                map[i][j].frameY = 0;
-                map[i][j].type = BlockType::Brick;
+                // 기본 배경
+                TileInfoSetting(map[i][j], BlockType::Background, 4, 0, 0, 0, 0, false);
             }
             else
             {
-                map[i][j].frameX = 0;
-                map[i][j].frameY = 0;
-                map[i][j].type = BlockType::Background;
+                // 기본 바닥
+                TileInfoSetting(map[i][j], BlockType::Brick, 0, 0, 0, 0, 0, true);
             }
         }
     }
