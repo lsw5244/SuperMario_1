@@ -3,8 +3,8 @@
 #define WIN_START_POS_X	400
 #define WIN_START_POS_Y	100
 
-#define WIN_SIZE_X	800//256//타일 맵 툴 이용 시 800
-#define WIN_SIZE_Y	800//240//타일 맵 툴 이용 시 800
+#define WIN_SIZE_X	256//타일 맵 툴 이용 시 800
+#define WIN_SIZE_Y	240//타일 맵 툴 이용 시 800
 
 #define GAME_SCENE_WIN_SIZE_X WIN_SIZE_X * 3
 #define GAME_SCENE_WIN_SIZE_Y WIN_SIZE_Y * 3

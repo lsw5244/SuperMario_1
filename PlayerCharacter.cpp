@@ -140,11 +140,11 @@ void PlayerCharacter::Update()
     // 1. 아래 블럭이 collider 있어야 함
     // 2. 현재 pos.y가 현재 블럭의 bottom보다 작아야 함
     // 3. TODO : 보정 해 주어야 함
-    //cout << TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider;
+    
+    // 바닥 콜라이더 (아래)
     if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true
         && pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom)
     {
-        cout << "@@@" << endl;
         isGround = true;
         gravity = 0.01f;
         currJumpPower = 0;
@@ -154,21 +154,13 @@ void PlayerCharacter::Update()
     {
         isGround = false;
     }
-    
-
-    //if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
-    //{
-    //    isGround = true;
-    //    gravity = 0.1f;
-    //    currJumpPower = 0;
-    //    jumpEnd = false;
-    //}
 
     if (Input::GetButtonUp('Z'))
     {
         jumpEnd = true;
     }
     // TODO : 점프 최대높이 지정하기 
+    // TODO : 머리 위 콜라이더 지정하기
     if (Input::GetButton('Z') && jumpEnd == false)
     {
         isGround = false;
@@ -178,6 +170,15 @@ void PlayerCharacter::Update()
             jumpEnd = true;
         }
         currJumpPower = min(currJumpPower, maxJumpPower);
+
+        //// 점프 끝나는 조건 ( 최대 점프 높이, 머리에 벽돌 부딫힘)
+        //if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
+        //    pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
+        //    )
+        //{
+        //    jumpEnd = true;
+        //    currJumpPower = 0.0;
+        //}
     }
 
     if (isGround)
@@ -211,9 +212,9 @@ void PlayerCharacter::Update()
     if (isGround == false)
     {
         currJumpPower -= gravity;
-        gravity += 0.002f;
+        gravity += gravityAcceleration;
         gravity = min(gravity, maxGravity);
-        cout << gravity << endl;
+        //cout << gravity << endl;
     }
 
     AnimationFrameChanger();
@@ -230,8 +231,10 @@ void PlayerCharacter::Update()
         }
     }
 
-     pos.y -= currJumpPower;
-    
+    //if ()
+    {
+       pos.y -= currJumpPower;
+    }
 }
 
 void PlayerCharacter::Render(HDC hdc)

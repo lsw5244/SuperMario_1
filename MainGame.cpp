@@ -16,7 +16,7 @@ HRESULT MainGame::Init()
 
 	//SceneManager::GetSingleton()->AddLoadingScene("LoadingScene", new LoadingScene());
 
-	SceneManager::GetInstance()->ChangeScene("MyTileMapTool");
+	SceneManager::GetInstance()->ChangeScene("TempScene");
 
 	//srand((unsigned int) time(nullptr));
 

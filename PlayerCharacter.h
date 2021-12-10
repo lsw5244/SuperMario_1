@@ -18,11 +18,13 @@ private:
 	float speed			 = 0.1f;
 	float resistance	 = 0.02f;
 
-	float maxJumpPower	 = 4.5f;
+	float maxJumpPower	 = 2.0f;
 	float currJumpPower	 = 0.0f;
 	float jumpPower		 = 0.1f;
 	float gravity		 = 0.001f;
 	float maxGravity	 = 0.05f;
+	float gravityAcceleration = 0.001f;
+
 	bool isGround		 = true;
 	bool jumpEnd		 = false;
 
