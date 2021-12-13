@@ -12,6 +12,8 @@ private:
 	
 	POINTFLOAT pos = { 0, 0 };
 
+	RECT collider = {};
+
 	float maxSpeed = 1.0f;
 	float currSpeed = 0.0f;
 	float speed = 0.1f;
@@ -35,6 +37,10 @@ private:
 	bool isDead = false;
 
 	int level = 1;		// 1 : small, 2 :  big, 3 : fire
+
+
+	void UpdateCollider();
+	bool OnCollisionEnter(RECT rc1, RECT rc2);
 
 	void AnimationFrameChanger();
 	void AnimationFrameChanger(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용

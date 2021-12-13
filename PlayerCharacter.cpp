@@ -3,6 +3,24 @@
 #include "Input.h"
 #include "MacroCollection.h"
 
+void PlayerCharacter::UpdateCollider()
+{
+    SetRect(&collider, pos.x - img->GetFrameWidth() / 2,
+        pos.y - (img->GetFrameWidth() * 0),  // 크기에 따라 나누는 수 달라야 함
+        pos.x + img->GetFrameWidth() / 2,
+        pos.y + img->GetFrameHeight() / 2);
+}
+
+bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
+{
+    if (rc1.left > rc2.right)	return false;
+    if (rc1.right < rc2.left)	return false;
+    if (rc1.top > rc2.bottom)	return false;
+    if (rc1.bottom < rc2.top)	return false;
+
+    return true;
+}
+
 void PlayerCharacter::AnimationFrameChanger()
 {
     // 14 * 2
@@ -106,6 +124,8 @@ HRESULT PlayerCharacter::Init()
 
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
+
+    UpdateCollider();
 
     return S_OK;
 }
