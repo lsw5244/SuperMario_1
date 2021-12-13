@@ -190,7 +190,7 @@ void PlayerCharacter::Update()
         currJumpPower += jumpPower;
         // 위 블럭에 머리 닿았을 때
         if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
-            pos.y > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
+            /*pos.y*/collider.top > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
             )
         {
             jumpEnd = true;
@@ -244,10 +244,29 @@ void PlayerCharacter::Update()
     }
 
     AnimationFrameChanger();
+
+
+    // 왼쪽 충돌 확인하기
+    //if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+    //    collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right + 1
+    //    && currSpeed < 0)
+    //{
+    //    cout << "왼쪽으로 가는 것 막음" << endl;
+    //    return;
+    //}
+
     // 왼쪽 넘어가기 방지 + 절반 이상 가지 않도록
     if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
     {
         pos.x += currSpeed;
+        if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) &&
+            currSpeed > 0)
+        {
+            cout << "오른쪽과 충돌" << endl;
+            pos.x -= currSpeed;
+
+        }
     }
     else
     {
