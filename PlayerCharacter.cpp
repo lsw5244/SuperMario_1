@@ -8,7 +8,7 @@
 
 void PlayerCharacter::UpdateCollider()
 {
-    SetRect(&collider, pos.x - img->GetFrameWidth() / 2,
+    SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
         pos.y - (img->GetFrameWidth() * 0),  // 크기에 따라 나누는 수 달라야 함
         pos.x + img->GetFrameWidth() / 2,
         pos.y + img->GetFrameHeight() / 2);
@@ -135,11 +135,18 @@ HRESULT PlayerCharacter::Init()
 
 void PlayerCharacter::Update()
 {
+    if (pos.y < 15)
+    {
+        return;
+    }
+
     if (isDead == true)
         return;
 
-    nowTileIndexX = pos.x / mapWid;
+    nowTileIndexX = pos.x / mapWid + GLOBAL_POS / mapWid;//MAP_WIDTH;
     nowTileIndexY = pos.y / MAP_HEIGHT;
+
+    cout << "GlobalPos : " << GLOBAL_POS << "\t idx : " << GLOBAL_POS / mapWid << endl;
 
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
@@ -159,8 +166,8 @@ void PlayerCharacter::Update()
     }
 
     //if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
-    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true/* &&
-        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom*/
+    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
+        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom
         )
     {
         isGround = true;
@@ -260,14 +267,16 @@ void PlayerCharacter::Render(HDC hdc)
 {
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
-
     // 현재 위치 타일
-    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left,
+    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
         TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right,
+        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
         TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
 
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
+
+    //pos위치
+    Rectangle(hdc, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
 }
 
 void PlayerCharacter::Release()

@@ -40,14 +40,25 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
-                , map[i][j].rc.top + TILE_SIZE / 2
-                , map[i][j].frameX, map[i][j].frameY); 
+            //if (map[i][j].isCollider == true)
+            //{
+            //    mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
+            //        , map[i][j].rc.top + TILE_SIZE / 2
+            //        , 0, 1);
+            //}
+            //else
+            {
+                mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
+                    , map[i][j].rc.top + TILE_SIZE / 2
+                    , map[i][j].frameX, map[i][j].frameY); 
+            }
         }
     }
 
     mario.Render(hdc);
     mushroom.Render(hdc);
+
+    
 }
 
 void TempScene::Release()
