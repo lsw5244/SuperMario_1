@@ -143,7 +143,7 @@ void PlayerCharacter::Update()
     if (isDead == true)
         return;
 
-    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.4f;//MAP_WIDTH;
+    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.6f;//MAP_WIDTH;
     nowTileIndexY = pos.y / MAP_HEIGHT;
     cout << TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider;
     cout << "x : " << (pos.x / mapWid + GLOBAL_POS / mapWid) << endl;
@@ -189,14 +189,7 @@ void PlayerCharacter::Update()
     {
         isGround = false;
         currJumpPower += jumpPower;
-        // 위 블럭에 머리 닿았을 때
-        if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
-            /*pos.y*/collider.top > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
-            )
-        {
-            jumpEnd = true;
-            currJumpPower = 0.0f;
-        }
+
 
         //점프 최대높이
         if (currJumpPower >= maxJumpPower)
@@ -204,6 +197,15 @@ void PlayerCharacter::Update()
             jumpEnd = true;
         }
         currJumpPower = min(currJumpPower, maxJumpPower);
+    }
+
+    // 위 블럭에 머리 닿았을 때
+    if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
+        /*pos.y*/collider.top > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
+        )
+    {
+        jumpEnd = true;
+        currJumpPower = 0.0f;
     }
 
     if (isGround)
@@ -246,27 +248,28 @@ void PlayerCharacter::Update()
 
     AnimationFrameChanger();
 
-
-    // 왼쪽 충돌 확인하기
-    //if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-    //    collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right + 1
-    //    && currSpeed < 0)
-    //{
-    //    cout << "왼쪽으로 가는 것 막음" << endl;
-    //    return;
-    //}
-
     // 왼쪽 넘어가기 방지 + 절반 이상 가지 않도록
     if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
     {
-        pos.x += currSpeed;
         if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
             collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
-            //OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) &&
             currSpeed > 0)
         {
             cout << "오른쪽과 충돌" << endl;
             pos.x -= currSpeed;
+            currSpeed = 0;
+        }
+        else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+            collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
+            currSpeed < 0)
+        {
+            cout << "왼쪽과 충돌" << endl;
+            pos.x -= currSpeed;
+            currSpeed = 0;
+        }
+        else
+        {
+            pos.x += currSpeed;
         }
     }
     else
@@ -278,7 +281,10 @@ void PlayerCharacter::Update()
         }
     }
 
-    pos.y -= currJumpPower;
+    if (isGround == false)
+    {
+        pos.y -= currJumpPower;
+    }
 
     UpdateCollider();
 }
