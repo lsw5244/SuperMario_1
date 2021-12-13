@@ -139,7 +139,7 @@ void PlayerCharacter::Update()
         return;
 
     nowTileIndexX = pos.x / mapWid;
-    nowTileIndexY = pos.y / MAP_HEIGHT - 1;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
 
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
@@ -159,14 +159,18 @@ void PlayerCharacter::Update()
     }
 
     //if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
-    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true //&&
-        
+    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true/* &&
+        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom*/
         )
     {
         isGround = true;
         gravity = 0.1f;
         currJumpPower = 0;
         jumpEnd = false;
+    }
+    else
+    {
+        isGround = false;
     }
 
     if (Input::GetButtonUp('Z'))
@@ -177,6 +181,16 @@ void PlayerCharacter::Update()
     {
         isGround = false;
         currJumpPower += jumpPower;
+        // 위 블럭에 머리 닿았을 때
+        if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
+            pos.y > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
+            )
+        {
+            jumpEnd = true;
+            currJumpPower = 0.0f;
+        }
+
+        //점프 최대높이
         if (currJumpPower >= maxJumpPower)
         {
             jumpEnd = true;
@@ -237,10 +251,6 @@ void PlayerCharacter::Update()
         }
     }
 
-    //if (pos.x < WIN_SIZE_X / 2 || currSpeed < 0)
-    /*{
-        pos.x += currSpeed;
-    }*/
     pos.y -= currJumpPower;
 
     UpdateCollider();
@@ -251,12 +261,11 @@ void PlayerCharacter::Render(HDC hdc)
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
 
-
-    // 현재 밟고있는 타일
-    Rectangle(hdc, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.left,
-        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.top,
-        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.right,
-        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.bottom);
+    // 현재 위치 타일
+    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left,
+        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
+        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right,
+        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
 
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
 }
