@@ -26,16 +26,20 @@ bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
 
 void PlayerCharacter::Jump()
 {
-    //if (isGround == false)
-    //{
-    //    return;
-    //}
+    if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
+        collider.top < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - 1
+        )
+    {
+        jumpEnd = true;
+        currJumpPower = 0.0f;
+    }
 
     if (isGround == false)
     {
         currJumpPower -= gravity;
         gravity += gravityAcceleration;
         gravity = min(gravity, maxGravity);
+        //return;
     }
 
     if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
@@ -207,6 +211,8 @@ HRESULT PlayerCharacter::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/SamllRedMario.bmp");
 
+    isGround = true;
+
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
 
@@ -224,6 +230,8 @@ void PlayerCharacter::Update()
 
     if (isDead == true)
         return;
+
+    UpdateCollider();
 
     nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.5f;//MAP_WIDTH;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -251,13 +259,13 @@ void PlayerCharacter::Update()
     Jump();
 
     // 위 블럭에 머리 닿았을 때
-    if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
-        /*pos.y*/collider.top > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top
-        )
-    {
-        jumpEnd = true;
-        currJumpPower = 0.0f;
-    }
+    //if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true/* &&
+    //    collider.top < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - 1*/
+    //    )
+    //{
+    //    jumpEnd = true;
+    //    currJumpPower = 0.0f;
+    //}
 
     Move();
 
@@ -301,7 +309,7 @@ void PlayerCharacter::Update()
         pos.y -= currJumpPower;
     }
 
-    UpdateCollider();
+
 }
 
 void PlayerCharacter::Render(HDC hdc)
