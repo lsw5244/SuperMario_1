@@ -143,10 +143,11 @@ void PlayerCharacter::Update()
     if (isDead == true)
         return;
 
-    nowTileIndexX = pos.x / mapWid + GLOBAL_POS / mapWid;//MAP_WIDTH;
+    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.4f;//MAP_WIDTH;
     nowTileIndexY = pos.y / MAP_HEIGHT;
-
-    cout << "GlobalPos : " << GLOBAL_POS << "\t idx : " << GLOBAL_POS / mapWid << endl;
+    cout << TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider;
+    cout << "x : " << (pos.x / mapWid + GLOBAL_POS / mapWid) << endl;
+    //cout << "GlobalPos : " << GLOBAL_POS << "\t idx : " << GLOBAL_POS / mapWid << endl;
 
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
@@ -260,12 +261,12 @@ void PlayerCharacter::Update()
     {
         pos.x += currSpeed;
         if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) &&
+            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - 1 &&
+            //OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) &&
             currSpeed > 0)
         {
             cout << "오른쪽과 충돌" << endl;
             pos.x -= currSpeed;
-
         }
     }
     else
