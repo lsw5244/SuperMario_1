@@ -24,6 +24,27 @@ bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
     return true;
 }
 
+void PlayerCharacter::Jump()
+{
+    if (Input::GetButtonUp('Z'))
+    {
+        jumpEnd = true;
+    }
+    if (Input::GetButton('Z') && jumpEnd == false)
+    {
+        isGround = false;
+        currJumpPower += jumpPower;
+
+
+        //점프 최대높이
+        if (currJumpPower >= maxJumpPower)
+        {
+            jumpEnd = true;
+        }
+        currJumpPower = min(currJumpPower, maxJumpPower);
+    }
+}
+
 void PlayerCharacter::AnimationFrameChanger()
 {
     // 14 * 2
@@ -181,23 +202,7 @@ void PlayerCharacter::Update()
         isGround = false;
     }
 
-    if (Input::GetButtonUp('Z'))
-    {
-        jumpEnd = true;
-    }
-    if (Input::GetButton('Z') && jumpEnd == false)
-    {
-        isGround = false;
-        currJumpPower += jumpPower;
-
-
-        //점프 최대높이
-        if (currJumpPower >= maxJumpPower)
-        {
-            jumpEnd = true;
-        }
-        currJumpPower = min(currJumpPower, maxJumpPower);
-    }
+    Jump();
 
     // 위 블럭에 머리 닿았을 때
     if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
