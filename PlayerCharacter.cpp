@@ -261,7 +261,7 @@ void PlayerCharacter::Update()
     {
         pos.x += currSpeed;
         if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - 1 &&
+            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
             //OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) &&
             currSpeed > 0)
         {
