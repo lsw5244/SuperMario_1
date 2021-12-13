@@ -26,15 +26,42 @@ bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
 
 void PlayerCharacter::Jump()
 {
+    //if (isGround == false)
+    //{
+    //    return;
+    //}
+
+    if (isGround == false)
+    {
+        currJumpPower -= gravity;
+        gravity += gravityAcceleration;
+        gravity = min(gravity, maxGravity);
+    }
+
+    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
+        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom
+        )
+    {
+        isGround = true;
+        gravity = 0.01f;
+        currJumpPower = 0;
+        jumpEnd = false;
+    }
+    else
+    {
+        isGround = false;
+    }
+
+
     if (Input::GetButtonUp('Z'))
     {
         jumpEnd = true;
+        return;
     }
     if (Input::GetButton('Z') && jumpEnd == false)
     {
         isGround = false;
         currJumpPower += jumpPower;
-
 
         //점프 최대높이
         if (currJumpPower >= maxJumpPower)
@@ -42,6 +69,40 @@ void PlayerCharacter::Jump()
             jumpEnd = true;
         }
         currJumpPower = min(currJumpPower, maxJumpPower);
+    }
+}
+
+void PlayerCharacter::Move()
+{
+    if (isGround)
+    {
+        if (Input::GetButton(VK_RIGHT))
+        {
+            if (pos.x < WIN_SIZE_X / 2)
+            {
+                currSpeed += speed;
+                currSpeed = min(currSpeed, maxSpeed);
+            }
+        }
+        else if (Input::GetButton(VK_LEFT))
+        {
+            currSpeed -= speed;
+            currSpeed = max(currSpeed, -maxSpeed);
+        }
+        else  // 속도 점점 줄여야 함 (아무것도 안눌림 )
+        {
+            switch (direction)
+            {
+            case MoveDirection::Left:   // 스피드 높여야 함
+                currSpeed += resistance; // 저항 ?
+                currSpeed = min(currSpeed, 0);
+                break;
+            case MoveDirection::Right: // 스피드 줄여야 함
+                currSpeed -= resistance; // 저항 ? resistance
+                currSpeed = max(currSpeed, 0);
+                break;
+            }
+        }
     }
 }
 
@@ -164,11 +225,10 @@ void PlayerCharacter::Update()
     if (isDead == true)
         return;
 
-    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.6f;//MAP_WIDTH;
+    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.5f;//MAP_WIDTH;
     nowTileIndexY = pos.y / MAP_HEIGHT;
-    cout << TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider;
-    cout << "x : " << (pos.x / mapWid + GLOBAL_POS / mapWid) << endl;
-    //cout << "GlobalPos : " << GLOBAL_POS << "\t idx : " << GLOBAL_POS / mapWid << endl;
+    //cout << TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider;
+    //cout << "x : " << (pos.x / mapWid + GLOBAL_POS / mapWid) << endl;
 
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
@@ -187,20 +247,6 @@ void PlayerCharacter::Update()
         direction = MoveDirection::Right;
     }
 
-    //if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
-    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
-        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom
-        )
-    {
-        isGround = true;
-        gravity = 0.01f;
-        currJumpPower = 0;
-        jumpEnd = false;
-    }
-    else
-    {
-        isGround = false;
-    }
 
     Jump();
 
@@ -213,43 +259,7 @@ void PlayerCharacter::Update()
         currJumpPower = 0.0f;
     }
 
-    if (isGround)
-    {
-        if (Input::GetButton(VK_RIGHT))
-        {
-            if (pos.x < WIN_SIZE_X / 2)
-            {
-                currSpeed += speed;
-                currSpeed = min(currSpeed, maxSpeed);
-            }
-        }
-        else if (Input::GetButton(VK_LEFT))
-        {
-            currSpeed -= speed;
-            currSpeed = max(currSpeed, -maxSpeed);
-        }
-        else  // 속도 점점 줄여야 함
-        {
-            switch (direction)
-            {
-            case MoveDirection::Left:   // 스피드 높여야 함
-                currSpeed += resistance; // 저항 ?
-                currSpeed = min(currSpeed, 0);
-                break;
-            case MoveDirection::Right: // 스피드 줄여야 함
-                currSpeed -= resistance; // 저항 ? resistance
-                currSpeed = max(currSpeed, 0);
-                break;
-            }
-        }
-    }
-
-    if (isGround == false)
-    {
-        currJumpPower -= gravity;
-        gravity += gravityAcceleration;
-        gravity = min(gravity, maxGravity);
-    }
+    Move();
 
     AnimationFrameChanger();
 
