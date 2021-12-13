@@ -40,7 +40,7 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mapSpriteImg->Render(hdc, map[i][j].rc.left - GLOBAL_POS
+            mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
                 , map[i][j].rc.top + TILE_SIZE / 2
                 , map[i][j].frameX, map[i][j].frameY); 
         }
