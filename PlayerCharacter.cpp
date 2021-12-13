@@ -164,7 +164,7 @@ void PlayerCharacter::Update()
         )
     {
         isGround = true;
-        gravity = 0.1f;
+        gravity = 0.01f;
         currJumpPower = 0;
         jumpEnd = false;
     }
