@@ -125,7 +125,7 @@ HRESULT PlayerCharacter::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
 
-    pos.x = WIN_SIZE_X / 2;
+    pos.x = 32;//WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
 
     UpdateCollider();
@@ -136,10 +136,13 @@ HRESULT PlayerCharacter::Init()
 void PlayerCharacter::Update()
 {
     nowTileIndexX = (pos.x + GLOBAL_POS) / TILE_SIZE;
-    nowTileIndexY = pos.y / TILE_SIZE;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
 
-    //cout << img->GetFrameHeight() << endl;
-    cout << img->GetHeight() << endl;
+    cout << "x : " << nowTileIndexX << endl;
+    cout << "y : " << nowTileIndexY << endl;
+
+    //cout << OnCollisionEnter(collider, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc) << endl;
+
     UpdateCollider();
 
     if (isDead == true)
@@ -169,7 +172,8 @@ void PlayerCharacter::Update()
     
     // 바닥 콜라이더 (아래)
     if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true
-        && pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom)
+        && OnCollisionEnter(collider, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc) == true
+        /*pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom*/)
     {
         isGround = true;
         gravity = 0.01f;
@@ -255,7 +259,7 @@ void PlayerCharacter::Update()
     AnimationFrameChanger();
 
     if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2 
-        && OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == false)
+        /*&& OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true*/)
     {
         pos.x += currSpeed;
     }
@@ -279,6 +283,23 @@ void PlayerCharacter::Render(HDC hdc)
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
 
+    if (Input::GetButton(VK_RBUTTON))
+    {
+        TILE_DATA[nowTileIndexY - 1][nowTileIndexX];
+
+        Rectangle(hdc, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left
+            , TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top
+            , TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.right
+            , TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.bottom);
+
+        Rectangle(hdc, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.left
+            , TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.top
+            , TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.right
+            , TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.bottom);
+
+    }
+
+    cout << GLOBAL_POS << endl;
 }
 
 void PlayerCharacter::Release()

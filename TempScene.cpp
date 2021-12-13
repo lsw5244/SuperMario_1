@@ -6,7 +6,7 @@
 
 HRESULT TempScene::Init()
 {
-    SetWindowSize(300, 20, GAME_SCENE_WIN_SIZE_X, GAME_SCENE_WIN_SIZE_Y);
+    SetWindowSize(300, 20, /*WIN_SIZE_X, WIN_SIZE_Y*/GAME_SCENE_WIN_SIZE_X, GAME_SCENE_WIN_SIZE_Y);
 
     mapSpriteImg = ImageManager::GetInstance()->FindImage("Image/mario_overwordTile.bmp");
     Load();
@@ -27,8 +27,16 @@ HRESULT TempScene::Init()
 void TempScene::Update()
 {
     mario.Update();
-    mushroom.Update();
-   
+    mushroom.Update();   
+
+    if ( Input::GetButtonDown(VK_LBUTTON))
+    {
+        int idxX = g_ptMouse.x / TILE_SIZE;
+        int idxY = g_ptMouse.y / TILE_SIZE;
+
+        cout << map[idxY][idxX].isCollider << endl;
+    }
+
     //if (Input::GetButton(VK_RIGHT) &&
     //    PLAYER->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -43,19 +51,30 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mapSpriteImg->Render(hdc, map[i][j].rc.left - GLOBAL_POS
-                , map[i][j].rc.top + TILE_SIZE / 2
-                , map[i][j].frameX, map[i][j].frameY); 
+            //mapSpriteImg->Render(hdc, map[i][j].rc.left - GLOBAL_POS
+            //    , map[i][j].rc.top + TILE_SIZE / 2
+            //    , map[i][j].frameX, map[i][j].frameY); 
 
-            //if (i == 0)
-            //{
-            //    Rectangle(hdc, map[i][j].rc.left,
-            //        map[i][j].rc.top, 
-            //        map[i][j].rc.right/* - TILE_SIZE / 2*/,
-            //        map[i][j].rc.bottom);
-            //}
+            mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS,
+                map[i][j].rc.top + TILE_SIZE / 2,
+                map[i][j].frameX,
+                map[i][j].frameY);
         }
     }
+
+    if (Input::GetButton('F'))
+    {
+        for (int i = 0; i < MAP_HEIGHT; i++)
+        {
+            for (int j = 0; j < MAP_WIDTH; j++)
+            {
+                Rectangle(hdc, map[i][j].rc.left + GLOBAL_POS,
+                    map[i][j].rc.top,
+                    map[i][j].rc.right + GLOBAL_POS,
+                    map[i][j].rc.bottom);
+            }   
+        }       
+    }           
 
     mario.Render(hdc);
     mushroom.Render(hdc);
