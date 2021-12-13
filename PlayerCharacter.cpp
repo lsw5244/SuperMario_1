@@ -135,13 +135,21 @@ HRESULT PlayerCharacter::Init()
 
 void PlayerCharacter::Update()
 {
-    nowTileIndexX = (pos.x + GLOBAL_POS) / TILE_SIZE;
+    //nowTileIndexX = (pos.x - GLOBAL_POS) / TILE_SIZE/* + GLOBAL_POS / TILE_SIZE*/;
+    // 현재 화면상의 좌표
+    nowTileIndexX = pos.x / TILE_SIZE/* - GLOBAL_POS / TILE_SIZE*/;
     nowTileIndexY = pos.y / MAP_HEIGHT;
 
-    cout << "x : " << nowTileIndexX << endl;
+    cout << GLOBAL_POS << endl;
+    cout << "x : " << nowTileIndexX << "\t";
     cout << "y : " << nowTileIndexY << endl;
 
-    //cout << OnCollisionEnter(collider, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc) << endl;
+    //cout << TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider << endl;
+
+    if (nowTileIndexY > 15)
+    {
+        return;
+    }
 
     UpdateCollider();
 
@@ -170,8 +178,11 @@ void PlayerCharacter::Update()
     // 2. 현재 pos.y가 현재 블럭의 bottom보다 작아야 함
     // 3. TODO : 보정 해 주어야 함
     
+
+
+
     // 바닥 콜라이더 (아래)
-    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true
+    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX + GLOBAL_POS / TILE_SIZE].isCollider == true
         && OnCollisionEnter(collider, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc) == true
         /*pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom*/)
     {
@@ -257,24 +268,27 @@ void PlayerCharacter::Update()
     }
 
     AnimationFrameChanger();
-
+    // 왼쪽으로 안나가고 중간보다 작은 위치에 있으면 위치 옮기기
     if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2 
         /*&& OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true*/)
     {
         pos.x += currSpeed;
+        //GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
     }
-    else
+    // 중간에 있으면서 스피드 있으면 global올리기 
+    else if (pos.x + currSpeed > WIN_SIZE_X / 2)
     {
         if (currSpeed > 0)  // 전진 할 때만 globalPos 변경
         {
             GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
         }
     }
-
     //if ()
     {
        pos.y -= currJumpPower;
     }
+
+
 }
 
 void PlayerCharacter::Render(HDC hdc)
@@ -282,6 +296,11 @@ void PlayerCharacter::Render(HDC hdc)
 
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
+    // 현재 위치 타일
+    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
+
+    Rectangle(hdc, TILE_DATA[0][0].rc.left - GLOBAL_POS, TILE_DATA[0][0].rc.top, TILE_DATA[0][0].rc.right - GLOBAL_POS, TILE_DATA[0][0].rc.bottom);
+
 
     if (Input::GetButton(VK_RBUTTON))
     {
@@ -299,7 +318,7 @@ void PlayerCharacter::Render(HDC hdc)
 
     }
 
-    cout << GLOBAL_POS << endl;
+    //cout << GLOBAL_POS << endl;
 }
 
 void PlayerCharacter::Release()

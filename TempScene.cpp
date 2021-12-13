@@ -36,13 +36,6 @@ void TempScene::Update()
 
         cout << map[idxY][idxX].isCollider << endl;
     }
-
-    //if (Input::GetButton(VK_RIGHT) &&
-    //    PLAYER->GetPos().x > WIN_SIZE_X / 2)
-    //{
-    //    GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS
-    //        + PLAYER->GetCurrSpeed());
-    //}
 }
 
 void TempScene::Render(HDC hdc)
@@ -55,10 +48,21 @@ void TempScene::Render(HDC hdc)
             //    , map[i][j].rc.top + TILE_SIZE / 2
             //    , map[i][j].frameX, map[i][j].frameY); 
 
-            mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS,
-                map[i][j].rc.top + TILE_SIZE / 2,
-                map[i][j].frameX,
-                map[i][j].frameY);
+            //if (map[i][j].isCollider == true)
+            //{
+            //    mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS,
+            //        map[i][j].rc.top + TILE_SIZE / 2,
+            //        2,
+            //        1);
+            //}
+            //else
+            {
+                mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS,
+                    map[i][j].rc.top + TILE_SIZE / 2,
+                    map[i][j].frameX,
+                    map[i][j].frameY);
+            }
+
         }
     }
 
