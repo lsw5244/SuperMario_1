@@ -17,13 +17,14 @@ private:
 	float maxSpeed = 1.0f;
 	float currSpeed = 0.0f;
 	float speed = 0.1f;
-
-	float maxJumpPower = 4.5f;
-	float currJumpPower = 0.0f;
-	float jumpPower = 1.0f;
-
-	float gravity = 0.1f;
 	float resistance = 0.02f;
+
+	float maxJumpPower = 2.0f;
+	float currJumpPower = 0.0f;
+	float jumpPower = 0.1f;
+	float gravity = 0.001f;
+	float maxGravity = 0.05f;
+	float gravityAcceleration = 0.001f;
 
 	bool isGround = true;
 	bool jumpEnd = false;
@@ -38,6 +39,8 @@ private:
 
 	int level = 1;		// 1 : small, 2 :  big, 3 : fire
 
+	int nowTileIndexX = 0;
+	int nowTileIndexY = 0;
 
 	void UpdateCollider();
 	bool OnCollisionEnter(RECT rc1, RECT rc2);

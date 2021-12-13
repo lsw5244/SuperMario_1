@@ -2,6 +2,9 @@
 #include "Image.h"
 #include "Input.h"
 #include "MacroCollection.h"
+#include "GameDataContainer.h"
+
+#define mapWid 16   // 게임 화면에 보이는 총 타일 수는 16개
 
 void PlayerCharacter::UpdateCollider()
 {
@@ -135,6 +138,9 @@ void PlayerCharacter::Update()
     if (isDead == true)
         return;
 
+    nowTileIndexX = pos.x / mapWid;
+    nowTileIndexY = pos.y / MAP_HEIGHT - 1;
+
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
         isDead = true;
@@ -152,7 +158,10 @@ void PlayerCharacter::Update()
         direction = MoveDirection::Right;
     }
 
-    if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
+    //if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
+    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true //&&
+        
+        )
     {
         isGround = true;
         gravity = 0.1f;
@@ -209,7 +218,8 @@ void PlayerCharacter::Update()
     if (isGround == false)
     {
         currJumpPower -= gravity;
-        gravity += 0.002f;
+        gravity += gravityAcceleration;
+        gravity = min(gravity, maxGravity);
     }
 
     AnimationFrameChanger();
@@ -219,10 +229,22 @@ void PlayerCharacter::Update()
         pos.x += currSpeed;
     }
     pos.y -= currJumpPower;
+
+    UpdateCollider();
 }
 
 void PlayerCharacter::Render(HDC hdc)
 {
+    Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
+
+
+
+    // 현재 밟고있는 타일
+    Rectangle(hdc, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.left,
+        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.top,
+        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.right,
+        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.bottom);
+
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
 }
 
