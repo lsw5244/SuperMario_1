@@ -223,11 +223,24 @@ void PlayerCharacter::Update()
     }
 
     AnimationFrameChanger();
-
-    if (pos.x < WIN_SIZE_X / 2 || currSpeed < 0)
+    // 왼쪽 넘어가기 방지 + 절반 이상 가지 않도록
+    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
     {
         pos.x += currSpeed;
     }
+    else
+    {
+        // 절반 이상 넘어가려 할 때 globalPos더해주기
+        if (currSpeed > 0)
+        {
+            GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+        }
+    }
+
+    //if (pos.x < WIN_SIZE_X / 2 || currSpeed < 0)
+    /*{
+        pos.x += currSpeed;
+    }*/
     pos.y -= currJumpPower;
 
     UpdateCollider();

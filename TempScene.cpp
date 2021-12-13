@@ -27,11 +27,11 @@ void TempScene::Update()
     mario.Update();
     mushroom.Update();
    
-    if (Input::GetButton(VK_RIGHT) &&
-        GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
-    {
-        GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + GameDataContainer::GetInstance()->GetPlayer()->GetCurrSpeed());
-    }
+    //if (Input::GetButton(VK_RIGHT) &&
+    //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
+    //{
+    //    GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + GameDataContainer::GetInstance()->GetPlayer()->GetCurrSpeed());
+    //}
 }
 
 void TempScene::Render(HDC hdc)
