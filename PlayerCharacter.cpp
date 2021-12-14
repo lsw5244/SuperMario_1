@@ -235,7 +235,6 @@ void PlayerCharacter::AnimationFrameChanger()
     // 커지기
 
 
-
     // 공격하기
     if (Input::GetButtonDown('X'))
     {
@@ -243,6 +242,12 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 깃발 잡기
+}
+
+void PlayerCharacter::AnimationFrameChanger(int frameX, int frameY)
+{
+    this->frameX = frameX;
+    this->frameY = frameY;
 }
 
 HRESULT PlayerCharacter::Init()
@@ -261,6 +266,19 @@ HRESULT PlayerCharacter::Init()
 
 void PlayerCharacter::Update()
 {
+    if (Input::GetButtonDown('G'))
+    {
+        isGrowing = true;
+    }
+
+    if (isGrowing == true)
+    {
+        LevelUp();
+        return;
+    }
+
+    
+
     if (pos.y < 15)
     {
         return;
@@ -309,4 +327,41 @@ void PlayerCharacter::Render(HDC hdc)
 
 void PlayerCharacter::Release()
 {
+}
+
+void PlayerCharacter::LevelUp()
+{
+    // 1 : small, 2 :  big, 3 : fire
+
+    switch (level)
+    {
+    case 1:
+        ++level;
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+
+    default:
+        break;
+    }
+
+    elapsedTime += DELETA_TIME;
+    if (elapsedTime > 0.2f)
+    {
+        switch (frameX)
+        {
+        case PlayerAnimation::Grow1:
+        case PlayerAnimation::Grow2:
+            ++frameX;
+            break;
+        case PlayerAnimation::Grow3:
+            break;
+        default:
+            AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+            break;
+        }
+        elapsedTime = 0.0f;
+    }
 }

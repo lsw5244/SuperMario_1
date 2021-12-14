@@ -39,6 +39,7 @@ private:
 	float animationDelay = 0.15f;
 
 	bool isDead = false;
+	bool isGrowing = false;
 
 	int level = 1;		// 1 : small, 2 :  big, 3 : fire
 
@@ -60,6 +61,8 @@ public:
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
 	virtual ~PlayerCharacter() = default;
+
+	void LevelUp();
 
 	void SetPos(POINTFLOAT pos)
 	{
