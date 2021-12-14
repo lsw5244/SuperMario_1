@@ -63,6 +63,7 @@ public:
 	virtual ~PlayerCharacter() = default;
 
 	void LevelUp();
+	void Hit();
 
 	void SetPos(POINTFLOAT pos)
 	{

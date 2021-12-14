@@ -8,8 +8,6 @@
 
 void PlayerCharacter::UpdateCollider()
 {
-
-
     SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
         pos.y - (img->GetFrameWidth() * min(level - 1 , 1)),  // 레벨이 오르면 top의 위치가 변경됨
         pos.x + img->GetFrameWidth() / 2,
@@ -293,6 +291,11 @@ void PlayerCharacter::Update()
         return;
     }
 
+    if (Input::GetButtonDown('H'))
+    {
+        Hit();
+    }
+
     
 
     if (pos.y < 15)
@@ -374,8 +377,7 @@ void PlayerCharacter::LevelUp()
         }
         return;
     }
-
-    
+  
     if (elapsedTime > 0.2f)
     {
         switch (frameX)
@@ -392,4 +394,15 @@ void PlayerCharacter::LevelUp()
         }
         elapsedTime = 0.0f;
     }
+}
+
+void PlayerCharacter::Hit()
+{
+    if (level <= 1)
+    {
+        isDead = true;
+        AnimationFrameChanger();
+        return;
+    }
+
 }
