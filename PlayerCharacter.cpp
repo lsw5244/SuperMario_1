@@ -8,8 +8,10 @@
 
 void PlayerCharacter::UpdateCollider()
 {
+
+
     SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
-        pos.y - (img->GetFrameWidth() * 0),  // 크기에 따라 나누는 수 달라야 함
+        pos.y - (img->GetFrameWidth() * min(level - 1 , 1)),  // 레벨이 오르면 top의 위치가 변경됨
         pos.x + img->GetFrameWidth() / 2,
         pos.y + img->GetFrameHeight() / 2);
 }
