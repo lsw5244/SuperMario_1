@@ -121,10 +121,6 @@ void PlayerCharacter::PositionUpdater()
     {
         canMove = false;
         GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
-        //if (currSpeed < 1.0f)
-        //{
-        //    //currSpeed = 0.0f;
-        //}
     }
 
     // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
@@ -237,6 +233,8 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 커지기
+
+
 
     // 공격하기
     if (Input::GetButtonDown('X'))
