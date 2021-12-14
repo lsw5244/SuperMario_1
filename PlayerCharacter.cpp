@@ -106,6 +106,8 @@ void PlayerCharacter::Move()
                 currSpeed -= resistance; // 저항 ? resistance
                 currSpeed = max(currSpeed, 0);
                 break;
+            default:
+                break;
             }
         }
     }
@@ -154,66 +156,49 @@ void PlayerCharacter::PositionUpdater()
 
 void PlayerCharacter::AnimationFrameChanger()
 {
-    // 14 * 2
-    /*
-    FrameX                              FrameY
-    0. 서 있기                           0. 오른쪽 바라보기
-    1. 달리기 1                          1. 왼쪽 바라보기
-    2. 달리기 2
-    3. 달리기 3
-    4. 달리다 방향 전환하기
-    5. 앉아있기
-    6. 점프
-    7. 죽기
-    8. 커지기 1
-    9. 커지기 2
-    10. 커지기 3
-    11. 공격하기
-    12. 깃발 잡기 1
-    13. 깃발 잡기 2*/
-    // 좌 우 반전
-    switch (direction)
+    // 방향 애니메이션
+    if (currSpeed < 0)
     {
-    case MoveDirection::Left:
-        frameY = 1;
-        break;
-    case MoveDirection::Right:
-        frameY = 0;
-        break;
+        frameY = MoveDirection::Right;
     }
+    else if (currSpeed > 0)
+    {
+        frameY = MoveDirection::Left;
+    }
+    // 서 있는 애니메이션
     if (currSpeed == 0)
     {
-        frameX = 0;
+        frameX = PlayerAnimation::Idle;
     }
 
-    // 달리고 있는지 확인하기(달리기 만들기)
+    // 달리는 애니메이션
     if (abs(currSpeed) > 0) // frame x가 2 ~ 4 반복해야 함  TODO : 애니메이션 간의 딜레이 주기(애니메이션이 너무 빨리 바뀜)
     {
         switch (frameX)
         {
-        case 1:
-        case 2:
+        case PlayerAnimation::Run1:
+        case PlayerAnimation::Run2:
             ++frameX;
             break;
-        case 3:
+        case PlayerAnimation::Run3:
         default:
-            frameX = 1;
+            frameX = PlayerAnimation::Run1;
             break;
         }
     }
-    // 달리다 방향전환
-    switch (direction)
+    // 방향전환 애니메이션
+    switch (frameY)
     {
     case MoveDirection::Left:
         if (Input::GetButtonDown(VK_RIGHT))
         {
-            frameX = 4;
+            frameX = PlayerAnimation::ChangeDirection;
         }
         break;
     case MoveDirection::Right:
         if (Input::GetButtonDown(VK_LEFT))
         {
-            frameX = 4;
+            frameX = PlayerAnimation::ChangeDirection;
         }
         break;
     }
@@ -223,19 +208,19 @@ void PlayerCharacter::AnimationFrameChanger()
     {
         if (level != 1)
         {
-            frameX = 5;
+            frameX = PlayerAnimation::Sit;
         }
     }
 
     // 점프
     if (isGround == false)
     {
-        frameX = 6;
+        frameX = PlayerAnimation::Jump;
     }
     // 죽기
     if (isDead == true)
     {
-        frameX = 7;
+        frameX = PlayerAnimation::Die;
     }
 
     // 커지기
@@ -243,7 +228,7 @@ void PlayerCharacter::AnimationFrameChanger()
     // 공격하기
     if (Input::GetButtonDown('X'))
     {
-        frameX = 11;
+        frameX = PlayerAnimation::Attack;
     }
 
     // 깃발 잡기
@@ -285,15 +270,7 @@ void PlayerCharacter::Update()
         return;
     }
 
-    //direction = (currSpeed < 0) ? Direction::Left : Direction::Right;
-    if (currSpeed < 0)
-    {
-        direction = MoveDirection::Left;
-    }
-    else if (currSpeed > 0)
-    {
-        direction = MoveDirection::Right;
-    }
+
 
 
     Jump();

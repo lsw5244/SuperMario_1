@@ -33,7 +33,7 @@ private:
 	MoveDirection direction = MoveDirection::Right;
 
 	int frameX = 0;
-	int frameY = 0;
+	int frameY = 0;	// 방향의 역할도 함께 함
 
 	bool isDead = false;
 
