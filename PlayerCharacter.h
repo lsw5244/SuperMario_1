@@ -14,10 +14,10 @@ private:
 
 	RECT collider = {};
 
-	float maxSpeed = 1.0f;
+	float maxSpeed = 1.5f;
 	float currSpeed = 0.0f;
-	float speed = 0.1f;
-	float resistance = 0.02f;
+	float speed = 0.01f;
+	float resistance = 0.01f;
 
 	float maxJumpPower = 2.0f;
 	float currJumpPower = 0.0f;
@@ -33,7 +33,10 @@ private:
 	MoveDirection direction = MoveDirection::Right;
 
 	int frameX = 0;
-	int frameY = 0;
+	int frameY = 0;	// 방향의 역할도 함께 함
+
+	float elapsedTime = 0.0f;
+	float animationDelay = 0.15f;
 
 	bool isDead = false;
 

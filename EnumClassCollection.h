@@ -1,8 +1,12 @@
 #pragma once
 
-enum class MoveDirection
+enum MoveDirection
 {
-	Left, Right, End
+	Right, Left
+};
+enum PlayerAnimation
+{
+	Idle, Run1, Run2, Run3, ChangeDirection, Sit, Jump, Die, Grow1, Grow2, Grow3, Attack, Flag1, Flag2
 };
 
 enum class BlockType

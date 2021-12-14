@@ -175,17 +175,14 @@ HRESULT MyTileMapTool::Init()
                 j * TILE_SIZE + TILE_SIZE,        // right
                 i * TILE_SIZE + TILE_SIZE);       // bottom
 
-            if (i < MAP_HEIGHT - 2)
+            if (i < MAP_HEIGHT - 2) // 
             {
-                map[i][j].frameX = 4;
-                map[i][j].frameY = 0;
-                map[i][j].type = BlockType::Brick;
+                TileInfoSetting(map[i][j], BlockType::Background, 4, 0, 0, 0, 0, false);
+
             }
             else
             {
-                map[i][j].frameX = 0;
-                map[i][j].frameY = 0;
-                map[i][j].type = BlockType::Background;
+                TileInfoSetting(map[i][j], BlockType::Brick, 0, 0, 0, 0, 0, true);
             }
         }
     }

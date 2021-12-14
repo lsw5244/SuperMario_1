@@ -83,29 +83,25 @@ void PlayerCharacter::Move()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            if (pos.x < WIN_SIZE_X / 2)
-            {
-                currSpeed += speed;
-                currSpeed = min(currSpeed, maxSpeed);
-            }
+            currSpeed += speed;
+            currSpeed = min(currSpeed, maxSpeed);
         }
         else if (Input::GetButton(VK_LEFT))
         {
             currSpeed -= speed;
             currSpeed = max(currSpeed, -maxSpeed);
         }
-        else  // 속도 점점 줄여야 함 (아무것도 안눌림 )
+        else
         {
-            switch (direction)
+            if (frameY == MoveDirection::Right)
             {
-            case MoveDirection::Left:   // 스피드 높여야 함
-                currSpeed += resistance; // 저항 ?
-                currSpeed = min(currSpeed, 0);
-                break;
-            case MoveDirection::Right: // 스피드 줄여야 함
-                currSpeed -= resistance; // 저항 ? resistance
+                currSpeed -= resistance;
                 currSpeed = max(currSpeed, 0);
-                break;
+            }
+            if (frameY == MoveDirection::Left)
+            {
+                currSpeed += resistance;
+                currSpeed = min(currSpeed, 0);
             }
         }
     }
@@ -113,37 +109,39 @@ void PlayerCharacter::Move()
 
 void PlayerCharacter::PositionUpdater()
 {
-    // 화면 왼쪽 밖, 화면 절반 이상 나가지 않도록 막음
-    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
+    bool canMove = true;
+    float nextXpos = pos.x + currSpeed;
+    // 왼쪽 나가기 방지
+    if (nextXpos < 0)
     {
-        // 옆 족 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
-        if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
-            //OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true &&
-            currSpeed > 0)
-        {
-            //cout << "오른쪽과 충돌" << endl;
-            currSpeed = 0;
-        }
-        else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-            collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
-            currSpeed < 0)
-        {
-            //cout << "왼쪽과 충돌" << endl;
-            currSpeed = 0;
-        }
-        else
-        {
-            pos.x += currSpeed;
-        }
+        canMove = false;
     }
-    else
+    // 절반 넘어가기 방지
+    if (nextXpos > WIN_SIZE_X / 2)
     {
-        // 절반 이상 넘어가려 할 때 globalPos더해주기
-        if (currSpeed > 0)
-        {
-            GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
-        }
+        canMove = false;
+        GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+    }
+
+    // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
+    if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+        collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
+        currSpeed > 0)
+    {
+        currSpeed = 0;
+        canMove = false;
+    }
+    else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+        collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
+        currSpeed < 0)
+    {
+        currSpeed = 0;
+        canMove = false;
+    }
+
+    if (canMove == true)
+    {
+        pos.x += currSpeed;
     }
 
     if (isGround == false)
@@ -154,68 +152,63 @@ void PlayerCharacter::PositionUpdater()
 
 void PlayerCharacter::AnimationFrameChanger()
 {
-    // 14 * 2
-    /*
-    FrameX                              FrameY
-    0. 서 있기                           0. 오른쪽 바라보기
-    1. 달리기 1                          1. 왼쪽 바라보기
-    2. 달리기 2
-    3. 달리기 3
-    4. 달리다 방향 전환하기
-    5. 앉아있기
-    6. 점프
-    7. 죽기
-    8. 커지기 1
-    9. 커지기 2
-    10. 커지기 3
-    11. 공격하기
-    12. 깃발 잡기 1
-    13. 깃발 잡기 2*/
-    // 좌 우 반전
-    switch (direction)
+    // 방향 애니메이션
+    if (currSpeed < 0)
     {
-    case MoveDirection::Left:
-        frameY = 1;
-        break;
-    case MoveDirection::Right:
-        frameY = 0;
-        break;
+        frameY = MoveDirection::Left;
     }
+    else if (currSpeed > 0)
+    {
+        frameY = MoveDirection::Right;
+    }
+    // 서 있는 애니메이션
     if (currSpeed == 0)
     {
-        frameX = 0;
+        frameX = PlayerAnimation::Idle;
     }
 
-    // 달리고 있는지 확인하기(달리기 만들기)
+    // 달리는 애니메이션
     if (abs(currSpeed) > 0) // frame x가 2 ~ 4 반복해야 함  TODO : 애니메이션 간의 딜레이 주기(애니메이션이 너무 빨리 바뀜)
     {
-        switch (frameX)
+        elapsedTime += DELETA_TIME;
+        if (elapsedTime > animationDelay)
         {
-        case 1:
-        case 2:
-            ++frameX;
-            break;
-        case 3:
-        default:
-            frameX = 1;
-            break;
+            switch (frameX)
+            {
+            case PlayerAnimation::Run1:
+            case PlayerAnimation::Run2:
+                ++frameX;
+                break;
+            case PlayerAnimation::Run3:
+            default:
+                frameX = PlayerAnimation::Run1;
+                break;
+            }
+            elapsedTime = 0;
+            animationDelay = 0.15f - 0.15f * currSpeed;
         }
     }
-    // 달리다 방향전환
-    switch (direction)
+    else
     {
-    case MoveDirection::Left:
-        if (Input::GetButtonDown(VK_RIGHT))
+        elapsedTime = 0;
+    }
+
+    // 방향전환 애니메이션
+    if (currSpeed > 0) // 오른쪽 가는 중인데
+    {
+        if (Input::GetButton(VK_LEFT))
         {
-            frameX = 4;
+            frameX = PlayerAnimation::ChangeDirection;
+            return;
         }
-        break;
-    case MoveDirection::Right:
-        if (Input::GetButtonDown(VK_LEFT))
+    }
+    if (currSpeed < 0)
+    {
+        if (Input::GetButton(VK_RIGHT))
         {
-            frameX = 4;
+            frameX = PlayerAnimation::ChangeDirection;
+            return;
         }
-        break;
     }
 
     // 앉아있기
@@ -223,27 +216,30 @@ void PlayerCharacter::AnimationFrameChanger()
     {
         if (level != 1)
         {
-            frameX = 5;
+            frameX = PlayerAnimation::Sit;
         }
     }
 
     // 점프
     if (isGround == false)
     {
-        frameX = 6;
+        frameX = PlayerAnimation::Jump;
     }
+
     // 죽기
     if (isDead == true)
     {
-        frameX = 7;
+        frameX = PlayerAnimation::Die;
     }
 
     // 커지기
 
+
+
     // 공격하기
     if (Input::GetButtonDown('X'))
     {
-        frameX = 11;
+        frameX = PlayerAnimation::Attack;
     }
 
     // 깃발 잡기
@@ -285,23 +281,12 @@ void PlayerCharacter::Update()
         return;
     }
 
-    //direction = (currSpeed < 0) ? Direction::Left : Direction::Right;
-    if (currSpeed < 0)
-    {
-        direction = MoveDirection::Left;
-    }
-    else if (currSpeed > 0)
-    {
-        direction = MoveDirection::Right;
-    }
-
-
     Jump();
 
     Move();
 
     AnimationFrameChanger();
-    
+
     PositionUpdater();
 }
 
