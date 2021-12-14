@@ -85,11 +85,21 @@ void PlayerCharacter::Move()
         {
             currSpeed += speed;
             currSpeed = min(currSpeed, maxSpeed);
+            // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정
+            if (currSpeed < 0 && currSpeed > -0.5f)
+            {
+                currSpeed = 0.0f;
+            }
+
         }
         else if (Input::GetButton(VK_LEFT))
         {
             currSpeed -= speed;
             currSpeed = max(currSpeed, -maxSpeed);
+            if (currSpeed > 0 && currSpeed < 0.5f)
+            {
+                currSpeed = 0.0f;
+            }
         }
         else
         {
