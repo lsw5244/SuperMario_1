@@ -35,6 +35,9 @@ private:
 	int frameX = 0;
 	int frameY = 0;	// 방향의 역할도 함께 함
 
+	float elapsedTime = 0.0f;
+	float animationDelay = 0.15f;
+
 	bool isDead = false;
 
 	int level = 1;		// 1 : small, 2 :  big, 3 : fire

@@ -104,36 +104,6 @@ void PlayerCharacter::Move()
                 currSpeed = min(currSpeed, 0);
             }
         }
-
-        //if (Input::GetButton(VK_RIGHT))
-        //{
-        //    //if (pos.x < WIN_SIZE_X / 2)
-        //    {
-        //        currSpeed += speed;
-        //        currSpeed = min(currSpeed, maxSpeed);
-        //    }
-        //}
-        //else if (Input::GetButton(VK_LEFT))
-        //{
-        //    currSpeed -= speed;
-        //    currSpeed = max(currSpeed, -maxSpeed);
-        //}
-        //else  // 속도 점점 줄여야 함 (아무것도 안눌림 )
-        //{
-        //    switch (frameY)
-        //    {
-        //    case MoveDirection::Left:   // 스피드 높여야 함
-        //        currSpeed += resistance; // 저항 ?
-        //        currSpeed = min(currSpeed, 0);
-        //        break;
-        //    case MoveDirection::Right: // 스피드 줄여야 함
-        //        currSpeed -= resistance; // 저항 ? resistance
-        //        currSpeed = max(currSpeed, 0);
-        //        break;
-        //    default:
-        //        break;
-        //    }
-        //}
     }
 }
 
@@ -151,10 +121,10 @@ void PlayerCharacter::PositionUpdater()
     {
         canMove = false;
         GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
-        if (currSpeed < 1.0f)
-        {
-            currSpeed = 0.0f;
-        }
+        //if (currSpeed < 1.0f)
+        //{
+        //    //currSpeed = 0.0f;
+        //}
     }
 
     // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
@@ -186,7 +156,6 @@ void PlayerCharacter::PositionUpdater()
 
 void PlayerCharacter::AnimationFrameChanger()
 {
-
     // 방향 애니메이션
     if (currSpeed < 0)
     {
@@ -205,17 +174,27 @@ void PlayerCharacter::AnimationFrameChanger()
     // 달리는 애니메이션
     if (abs(currSpeed) > 0) // frame x가 2 ~ 4 반복해야 함  TODO : 애니메이션 간의 딜레이 주기(애니메이션이 너무 빨리 바뀜)
     {
-        switch (frameX)
+        elapsedTime += DELETA_TIME;
+        if (elapsedTime > animationDelay)
         {
-        case PlayerAnimation::Run1:
-        case PlayerAnimation::Run2:
-            ++frameX;
-            break;
-        case PlayerAnimation::Run3:
-        default:
-            frameX = PlayerAnimation::Run1;
-            break;
+            switch (frameX)
+            {
+            case PlayerAnimation::Run1:
+            case PlayerAnimation::Run2:
+                ++frameX;
+                break;
+            case PlayerAnimation::Run3:
+            default:
+                frameX = PlayerAnimation::Run1;
+                break;
+            }
+            elapsedTime = 0;
+            animationDelay = 0.15f - 0.15f * currSpeed;
         }
+    }
+    else
+    {
+        elapsedTime = 0;
     }
 
     // 방향전환 애니메이션
@@ -235,22 +214,6 @@ void PlayerCharacter::AnimationFrameChanger()
             return;
         }
     }
-
-    /*switch (frameY)
-    {
-    case MoveDirection::Left:
-        if (Input::GetButtonDown(VK_RIGHT))
-        {
-            frameX = PlayerAnimation::ChangeDirection;
-        }
-        break;
-    case MoveDirection::Right:
-        if (Input::GetButtonDown(VK_LEFT))
-        {
-            frameX = PlayerAnimation::ChangeDirection;
-        }
-        break;
-    }*/
 
     // 앉아있기
     if (Input::GetButtonDown(VK_DOWN))
@@ -319,9 +282,6 @@ void PlayerCharacter::Update()
         AnimationFrameChanger();
         return;
     }
-
-
-
 
     Jump();
 
