@@ -27,11 +27,11 @@ void TempScene::Update()
     mario.Update();
     mushroom.Update();
    
-    if (Input::GetButton(VK_RIGHT) &&
-        GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
-    {
-        GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + GameDataContainer::GetInstance()->GetPlayer()->GetCurrSpeed());
-    }
+    //if (Input::GetButton(VK_RIGHT) &&
+    //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
+    //{
+    //    GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + GameDataContainer::GetInstance()->GetPlayer()->GetCurrSpeed());
+    //}
 }
 
 void TempScene::Render(HDC hdc)
@@ -40,14 +40,23 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            mapSpriteImg->Render(hdc, map[i][j].rc.left - GLOBAL_POS
-                , map[i][j].rc.top + TILE_SIZE / 2
-                , map[i][j].frameX, map[i][j].frameY); 
+            if (map[i][j].isCollider == true)
+            {
+                mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
+                    , map[i][j].rc.top + TILE_SIZE / 2
+                    , 0, 4);
+            }
+            else
+            {
+                mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
+                    , map[i][j].rc.top + TILE_SIZE / 2
+                    , map[i][j].frameX, map[i][j].frameY); 
+            }
         }
     }
 
     mario.Render(hdc);
-    mushroom.Render(hdc);
+    mushroom.Render(hdc);  
 }
 
 void TempScene::Release()

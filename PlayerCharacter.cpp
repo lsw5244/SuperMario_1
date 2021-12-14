@@ -2,6 +2,155 @@
 #include "Image.h"
 #include "Input.h"
 #include "MacroCollection.h"
+#include "GameDataContainer.h"
+
+#define mapWid 16   // 게임 화면에 보이는 총 타일 수는 16개
+
+void PlayerCharacter::UpdateCollider()
+{
+    SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
+        pos.y - (img->GetFrameWidth() * 0),  // 크기에 따라 나누는 수 달라야 함
+        pos.x + img->GetFrameWidth() / 2,
+        pos.y + img->GetFrameHeight() / 2);
+}
+
+bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
+{
+    if (rc1.left > rc2.right)	return false;
+    if (rc1.right < rc2.left)	return false;
+    if (rc1.top > rc2.bottom)	return false;
+    if (rc1.bottom < rc2.top)	return false;
+
+    return true;
+}
+
+void PlayerCharacter::Jump()
+{
+    // 점프하다 머리 박았을 때 처리
+    if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
+        collider.top < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - 1
+        )
+    {
+        jumpEnd = true;
+        currJumpPower = 0.0f;
+    }
+
+    if (isGround == false)
+    {
+        currJumpPower -= gravity;
+        gravity += gravityAcceleration;
+        gravity = min(gravity, maxGravity);
+        //return;
+    }
+
+    if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
+        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom
+        )
+    {
+        isGround = true;
+        gravity = 0.01f;
+        currJumpPower = 0;
+        jumpEnd = false;
+    }
+    else
+    {
+        isGround = false;
+    }
+
+
+    if (Input::GetButtonUp('Z'))
+    {
+        jumpEnd = true;
+        return;
+    }
+    if (Input::GetButton('Z') && jumpEnd == false)
+    {
+        isGround = false;
+        currJumpPower += jumpPower;
+
+        //점프 최대높이
+        if (currJumpPower >= maxJumpPower)
+        {
+            jumpEnd = true;
+        }
+        currJumpPower = min(currJumpPower, maxJumpPower);
+    }
+}
+
+void PlayerCharacter::Move()
+{
+    if (isGround)
+    {
+        if (Input::GetButton(VK_RIGHT))
+        {
+            if (pos.x < WIN_SIZE_X / 2)
+            {
+                currSpeed += speed;
+                currSpeed = min(currSpeed, maxSpeed);
+            }
+        }
+        else if (Input::GetButton(VK_LEFT))
+        {
+            currSpeed -= speed;
+            currSpeed = max(currSpeed, -maxSpeed);
+        }
+        else  // 속도 점점 줄여야 함 (아무것도 안눌림 )
+        {
+            switch (direction)
+            {
+            case MoveDirection::Left:   // 스피드 높여야 함
+                currSpeed += resistance; // 저항 ?
+                currSpeed = min(currSpeed, 0);
+                break;
+            case MoveDirection::Right: // 스피드 줄여야 함
+                currSpeed -= resistance; // 저항 ? resistance
+                currSpeed = max(currSpeed, 0);
+                break;
+            }
+        }
+    }
+}
+
+void PlayerCharacter::PositionUpdater()
+{
+    // 화면 왼쪽 밖, 화면 절반 이상 나가지 않도록 막음
+    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
+    {
+        // 옆 족 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
+        if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
+            //OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true &&
+            currSpeed > 0)
+        {
+            //cout << "오른쪽과 충돌" << endl;
+            currSpeed = 0;
+        }
+        else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+            collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
+            currSpeed < 0)
+        {
+            //cout << "왼쪽과 충돌" << endl;
+            currSpeed = 0;
+        }
+        else
+        {
+            pos.x += currSpeed;
+        }
+    }
+    else
+    {
+        // 절반 이상 넘어가려 할 때 globalPos더해주기
+        if (currSpeed > 0)
+        {
+            GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+        }
+    }
+
+    if (isGround == false)
+    {
+        pos.y -= currJumpPower;
+    }
+}
 
 void PlayerCharacter::AnimationFrameChanger()
 {
@@ -104,16 +253,30 @@ HRESULT PlayerCharacter::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/SamllRedMario.bmp");
 
+    isGround = true;
+
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
+
+    UpdateCollider();
 
     return S_OK;
 }
 
 void PlayerCharacter::Update()
 {
+    if (pos.y < 15)
+    {
+        return;
+    }
+
     if (isDead == true)
         return;
+
+    UpdateCollider();
+
+    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.5f;//MAP_WIDTH;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
 
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
@@ -132,78 +295,31 @@ void PlayerCharacter::Update()
         direction = MoveDirection::Right;
     }
 
-    if (pos.y > WIN_SIZE_Y / 2) // TODO : 바닥에 닿은 조건 변경하기
-    {
-        isGround = true;
-        gravity = 0.1f;
-        currJumpPower = 0;
-        jumpEnd = false;
-    }
 
-    if (Input::GetButtonUp('Z'))
-    {
-        jumpEnd = true;
-    }
-    if (Input::GetButton('Z') && jumpEnd == false)
-    {
-        isGround = false;
-        currJumpPower += jumpPower;
-        if (currJumpPower >= maxJumpPower)
-        {
-            jumpEnd = true;
-        }
-        currJumpPower = min(currJumpPower, maxJumpPower);
-    }
+    Jump();
 
-    if (isGround)
-    {
-        if (Input::GetButton(VK_RIGHT))
-        {
-            if (pos.x < WIN_SIZE_X / 2)
-            {
-                currSpeed += speed;
-                currSpeed = min(currSpeed, maxSpeed);
-            }
-        }
-        else if (Input::GetButton(VK_LEFT))
-        {
-            currSpeed -= speed;
-            currSpeed = max(currSpeed, -maxSpeed);
-        }
-        else  // 속도 점점 줄여야 함
-        {
-            switch (direction)
-            {
-            case MoveDirection::Left:   // 스피드 높여야 함
-                currSpeed += resistance; // 저항 ?
-                currSpeed = min(currSpeed, 0);
-                break;
-            case MoveDirection::Right: // 스피드 줄여야 함
-                currSpeed -= resistance; // 저항 ? resistance
-                currSpeed = max(currSpeed, 0);
-                break;
-            }
-        }
-    }
-
-    if (isGround == false)
-    {
-        currJumpPower -= gravity;
-        gravity += 0.002f;
-    }
+    Move();
 
     AnimationFrameChanger();
-
-    if (pos.x < WIN_SIZE_X / 2 || currSpeed < 0)
-    {
-        pos.x += currSpeed;
-    }
-    pos.y -= currJumpPower;
+    
+    PositionUpdater();
 }
 
 void PlayerCharacter::Render(HDC hdc)
 {
+    //현재 콜라이더
+    Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
+
+    // 현재 위치 타일
+    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
+        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
+        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
+        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
+
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
+
+    //pos위치
+    Rectangle(hdc, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
 }
 
 void PlayerCharacter::Release()
