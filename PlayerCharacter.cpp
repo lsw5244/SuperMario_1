@@ -83,100 +83,99 @@ void PlayerCharacter::Move()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            if (pos.x < WIN_SIZE_X / 2)
-            {
-                currSpeed += speed;
-                currSpeed = min(currSpeed, maxSpeed);
-            }
+            currSpeed += speed;
+            currSpeed = min(currSpeed, maxSpeed);
         }
         else if (Input::GetButton(VK_LEFT))
         {
             currSpeed -= speed;
             currSpeed = max(currSpeed, -maxSpeed);
         }
-        else  // 속도 점점 줄여야 함 (아무것도 안눌림 )
+        else
         {
-            switch (direction)
+            if (frameY == MoveDirection::Right)
             {
-            case MoveDirection::Left:   // 스피드 높여야 함
-                currSpeed += resistance; // 저항 ?
-                currSpeed = min(currSpeed, 0);
-                break;
-            case MoveDirection::Right: // 스피드 줄여야 함
-                currSpeed -= resistance; // 저항 ? resistance
+                currSpeed -= resistance;
                 currSpeed = max(currSpeed, 0);
-                break;
-            default:
-                break;
+            }
+            if (frameY == MoveDirection::Left)
+            {
+                currSpeed += resistance;
+                currSpeed = min(currSpeed, 0);
             }
         }
+
+        //if (Input::GetButton(VK_RIGHT))
+        //{
+        //    //if (pos.x < WIN_SIZE_X / 2)
+        //    {
+        //        currSpeed += speed;
+        //        currSpeed = min(currSpeed, maxSpeed);
+        //    }
+        //}
+        //else if (Input::GetButton(VK_LEFT))
+        //{
+        //    currSpeed -= speed;
+        //    currSpeed = max(currSpeed, -maxSpeed);
+        //}
+        //else  // 속도 점점 줄여야 함 (아무것도 안눌림 )
+        //{
+        //    switch (frameY)
+        //    {
+        //    case MoveDirection::Left:   // 스피드 높여야 함
+        //        currSpeed += resistance; // 저항 ?
+        //        currSpeed = min(currSpeed, 0);
+        //        break;
+        //    case MoveDirection::Right: // 스피드 줄여야 함
+        //        currSpeed -= resistance; // 저항 ? resistance
+        //        currSpeed = max(currSpeed, 0);
+        //        break;
+        //    default:
+        //        break;
+        //    }
+        //}
     }
 }
 
 void PlayerCharacter::PositionUpdater()
 {
-    //float nextXpos = pos.x + currSpeed;
-
-    //// 밖으로 나가려 할 때 ?
-    //if (nextXpos < 0 || nextXpos > WIN_SIZE_X / 2)
-    //{
-    //    pos.x -= currSpeed;
-    //}
-    //// globalPos업데이트 시켜야 할 때
-    //if (nextXpos > WIN_SIZE_X / 2)
-    //{
-    //    GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
-    //}
-
-    //// 옆 타일과 충돌 했을 때
-    //if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-    //    collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
-    //    currSpeed > 0)
-    //{
-    //    currSpeed = 0;
-    //}
-    //else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-    //    collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
-    //    currSpeed < 0)
-    //{
-    //    currSpeed = 0;
-    //}
-
-    //pos.x += currSpeed;
-
-    //if (isGround == false)
-    //{
-    //    pos.y -= currJumpPower;
-    //}
-
-    // 화면 왼쪽 밖, 화면 절반 이상 나가지 않도록 막음
-    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
+    bool canMove = true;
+    float nextXpos = pos.x + currSpeed;
+    // 왼쪽 나가기 방지
+    if (nextXpos < 0)
     {
-        // 옆 족 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
-        if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
-            currSpeed > 0)
+        canMove = false;
+    }
+    // 절반 넘어가기 방지
+    if (nextXpos > WIN_SIZE_X / 2)
+    {
+        canMove = false;
+        GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+        if (currSpeed < 1.0f)
         {
-            currSpeed = 0;
-        }
-        else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-            collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
-            currSpeed < 0)
-        {
-            currSpeed = 0;
-        }
-        else
-        {
-            pos.x += currSpeed;
+            currSpeed = 0.0f;
         }
     }
-    else
+
+    // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
+    if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+        collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
+        currSpeed > 0)
     {
-        // 절반 이상 넘어가려 할 때 globalPos더해주기
-        if (currSpeed > 0)
-        {
-            GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
-        }
+        currSpeed = 0;
+        canMove = false;
+    }
+    else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+        collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
+        currSpeed < 0)
+    {
+        currSpeed = 0;
+        canMove = false;
+    }
+
+    if (canMove == true)
+    {
+        pos.x += currSpeed;
     }
 
     if (isGround == false)
@@ -191,11 +190,11 @@ void PlayerCharacter::AnimationFrameChanger()
     // 방향 애니메이션
     if (currSpeed < 0)
     {
-        frameY = MoveDirection::Right;
+        frameY = MoveDirection::Left;
     }
     else if (currSpeed > 0)
     {
-        frameY = MoveDirection::Left;
+        frameY = MoveDirection::Right;
     }
     // 서 있는 애니메이션
     if (currSpeed == 0)
@@ -329,11 +328,7 @@ void PlayerCharacter::Update()
     Move();
 
     AnimationFrameChanger();
-    if (frameX == 4)
-    {
-        cout << frameX << endl;
 
-    }
     PositionUpdater();
 }
 

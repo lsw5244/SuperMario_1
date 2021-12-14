@@ -2,7 +2,7 @@
 
 enum MoveDirection
 {
-	Left, Right
+	Right, Left
 };
 enum PlayerAnimation
 {
