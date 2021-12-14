@@ -121,6 +121,10 @@ void PlayerCharacter::PositionUpdater()
     {
         canMove = false;
         GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+        if (Input::GetButton(VK_LEFT) && currSpeed < 1.0f)
+        {
+            currSpeed = 0.0f;
+        }
     }
 
     // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
@@ -168,7 +172,7 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 달리는 애니메이션
-    if (abs(currSpeed) > 0) // frame x가 2 ~ 4 반복해야 함  TODO : 애니메이션 간의 딜레이 주기(애니메이션이 너무 빨리 바뀜)
+    if (abs(currSpeed) > 0)
     {
         elapsedTime += DELETA_TIME;
         if (elapsedTime > animationDelay)
@@ -212,7 +216,7 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 앉아있기
-    if (Input::GetButtonDown(VK_DOWN))
+    if (Input::GetButton(VK_DOWN))
     {
         if (level != 1)
         {
@@ -346,8 +350,20 @@ void PlayerCharacter::LevelUp()
     default:
         break;
     }
-
     elapsedTime += DELETA_TIME;
+    if (frameX == PlayerAnimation::Grow3)
+    {
+        if (elapsedTime > 0.1f)
+        {
+            isGrowing = false;
+            elapsedTime = 0;
+            img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
+            return;
+        }
+        return;
+    }
+
+    
     if (elapsedTime > 0.2f)
     {
         switch (frameX)
