@@ -16,8 +16,8 @@ private:
 
 	float maxSpeed = 1.0f;
 	float currSpeed = 0.0f;
-	float speed = 0.1f;
-	float resistance = 0.02f;
+	float speed = 0.01f;
+	float resistance = 0.001f;
 
 	float maxJumpPower = 2.0f;
 	float currJumpPower = 0.0f;
