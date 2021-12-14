@@ -46,6 +46,7 @@ private:
 	bool OnCollisionEnter(RECT rc1, RECT rc2);
 	void Jump();
 	void Move();
+	void PositionUpdater();
 
 	void AnimationFrameChanger();
 	void AnimationFrameChanger(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용

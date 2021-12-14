@@ -26,6 +26,7 @@ bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
 
 void PlayerCharacter::Jump()
 {
+    // 점프하다 머리 박았을 때 처리
     if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
         collider.top < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - 1
         )
@@ -107,6 +108,47 @@ void PlayerCharacter::Move()
                 break;
             }
         }
+    }
+}
+
+void PlayerCharacter::PositionUpdater()
+{
+    // 화면 왼쪽 밖, 화면 절반 이상 나가지 않도록 막음
+    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
+    {
+        // 옆 족 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
+        if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
+            //OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true &&
+            currSpeed > 0)
+        {
+            //cout << "오른쪽과 충돌" << endl;
+            currSpeed = 0;
+        }
+        else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+            collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
+            currSpeed < 0)
+        {
+            //cout << "왼쪽과 충돌" << endl;
+            currSpeed = 0;
+        }
+        else
+        {
+            pos.x += currSpeed;
+        }
+    }
+    else
+    {
+        // 절반 이상 넘어가려 할 때 globalPos더해주기
+        if (currSpeed > 0)
+        {
+            GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+        }
+    }
+
+    if (isGround == false)
+    {
+        pos.y -= currJumpPower;
     }
 }
 
@@ -235,8 +277,6 @@ void PlayerCharacter::Update()
 
     nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.5f;//MAP_WIDTH;
     nowTileIndexY = pos.y / MAP_HEIGHT;
-    //cout << TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider;
-    //cout << "x : " << (pos.x / mapWid + GLOBAL_POS / mapWid) << endl;
 
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
@@ -258,62 +298,16 @@ void PlayerCharacter::Update()
 
     Jump();
 
-    // 위 블럭에 머리 닿았을 때
-    //if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true/* &&
-    //    collider.top < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - 1*/
-    //    )
-    //{
-    //    jumpEnd = true;
-    //    currJumpPower = 0.0f;
-    //}
-
     Move();
 
     AnimationFrameChanger();
-
-    // 왼쪽 넘어가기 방지 + 절반 이상 가지 않도록
-    if (pos.x + currSpeed > 0 && pos.x + currSpeed < WIN_SIZE_X / 2)
-    {
-        if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-            collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
-            currSpeed > 0)
-        {
-            cout << "오른쪽과 충돌" << endl;
-            pos.x -= currSpeed;
-            currSpeed = 0;
-        }
-        else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-            collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
-            currSpeed < 0)
-        {
-            cout << "왼쪽과 충돌" << endl;
-            pos.x -= currSpeed;
-            currSpeed = 0;
-        }
-        else
-        {
-            pos.x += currSpeed;
-        }
-    }
-    else
-    {
-        // 절반 이상 넘어가려 할 때 globalPos더해주기
-        if (currSpeed > 0)
-        {
-            GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
-        }
-    }
-
-    if (isGround == false)
-    {
-        pos.y -= currJumpPower;
-    }
-
-
+    
+    PositionUpdater();
 }
 
 void PlayerCharacter::Render(HDC hdc)
 {
+    //현재 콜라이더
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
     // 현재 위치 타일

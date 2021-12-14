@@ -44,7 +44,7 @@ void TempScene::Render(HDC hdc)
             {
                 mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
                     , map[i][j].rc.top + TILE_SIZE / 2
-                    , 0, 1);
+                    , 0, 4);
             }
             else
             {
@@ -56,9 +56,7 @@ void TempScene::Render(HDC hdc)
     }
 
     mario.Render(hdc);
-    mushroom.Render(hdc);
-
-    
+    mushroom.Render(hdc);  
 }
 
 void TempScene::Release()
