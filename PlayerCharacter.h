@@ -14,23 +14,21 @@ private:
 
 	RECT collider = {};
 
-	float maxSpeed = 240.0f;//1.5f;
-	float currSpeed = 0.0f;//0.0f;
-	float speed = 1.6f;//0.01f;
+	float maxSpeed	 = 240.0f;//1.5f; 160배
+	float currSpeed	 = 0.0f;//0.0f;
+	float speed		 = 1.6f;//0.01f;
 	float resistance = 1.6f; //0.01f;
 
-	float maxJumpPower = 2.0f;
-	float currJumpPower = 0.0f;
-	float jumpPower = 0.1f;
-	float gravity = 0.001f;
-	float maxGravity = 0.05f;
-	float gravityAcceleration = 0.001f;
+	float maxJumpPower			 = 220.0f;
+	float currJumpPower			 = 0.0f;
+	float jumpPower				 = 700.0f;
+
+	float gravity				 = 300.0f;
+	float maxGravity			 = 500.0f;
+	float gravityAcceleration	 = 5000.0f;//5500.0f;
 
 	bool isGround = true;
 	bool jumpEnd = false;
-
-	// 방향 가져야 함 ?
-	MoveDirection direction = MoveDirection::Right;
 
 	int frameX = 0;
 	int frameY = 0;	// 방향의 역할도 함께 함

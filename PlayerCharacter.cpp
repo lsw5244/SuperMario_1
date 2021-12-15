@@ -4,8 +4,6 @@
 #include "MacroCollection.h"
 #include "GameDataContainer.h"
 
-#define mapWid 16   // 게임 화면에 보이는 총 타일 수는 16개
-
 void PlayerCharacter::UpdateCollider()
 {
     SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
@@ -37,8 +35,8 @@ void PlayerCharacter::Jump()
 
     if (isGround == false)
     {
-        currJumpPower -= gravity;
-        gravity += gravityAcceleration;
+        currJumpPower -= gravity * DELETA_TIME;
+        gravity += gravityAcceleration * DELETA_TIME;
         gravity = min(gravity, maxGravity);
         //return;
     }
@@ -48,8 +46,8 @@ void PlayerCharacter::Jump()
         )
     {
         isGround = true;
-        gravity = 0.01f;
-        currJumpPower = 0;
+        gravity = 300.0f;
+        currJumpPower = 0.0f;
         jumpEnd = false;
     }
     else
@@ -66,12 +64,12 @@ void PlayerCharacter::Jump()
     if (Input::GetButton('Z') && jumpEnd == false)
     {
         isGround = false;
-        currJumpPower += jumpPower;
-
+        currJumpPower += (jumpPower + jumpPower) * DELETA_TIME;
         //점프 최대높이
         if (currJumpPower >= maxJumpPower)
         {
             jumpEnd = true;
+            currJumpPower = maxJumpPower;
         }
         currJumpPower = min(currJumpPower, maxJumpPower);
     }
@@ -160,7 +158,7 @@ void PlayerCharacter::PositionUpdater()
 
     if (isGround == false)
     {
-        pos.y -= currJumpPower;
+        pos.y -= currJumpPower * DELETA_TIME;
     }
 }
 
