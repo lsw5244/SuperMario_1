@@ -366,9 +366,10 @@ void PlayerCharacter::Release()
 void PlayerCharacter::LevelUp()
 {
     // 1 : small, 2 :  big, 3 : fire
+    elapsedTime += DELETA_TIME;
+
     if (level == 2)
     {
-        elapsedTime += DELETA_TIME;
         if (frameX == PlayerAnimation::Grow3)
         {
             if (elapsedTime > 0.1f)
@@ -401,13 +402,12 @@ void PlayerCharacter::LevelUp()
         }
     }
     else
-    {
-        elapsedTime += DELETA_TIME;
-        
+    {        
         if (nowImageIdChecker > 5)
         {
             img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
             elapsedTime = 0.0f;
+            nowImageIdChecker = 0;
             isGrowing = false;
             return;
         }
