@@ -199,7 +199,7 @@ void PlayerCharacter::AnimationFrameChanger()
                 break;
             }
             elapsedTime = 0;
-            animationDelay = 0.15f - 0.15f * currSpeed;
+            animationDelay = max(0.15f - 0.15f * abs(currSpeed), 0.05f); // 0.05는 최소 딜레이
         }
     }
     else
@@ -281,7 +281,7 @@ HRESULT PlayerCharacter::Init()
 void PlayerCharacter::Update()
 {
     //cout << level << endl;
-    cout << elapsedTime << endl;
+    //cout << elapsedTime << endl;
     if (Input::GetButtonDown('G'))
     {
         elapsedTime = 0.0f;
@@ -332,6 +332,7 @@ void PlayerCharacter::Update()
         AnimationFrameChanger();
         return;
     }
+
 
     Jump();
 
@@ -405,7 +406,7 @@ void PlayerCharacter::LevelUp()
     {        
         if (nowImageIdChecker > 5)
         {
-            img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
+            img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
             elapsedTime = 0.0f;
             nowImageIdChecker = 0;
             isGrowing = false;
@@ -417,7 +418,7 @@ void PlayerCharacter::LevelUp()
             switch (nowImageIdChecker % 2)
             {
             case 1:
-                img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
+                img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
                 break;
             default:
                 img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
