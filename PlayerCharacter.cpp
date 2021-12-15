@@ -9,7 +9,7 @@
 void PlayerCharacter::UpdateCollider()
 {
     SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
-        pos.y - (img->GetFrameWidth() * 0),  // 크기에 따라 나누는 수 달라야 함
+        pos.y - (img->GetFrameWidth() * min(level - 1 , 1)),  // 레벨이 오르면 top의 위치가 변경됨
         pos.x + img->GetFrameWidth() / 2,
         pos.y + img->GetFrameHeight() / 2);
 }
@@ -85,11 +85,21 @@ void PlayerCharacter::Move()
         {
             currSpeed += speed;
             currSpeed = min(currSpeed, maxSpeed);
+            // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정
+            if (currSpeed < 0 && currSpeed > -0.5f)
+            {
+                currSpeed = 0.0f;
+            }
+
         }
         else if (Input::GetButton(VK_LEFT))
         {
             currSpeed -= speed;
             currSpeed = max(currSpeed, -maxSpeed);
+            if (currSpeed > 0 && currSpeed < 0.5f)
+            {
+                currSpeed = 0.0f;
+            }
         }
         else
         {
@@ -121,6 +131,10 @@ void PlayerCharacter::PositionUpdater()
     {
         canMove = false;
         GameDataContainer::GetInstance()->SetGlobalPos(GLOBAL_POS + currSpeed);
+        if (Input::GetButton(VK_LEFT) && currSpeed < 1.0f)
+        {
+            currSpeed = 0.0f;
+        }
     }
 
     // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
@@ -168,7 +182,7 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 달리는 애니메이션
-    if (abs(currSpeed) > 0) // frame x가 2 ~ 4 반복해야 함  TODO : 애니메이션 간의 딜레이 주기(애니메이션이 너무 빨리 바뀜)
+    if (abs(currSpeed) > 0)
     {
         elapsedTime += DELETA_TIME;
         if (elapsedTime > animationDelay)
@@ -212,7 +226,7 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 앉아있기
-    if (Input::GetButtonDown(VK_DOWN))
+    if (Input::GetButton(VK_DOWN))
     {
         if (level != 1)
         {
@@ -235,7 +249,6 @@ void PlayerCharacter::AnimationFrameChanger()
     // 커지기
 
 
-
     // 공격하기
     if (Input::GetButtonDown('X'))
     {
@@ -243,6 +256,12 @@ void PlayerCharacter::AnimationFrameChanger()
     }
 
     // 깃발 잡기
+}
+
+void PlayerCharacter::AnimationFrameChanger(int frameX, int frameY)
+{
+    this->frameX = frameX;
+    this->frameY = frameY;
 }
 
 HRESULT PlayerCharacter::Init()
@@ -261,6 +280,23 @@ HRESULT PlayerCharacter::Init()
 
 void PlayerCharacter::Update()
 {
+    //cout << level << endl;
+    cout << elapsedTime << endl;
+    if (Input::GetButtonDown('G'))
+    {
+        elapsedTime = 0.0f;
+        level++;
+        isGrowing = true;
+    }
+
+    if (Input::GetButtonDown('H') && isSmalling == false)
+    {
+        elapsedTime = 0.0f;
+        --level;
+        Hit();
+        return;
+    }
+
     if (pos.y < 15)
     {
         return;
@@ -268,6 +304,22 @@ void PlayerCharacter::Update()
 
     if (isDead == true)
         return;
+
+
+
+    if (isGrowing == true)
+    {
+        LevelUp();
+        return;
+    }
+
+    if (isSmalling == true)
+    {
+        Smalling();
+        return;
+    }
+
+
 
     UpdateCollider();
 
@@ -309,4 +361,123 @@ void PlayerCharacter::Render(HDC hdc)
 
 void PlayerCharacter::Release()
 {
+}
+
+void PlayerCharacter::LevelUp()
+{
+    // 1 : small, 2 :  big, 3 : fire
+    elapsedTime += DELETA_TIME;
+
+    if (level == 2)
+    {
+        if (frameX == PlayerAnimation::Grow3)
+        {
+            if (elapsedTime > 0.1f)
+            {
+                isGrowing = false;
+                elapsedTime = 0;
+
+                img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
+
+                return;
+            }
+            return;
+        }
+
+        if (elapsedTime > 0.2f)
+        {
+            switch (frameX)
+            {
+            case PlayerAnimation::Grow1:
+            case PlayerAnimation::Grow2:
+                ++frameX;
+                break;
+            case PlayerAnimation::Grow3:
+                break;
+            default:
+                AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+                break;
+            }
+            elapsedTime = 0.0f;
+        }
+    }
+    else
+    {        
+        if (nowImageIdChecker > 5)
+        {
+            img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
+            elapsedTime = 0.0f;
+            nowImageIdChecker = 0;
+            isGrowing = false;
+            return;
+        }
+        
+        if (elapsedTime > 0.2f)
+        {
+            switch (nowImageIdChecker % 2)
+            {
+            case 1:
+                img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
+                break;
+            default:
+                img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
+                break;
+            }
+            elapsedTime = 0.0f;
+            ++nowImageIdChecker;
+        }
+        
+    }
+    
+}
+
+void PlayerCharacter::Smalling()
+{
+    elapsedTime += DELETA_TIME;
+    if (frameX == PlayerAnimation::Grow3)
+    {
+        if (elapsedTime > 0.1f)
+        {
+            isSmalling = false;
+            elapsedTime = 0;
+            img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
+            return;
+        }
+        return;
+    }
+
+    if (elapsedTime > 0.2f)
+    {
+        switch (frameX)
+        {
+        case PlayerAnimation::Grow1:
+        case PlayerAnimation::Grow2:
+            ++frameX;
+            break;
+        case PlayerAnimation::Grow3:
+            break;
+        default:
+            AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+            break;
+        }
+        elapsedTime = 0.0f;
+    }
+}
+
+void PlayerCharacter::Hit()
+{
+    // 1 : small, 2 :  big, 3 : fire
+
+    if (level < 1)
+    {
+        isDead = true;
+        AnimationFrameChanger();
+        return;
+    }
+
+    if (level < 3)
+    {
+        level = 1;
+        isSmalling = true;
+    }
 }
