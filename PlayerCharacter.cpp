@@ -205,6 +205,13 @@ void PlayerCharacter::AnimationFrameChanger()
         elapsedTime = 0;
     }
 
+    // 점프
+    if (isGround == false)
+    {
+        frameX = PlayerAnimation::Jump;
+        return;
+    }
+
     // 방향전환 애니메이션
     if (currSpeed > 0) // 오른쪽 가는 중인데
     {
@@ -230,12 +237,6 @@ void PlayerCharacter::AnimationFrameChanger()
         {
             frameX = PlayerAnimation::Sit;
         }
-    }
-
-    // 점프
-    if (isGround == false)
-    {
-        frameX = PlayerAnimation::Jump;
     }
 
     // 죽기
