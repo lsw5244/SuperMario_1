@@ -6,6 +6,7 @@ void ImageManager::Init()
 {
 	ImageManager::GetInstance()->AddImage("Image/Character/SamllRedMario.bmp", 224, 64, 14, 2, true, RGB(255, 0, 255));
 	ImageManager::GetInstance()->AddImage("Image/Character/BigRedMario.bmp", 224, 64, 14, 2, true, RGB(255, 0, 255));
+	ImageManager::GetInstance()->AddImage("Image/Character/BigFireMario.bmp", 224, 64, 14, 2, true, RGB(255, 0, 255));
 	ImageManager::GetInstance()->AddImage("Image/Monster/Gunba.bmp", 64, 32, 4, 2, true, RGB(255, 0, 255));
 	ImageManager::GetInstance()->AddImage("Image/mario_overwordTile.bmp", 176, 208, 11, 13, true, RGB(255, 0, 255));
 }

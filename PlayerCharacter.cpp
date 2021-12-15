@@ -288,18 +288,6 @@ void PlayerCharacter::Update()
         isGrowing = true;
     }
 
-    if (isGrowing == true)
-    {
-        LevelUp();
-        return;
-    }
-
-    if (isSmalling == true)
-    {
-        Smalling();
-        return;
-    }
-
     if (Input::GetButtonDown('H') && isSmalling == false)
     {
         --level;
@@ -314,6 +302,22 @@ void PlayerCharacter::Update()
 
     if (isDead == true)
         return;
+
+
+
+    if (isGrowing == true)
+    {
+        LevelUp();
+        return;
+    }
+
+    if (isSmalling == true)
+    {
+        Smalling();
+        return;
+    }
+
+
 
     UpdateCollider();
 
@@ -367,7 +371,16 @@ void PlayerCharacter::LevelUp()
         {
             isGrowing = false;
             elapsedTime = 0;
-            img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
+
+            if (level == 2)
+            {
+                img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
+            }
+            else
+            {
+                img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
+            }
+            
             return;
         }
         return;
@@ -437,8 +450,7 @@ void PlayerCharacter::Hit()
 
     if (level < 3)
     {
-        
-        //--level;
+        level = 1;
         isSmalling = true;
     }
 }
