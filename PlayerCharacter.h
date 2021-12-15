@@ -14,10 +14,10 @@ private:
 
 	RECT collider = {};
 
-	float maxSpeed = 1.5f;
-	float currSpeed = 0.0f;
-	float speed = 0.01f;
-	float resistance = 0.01f;
+	float maxSpeed = 240.0f;//1.5f;
+	float currSpeed = 0.0f;//0.0f;
+	float speed = 1.6f;//0.01f;
+	float resistance = 1.6f; //0.01f;
 
 	float maxJumpPower = 2.0f;
 	float currJumpPower = 0.0f;

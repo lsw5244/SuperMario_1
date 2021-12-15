@@ -89,8 +89,6 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 		{
 			Input::Update();
 			g_mainGame.Update();
-			g_mainGame.Render(hdc);
-
 		}
 	}
 

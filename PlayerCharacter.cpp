@@ -83,8 +83,8 @@ void PlayerCharacter::Move()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            currSpeed += speed;
-            currSpeed = min(currSpeed, maxSpeed);
+            currSpeed += speed * DELETA_TIME;
+            currSpeed = min(currSpeed, maxSpeed * DELETA_TIME);
             // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정
             if (currSpeed < 0 && currSpeed > -0.5f)
             {
@@ -94,8 +94,8 @@ void PlayerCharacter::Move()
         }
         else if (Input::GetButton(VK_LEFT))
         {
-            currSpeed -= speed;
-            currSpeed = max(currSpeed, -maxSpeed);
+            currSpeed -= speed * DELETA_TIME;
+            currSpeed = max(currSpeed, -maxSpeed * DELETA_TIME);
             if (currSpeed > 0 && currSpeed < 0.5f)
             {
                 currSpeed = 0.0f;
@@ -105,12 +105,12 @@ void PlayerCharacter::Move()
         {
             if (frameY == MoveDirection::Right)
             {
-                currSpeed -= resistance;
+                currSpeed -= resistance * DELETA_TIME;
                 currSpeed = max(currSpeed, 0);
             }
             if (frameY == MoveDirection::Left)
             {
-                currSpeed += resistance;
+                currSpeed += resistance * DELETA_TIME;
                 currSpeed = min(currSpeed, 0);
             }
         }
@@ -321,10 +321,7 @@ void PlayerCharacter::Update()
 
 
 
-    UpdateCollider();
 
-    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.5f;//MAP_WIDTH;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
 
     if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
     {
@@ -341,6 +338,11 @@ void PlayerCharacter::Update()
     AnimationFrameChanger();
 
     PositionUpdater();
+
+    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
+
+    UpdateCollider();
 }
 
 void PlayerCharacter::Render(HDC hdc)
