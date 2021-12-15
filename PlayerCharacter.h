@@ -42,6 +42,8 @@ private:
 	bool isGrowing = false;
 	bool isSmalling = false;
 
+	int nowImageIdChecker = 0;
+
 	int level = 1;		// 1 : small, 2 :  big, 3 : fire
 
 	int nowTileIndexX = 0;

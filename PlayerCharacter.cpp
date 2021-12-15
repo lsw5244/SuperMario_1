@@ -284,12 +284,14 @@ void PlayerCharacter::Update()
     cout << elapsedTime << endl;
     if (Input::GetButtonDown('G'))
     {
+        elapsedTime = 0.0f;
         level++;
         isGrowing = true;
     }
 
     if (Input::GetButtonDown('H') && isSmalling == false)
     {
+        elapsedTime = 0.0f;
         --level;
         Hit();
         return;
@@ -364,44 +366,69 @@ void PlayerCharacter::Release()
 void PlayerCharacter::LevelUp()
 {
     // 1 : small, 2 :  big, 3 : fire
-    elapsedTime += DELETA_TIME;
-    if (frameX == PlayerAnimation::Grow3)
+    if (level == 2)
     {
-        if (elapsedTime > 0.1f)
+        elapsedTime += DELETA_TIME;
+        if (frameX == PlayerAnimation::Grow3)
         {
-            isGrowing = false;
-            elapsedTime = 0;
+            if (elapsedTime > 0.1f)
+            {
+                isGrowing = false;
+                elapsedTime = 0;
 
-            if (level == 2)
-            {
                 img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
+
+                return;
             }
-            else
-            {
-                img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
-            }
-            
             return;
         }
-        return;
-    }
-  
-    if (elapsedTime > 0.2f)
-    {
-        switch (frameX)
+
+        if (elapsedTime > 0.2f)
         {
-        case PlayerAnimation::Grow1:
-        case PlayerAnimation::Grow2:
-            ++frameX;
-            break;
-        case PlayerAnimation::Grow3:
-            break;
-        default:
-            AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
-            break;
+            switch (frameX)
+            {
+            case PlayerAnimation::Grow1:
+            case PlayerAnimation::Grow2:
+                ++frameX;
+                break;
+            case PlayerAnimation::Grow3:
+                break;
+            default:
+                AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+                break;
+            }
+            elapsedTime = 0.0f;
         }
-        elapsedTime = 0.0f;
     }
+    else
+    {
+        elapsedTime += DELETA_TIME;
+        
+        if (nowImageIdChecker > 5)
+        {
+            img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
+            elapsedTime = 0.0f;
+            isGrowing = false;
+            return;
+        }
+        
+        if (elapsedTime > 0.2f)
+        {
+            switch (nowImageIdChecker % 2)
+            {
+            case 1:
+                img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigFireMario.bmp");
+                break;
+            default:
+                img = img = ImageManager::GetInstance()->FindImage("Image/Character/BigRedMario.bmp");
+                break;
+            }
+            elapsedTime = 0.0f;
+            ++nowImageIdChecker;
+        }
+        
+    }
+    
 }
 
 void PlayerCharacter::Smalling()
