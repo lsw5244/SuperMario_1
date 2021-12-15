@@ -280,8 +280,11 @@ HRESULT PlayerCharacter::Init()
 
 void PlayerCharacter::Update()
 {
+    //cout << level << endl;
+    cout << elapsedTime << endl;
     if (Input::GetButtonDown('G'))
     {
+        level++;
         isGrowing = true;
     }
 
@@ -291,12 +294,18 @@ void PlayerCharacter::Update()
         return;
     }
 
-    if (Input::GetButtonDown('H'))
+    if (isSmalling == true)
     {
-        Hit();
+        Smalling();
+        return;
     }
 
-    
+    if (Input::GetButtonDown('H') && isSmalling == false)
+    {
+        --level;
+        Hit();
+        return;
+    }
 
     if (pos.y < 15)
     {
@@ -351,20 +360,6 @@ void PlayerCharacter::Release()
 void PlayerCharacter::LevelUp()
 {
     // 1 : small, 2 :  big, 3 : fire
-
-    switch (level)
-    {
-    case 1:
-        ++level;
-        break;
-    case 2:
-        break;
-    case 3:
-        break;
-
-    default:
-        break;
-    }
     elapsedTime += DELETA_TIME;
     if (frameX == PlayerAnimation::Grow3)
     {
@@ -396,13 +391,54 @@ void PlayerCharacter::LevelUp()
     }
 }
 
+void PlayerCharacter::Smalling()
+{
+    elapsedTime += DELETA_TIME;
+    if (frameX == PlayerAnimation::Grow3)
+    {
+        if (elapsedTime > 0.1f)
+        {
+            isSmalling = false;
+            elapsedTime = 0;
+            img = ImageManager::GetInstance()->FindImage("Image/Character/SamllRedMario.bmp");
+            return;
+        }
+        return;
+    }
+
+    if (elapsedTime > 0.2f)
+    {
+        switch (frameX)
+        {
+        case PlayerAnimation::Grow1:
+        case PlayerAnimation::Grow2:
+            ++frameX;
+            break;
+        case PlayerAnimation::Grow3:
+            break;
+        default:
+            AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+            break;
+        }
+        elapsedTime = 0.0f;
+    }
+}
+
 void PlayerCharacter::Hit()
 {
-    if (level <= 1)
+    // 1 : small, 2 :  big, 3 : fire
+
+    if (level < 1)
     {
         isDead = true;
         AnimationFrameChanger();
         return;
     }
 
+    if (level < 3)
+    {
+        
+        //--level;
+        isSmalling = true;
+    }
 }

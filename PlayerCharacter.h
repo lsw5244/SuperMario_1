@@ -40,6 +40,7 @@ private:
 
 	bool isDead = false;
 	bool isGrowing = false;
+	bool isSmalling = false;
 
 	int level = 1;		// 1 : small, 2 :  big, 3 : fire
 
@@ -63,6 +64,7 @@ public:
 	virtual ~PlayerCharacter() = default;
 
 	void LevelUp();
+	void Smalling();
 	void Hit();
 
 	void SetPos(POINTFLOAT pos)
