@@ -8,6 +8,8 @@ HRESULT TempScene::Init()
 {
     SetWindowSize(300, 20, GAME_SCENE_WIN_SIZE_X, GAME_SCENE_WIN_SIZE_Y);
 
+    GameDataContainer::GetInstance()->SetGlobalPos(0);
+
     mapSpriteImg = ImageManager::GetInstance()->FindImage("Image/mario_overwordTile.bmp");
     Load();
     GameDataContainer::GetInstance()->map = map;
@@ -17,8 +19,7 @@ HRESULT TempScene::Init()
 
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
-
-    GameDataContainer::GetInstance()->SetGlobalPos(0);
+    ammo.Init();
     return S_OK;
 }
 
@@ -26,7 +27,7 @@ void TempScene::Update()
 {
     mario.Update();
     mushroom.Update();
-   
+    ammo.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -57,6 +58,7 @@ void TempScene::Render(HDC hdc)
 
     mario.Render(hdc);
     mushroom.Render(hdc);  
+    ammo.Render(hdc);
 }
 
 void TempScene::Release()

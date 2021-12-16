@@ -82,7 +82,6 @@ void PlayerCharacter::Move()
         if (Input::GetButton(VK_RIGHT))
         {
             currSpeed += (acceleration - (jumpCorrectionSpeed * !isGround)) * DELETA_TIME;
-            cout << isGround << endl;
             //currSpeed += acceleration * DELETA_TIME;
             currSpeed = min(currSpeed, maxSpeed * DELETA_TIME);
             // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정

@@ -37,6 +37,9 @@
     <Filter Include="MainGame\Character">
       <UniqueIdentifier>{f1749f4c-d5a8-41e8-9093-dfe9d347e35b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Character\Ammo">
+      <UniqueIdentifier>{7bbcdf2d-38ad-4a01-beb5-3d088b2c1f87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="PlayerCharacter.cpp">
       <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="FireAmmo.cpp">
+      <Filter>MainGame\Character\Ammo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="PlayerCharacter.h">
       <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="FireAmmo.h">
+      <Filter>MainGame\Character\Ammo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

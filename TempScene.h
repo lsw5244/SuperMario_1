@@ -4,6 +4,7 @@
 #include "PlayerCharacter.h"
 #include "MacroCollection.h"
 #include "StructCollection.h"
+#include "FireAmmo.h"
 
 class Image;
 class TempScene : public GameEntity
@@ -15,6 +16,7 @@ private:
 	Image* mapSpriteImg = {};
 
 	//int globalPos = 0;
+	FireAmmo ammo;
 
 public:
 	virtual HRESULT Init() override;

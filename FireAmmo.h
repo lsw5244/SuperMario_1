@@ -1,6 +1,7 @@
 #pragma once
 #include "GameEntity.h"
 #include "HeaderCollection.h"
+#include "EnumClassCollection.h"
 
 class Image;
 class FireAmmo : public GameEntity
@@ -15,16 +16,20 @@ private:
 	int nowTileIndexX = 0;
 	int nowTileIndexY = 0;
 
-	float speed = 1.0f;
-	float jumpSpeed = 1.0f;
+	float speed = 30.0f;
 
 	const float maxJumpHeight = 5.0f;
 	float jumpHeight = 0.0f;
 
 	float elapsedTime = 0.0f;
 
+	BoundDirection boundDirection = BoundDirection::Down;
+
 	void UpdateCollider();
 	bool OnCollisionEnter(RECT rc1, RECT rc2);
+	void ChangeAnimationFrame();
+	void ChangeBoundDirection();
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;
