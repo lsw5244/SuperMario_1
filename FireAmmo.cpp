@@ -96,9 +96,11 @@ void FireAmmo::Update()
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
     
-    // 앞에 있는 타일과 충돌함
-    if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc))
+    // 앞, 뒤의 타일과 충돌했을 때
+    if ((TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc)) ||
+        (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc)))
     {
         isDead = true;
     }
@@ -110,17 +112,6 @@ void FireAmmo::Update()
     {
         ChangeBoundDirection();
     }
-
-    // 바닥에 튕기면 위 아래 방향 바꾸기
-    //if (TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true &&
-    //    OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX].rc) &&
-    //    pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top)
-    //{
-    //    ChangeBoundDirection();
-    //}
-
-
-
 
     UpdatePosition();
 
