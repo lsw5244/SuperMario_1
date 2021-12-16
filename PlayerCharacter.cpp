@@ -42,7 +42,7 @@ void PlayerCharacter::Jump()
     }
 
     if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
-        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc)
         )
     {
         isGround = true;
