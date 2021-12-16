@@ -15,8 +15,8 @@ void FireAmmo::UpdateCollider()
 bool FireAmmo::OnCollisionEnter(RECT rc1, RECT rc2)
 {
     if (rc1.left > rc2.right - GLOBAL_POS)	return false;
-    if (rc1.right < rc2.left)	            return false;
-    if (rc1.top > rc2.bottom - GLOBAL_POS)	return false;
+    if (rc1.right < rc2.left - GLOBAL_POS)  return false;
+    if (rc1.top > rc2.bottom)	            return false;
     if (rc1.bottom < rc2.top)	            return false;
 
     return true;
@@ -50,7 +50,7 @@ void FireAmmo::ChangeBoundDirection()
 
 HRESULT FireAmmo::Init()
 {
-    pos = { WIN_SIZE_X / 3, WIN_SIZE_Y / 2 };
+    pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };
 
     UpdateCollider();
 
@@ -67,6 +67,7 @@ void FireAmmo::Update()
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
+    cout << nowTileIndexX << endl;
 
     if (TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].isCollider == true &&
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].rc))
@@ -83,11 +84,15 @@ void FireAmmo::Update()
     {
         pos.y -= speed * DELETA_TIME;
     }
+    // 화면 밖으로 안나가도록
+    if (pos.x < 0 || pos.x > WIN_SIZE_X)
+    {
+        pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };
+    }
     
     ChangeAnimationFrame();
     
     UpdateCollider();
-
 }
 
 void FireAmmo::Render(HDC hdc)
