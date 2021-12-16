@@ -14,8 +14,8 @@ void PlayerCharacter::UpdateCollider()
 
 bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
 {
-    if (rc1.left > rc2.right)	return false;
-    if (rc1.right < rc2.left)	return false;
+    if (rc1.left > rc2.right - GLOBAL_POS)	return false;
+    if (rc1.right < rc2.left - GLOBAL_POS)	return false;
     if (rc1.top > rc2.bottom)	return false;
     if (rc1.bottom < rc2.top)	return false;
 
@@ -137,14 +137,14 @@ void PlayerCharacter::PositionUpdater()
 
     // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
     if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-        collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true &&
         currSpeed > 0)
     {
         currSpeed = 0;
         canMove = false;
     }
     else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-        collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc) == true &&
         currSpeed < 0)
     {
         currSpeed = 0;
@@ -302,9 +302,9 @@ void PlayerCharacter::Update()
     }
 
     if (isDead == true)
+    {
         return;
-
-
+    }
 
     if (isGrowing == true)
     {
@@ -317,18 +317,6 @@ void PlayerCharacter::Update()
         Smalling();
         return;
     }
-
-
-
-
-
-    //if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
-    //{
-    //    isDead = true;
-    //    ChagneAnimationFrame();
-    //    return;
-    //}
-
 
     Jump();
 
