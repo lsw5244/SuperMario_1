@@ -26,7 +26,7 @@ void PlayerCharacter::Jump()
 {
     // 점프하다 머리 박았을 때 처리
     if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
-        collider.top < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - 1
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc)
         )
     {
         jumpEnd = true;
