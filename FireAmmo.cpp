@@ -69,14 +69,22 @@ void FireAmmo::Update()
     nowTileIndexY = pos.y / MAP_HEIGHT;
     
     // 바닥에 튕기면 위 아래 방향 바꾸기
-    if (TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].isCollider == true &&
-        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].rc) &&
-        pos.y < TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].rc.top)
+    if (TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true &&
+        //OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX].rc) &&
+        pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top)
     {
         ChangeBoundDirection();
     }
 
-    pos.x += speed * DELETA_TIME;
+    if (moveDirection == MoveDirection::Right)
+    {
+        pos.x += speed * DELETA_TIME;
+    }
+    else
+    {
+        pos.x -= speed * DELETA_TIME;
+    }
+
     if (boundDirection == BoundDirection::Down)
     {
         pos.y += speed * DELETA_TIME;

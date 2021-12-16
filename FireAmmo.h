@@ -24,6 +24,7 @@ private:
 	float elapsedTime = 0.0f;
 
 	BoundDirection boundDirection = BoundDirection::Down;
+	MoveDirection moveDirection = MoveDirection::Right;
 
 	void UpdateCollider();
 	bool OnCollisionEnter(RECT rc1, RECT rc2);
