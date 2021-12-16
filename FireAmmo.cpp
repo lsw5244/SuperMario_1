@@ -84,10 +84,11 @@ void FireAmmo::Update()
     {
         pos.y -= speed * DELETA_TIME;
     }
-    // 화면 밖으로 안나가도록
+    // 화면 밖으로 안나가도록 처리
     if (pos.x < 0 || pos.x > WIN_SIZE_X)
     {
-        pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };
+        pos = { WIN_SIZE_X / 4, WIN_SIZE_Y / 2 };
+        boundDirection = BoundDirection::Down;
     }
     
     ChangeAnimationFrame();
