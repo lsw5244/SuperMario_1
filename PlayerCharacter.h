@@ -14,10 +14,10 @@ private:
 
 	RECT collider = {};
 
-	float maxSpeed	 = 240.0f;//1.5f; 160배
-	float currSpeed	 = 0.0f;//0.0f;
-	float speed		 = 1.6f;//0.01f;
-	float resistance = 1.6f; //0.01f;
+	float maxSpeed		 = 240.0f;//1.5f; 160배
+	float currSpeed	  	 = 0.0f;//0.0f;
+	float acceleration	 = 1.6f;//0.01f;
+	float resistance	 = 1.6f; //0.01f;
 
 	float maxJumpPower			 = 220.0f;
 	float currJumpPower			 = 0.0f;
@@ -53,8 +53,8 @@ private:
 	void Move();
 	void PositionUpdater();
 
-	void AnimationFrameChanger();
-	void AnimationFrameChanger(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용
+	void ChagneAnimationFrame();
+	void ChagneAnimationFrame(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용
 
 public:
 	virtual HRESULT Init() override;

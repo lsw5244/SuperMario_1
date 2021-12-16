@@ -81,7 +81,7 @@ void PlayerCharacter::Move()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            currSpeed += speed * DELETA_TIME;
+            currSpeed += acceleration * DELETA_TIME;
             currSpeed = min(currSpeed, maxSpeed * DELETA_TIME);
             // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정
             if (currSpeed < 0 && currSpeed > -0.5f)
@@ -92,7 +92,7 @@ void PlayerCharacter::Move()
         }
         else if (Input::GetButton(VK_LEFT))
         {
-            currSpeed -= speed * DELETA_TIME;
+            currSpeed -= acceleration * DELETA_TIME;
             currSpeed = max(currSpeed, -maxSpeed * DELETA_TIME);
             if (currSpeed > 0 && currSpeed < 0.5f)
             {
@@ -162,7 +162,7 @@ void PlayerCharacter::PositionUpdater()
     }
 }
 
-void PlayerCharacter::AnimationFrameChanger()
+void PlayerCharacter::ChagneAnimationFrame()
 {
     // 방향 애니메이션
     if (currSpeed < 0)
@@ -257,7 +257,7 @@ void PlayerCharacter::AnimationFrameChanger()
     // 깃발 잡기
 }
 
-void PlayerCharacter::AnimationFrameChanger(int frameX, int frameY)
+void PlayerCharacter::ChagneAnimationFrame(int frameX, int frameY)
 {
     this->frameX = frameX;
     this->frameY = frameY;
@@ -322,19 +322,19 @@ void PlayerCharacter::Update()
 
 
 
-    if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
-    {
-        isDead = true;
-        AnimationFrameChanger();
-        return;
-    }
+    //if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
+    //{
+    //    isDead = true;
+    //    ChagneAnimationFrame();
+    //    return;
+    //}
 
 
     Jump();
 
     Move();
 
-    AnimationFrameChanger();
+    ChagneAnimationFrame();
 
     PositionUpdater();
 
@@ -397,7 +397,7 @@ void PlayerCharacter::LevelUp()
             case PlayerAnimation::Grow3:
                 break;
             default:
-                AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+                ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
                 break;
             }
             elapsedTime = 0.0f;
@@ -459,7 +459,7 @@ void PlayerCharacter::Smalling()
         case PlayerAnimation::Grow3:
             break;
         default:
-            AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+            ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
             break;
         }
         elapsedTime = 0.0f;
@@ -473,7 +473,7 @@ void PlayerCharacter::Hit()
     if (level < 1)
     {
         isDead = true;
-        AnimationFrameChanger();
+        ChagneAnimationFrame();
         return;
     }
 
