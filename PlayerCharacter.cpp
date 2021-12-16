@@ -12,12 +12,12 @@ void PlayerCharacter::UpdateCollider()
         pos.y + img->GetFrameHeight() / 2);
 }
 
-bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
+bool PlayerCharacter::OnCollisionEnter(RECT plyaerRect, RECT tileRect)
 {
-    if (rc1.left > rc2.right)	return false;
-    if (rc1.right < rc2.left)	return false;
-    if (rc1.top > rc2.bottom)	return false;
-    if (rc1.bottom < rc2.top)	return false;
+    if (plyaerRect.left > tileRect.right - GLOBAL_POS)	return false;
+    if (plyaerRect.right < tileRect.left - GLOBAL_POS)	return false;
+    if (plyaerRect.top > tileRect.bottom)	return false;
+    if (plyaerRect.bottom < tileRect.top)	return false;
 
     return true;
 }
@@ -26,7 +26,7 @@ void PlayerCharacter::Jump()
 {
     // 점프하다 머리 박았을 때 처리
     if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
-        collider.top < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - 1
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc)
         )
     {
         jumpEnd = true;
@@ -42,7 +42,7 @@ void PlayerCharacter::Jump()
     }
 
     if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
-        collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc)
         )
     {
         isGround = true;
@@ -77,11 +77,13 @@ void PlayerCharacter::Jump()
 
 void PlayerCharacter::Move()
 {
-    if (isGround)
+    //if (isGround)
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            currSpeed += acceleration * DELETA_TIME;
+            currSpeed += (acceleration - (jumpCorrectionSpeed * !isGround)) * DELETA_TIME;
+            cout << isGround << endl;
+            //currSpeed += acceleration * DELETA_TIME;
             currSpeed = min(currSpeed, maxSpeed * DELETA_TIME);
             // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정
             if (currSpeed < 0 && currSpeed > -0.5f)
@@ -137,14 +139,14 @@ void PlayerCharacter::PositionUpdater()
 
     // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
     if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-        collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc.left - GLOBAL_POS - 1 &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true &&
         currSpeed > 0)
     {
         currSpeed = 0;
         canMove = false;
     }
     else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-        collider.left > TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc.right - GLOBAL_POS + 1 &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc) == true &&
         currSpeed < 0)
     {
         currSpeed = 0;
@@ -302,9 +304,9 @@ void PlayerCharacter::Update()
     }
 
     if (isDead == true)
+    {
         return;
-
-
+    }
 
     if (isGrowing == true)
     {
@@ -317,18 +319,6 @@ void PlayerCharacter::Update()
         Smalling();
         return;
     }
-
-
-
-
-
-    //if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
-    //{
-    //    isDead = true;
-    //    ChagneAnimationFrame();
-    //    return;
-    //}
-
 
     Jump();
 
