@@ -16,6 +16,8 @@ private:
 	int nowTileIndexX = 0;
 	int nowTileIndexY = 0;
 
+	bool isDead = false;
+
 	float speed = 30.0f;
 
 	const float maxJumpHeight = 5.0f;
@@ -30,6 +32,7 @@ private:
 	bool OnCollisionEnter(RECT rc1, RECT rc2);
 	void ChangeAnimationFrame();
 	void ChangeBoundDirection();
+	void UpdatePosition();
 
 public:
 	virtual HRESULT Init() override;
