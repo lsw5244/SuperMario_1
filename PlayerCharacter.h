@@ -48,7 +48,7 @@ private:
 	int nowTileIndexY = 0;
 
 	void UpdateCollider();
-	bool OnCollisionEnter(RECT rc1, RECT rc2);
+	bool OnCollisionEnter(RECT plyaerRect, RECT tileRect);
 	void Jump();
 	void Move();
 	void PositionUpdater();

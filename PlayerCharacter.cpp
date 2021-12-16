@@ -12,12 +12,12 @@ void PlayerCharacter::UpdateCollider()
         pos.y + img->GetFrameHeight() / 2);
 }
 
-bool PlayerCharacter::OnCollisionEnter(RECT rc1, RECT rc2)
+bool PlayerCharacter::OnCollisionEnter(RECT plyaerRect, RECT tileRect)
 {
-    if (rc1.left > rc2.right - GLOBAL_POS)	return false;
-    if (rc1.right < rc2.left - GLOBAL_POS)	return false;
-    if (rc1.top > rc2.bottom)	return false;
-    if (rc1.bottom < rc2.top)	return false;
+    if (plyaerRect.left > tileRect.right - GLOBAL_POS)	return false;
+    if (plyaerRect.right < tileRect.left - GLOBAL_POS)	return false;
+    if (plyaerRect.top > tileRect.bottom)	return false;
+    if (plyaerRect.bottom < tileRect.top)	return false;
 
     return true;
 }
