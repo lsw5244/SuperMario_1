@@ -67,10 +67,11 @@ void FireAmmo::Update()
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
-    cout << nowTileIndexX << endl;
-
+    
+    // 바닥에 튕기면 위 아래 방향 바꾸기
     if (TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].isCollider == true &&
-        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].rc))
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].rc) &&
+        pos.y < TILE_DATA[nowTileIndexY/* + 1*/][nowTileIndexX].rc.top)
     {
         ChangeBoundDirection();
     }
