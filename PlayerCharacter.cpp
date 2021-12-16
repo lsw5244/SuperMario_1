@@ -64,7 +64,7 @@ void PlayerCharacter::Jump()
     if (Input::GetButton('Z') && jumpEnd == false)
     {
         isGround = false;
-        currJumpPower += (jumpPower + jumpPower) * DELETA_TIME;
+        currJumpPower += (jumpPower/* + jumpPower*/) * DELETA_TIME;
         //점프 최대높이
         if (currJumpPower >= maxJumpPower)
         {

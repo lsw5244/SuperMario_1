@@ -21,7 +21,7 @@ private:
 
 	float maxJumpPower			 = 220.0f;
 	float currJumpPower			 = 0.0f;
-	float jumpPower				 = 700.0f;
+	float jumpPower				 = 1400.0f;
 
 	float gravity				 = 300.0f;
 	float maxGravity			 = 500.0f;
