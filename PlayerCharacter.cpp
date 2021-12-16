@@ -4,8 +4,6 @@
 #include "MacroCollection.h"
 #include "GameDataContainer.h"
 
-#define mapWid 16   // 게임 화면에 보이는 총 타일 수는 16개
-
 void PlayerCharacter::UpdateCollider()
 {
     SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
@@ -37,8 +35,8 @@ void PlayerCharacter::Jump()
 
     if (isGround == false)
     {
-        currJumpPower -= gravity;
-        gravity += gravityAcceleration;
+        currJumpPower -= gravity * DELETA_TIME;
+        gravity += gravityAcceleration * DELETA_TIME;
         gravity = min(gravity, maxGravity);
         //return;
     }
@@ -48,8 +46,8 @@ void PlayerCharacter::Jump()
         )
     {
         isGround = true;
-        gravity = 0.01f;
-        currJumpPower = 0;
+        gravity = 300.0f;
+        currJumpPower = 0.0f;
         jumpEnd = false;
     }
     else
@@ -66,12 +64,12 @@ void PlayerCharacter::Jump()
     if (Input::GetButton('Z') && jumpEnd == false)
     {
         isGround = false;
-        currJumpPower += jumpPower;
-
+        currJumpPower += (jumpPower/* + jumpPower*/) * DELETA_TIME;
         //점프 최대높이
         if (currJumpPower >= maxJumpPower)
         {
             jumpEnd = true;
+            currJumpPower = maxJumpPower;
         }
         currJumpPower = min(currJumpPower, maxJumpPower);
     }
@@ -83,8 +81,8 @@ void PlayerCharacter::Move()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            currSpeed += speed;
-            currSpeed = min(currSpeed, maxSpeed);
+            currSpeed += acceleration * DELETA_TIME;
+            currSpeed = min(currSpeed, maxSpeed * DELETA_TIME);
             // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정
             if (currSpeed < 0 && currSpeed > -0.5f)
             {
@@ -94,8 +92,8 @@ void PlayerCharacter::Move()
         }
         else if (Input::GetButton(VK_LEFT))
         {
-            currSpeed -= speed;
-            currSpeed = max(currSpeed, -maxSpeed);
+            currSpeed -= acceleration * DELETA_TIME;
+            currSpeed = max(currSpeed, -maxSpeed * DELETA_TIME);
             if (currSpeed > 0 && currSpeed < 0.5f)
             {
                 currSpeed = 0.0f;
@@ -105,12 +103,12 @@ void PlayerCharacter::Move()
         {
             if (frameY == MoveDirection::Right)
             {
-                currSpeed -= resistance;
+                currSpeed -= resistance * DELETA_TIME;
                 currSpeed = max(currSpeed, 0);
             }
             if (frameY == MoveDirection::Left)
             {
-                currSpeed += resistance;
+                currSpeed += resistance * DELETA_TIME;
                 currSpeed = min(currSpeed, 0);
             }
         }
@@ -160,11 +158,11 @@ void PlayerCharacter::PositionUpdater()
 
     if (isGround == false)
     {
-        pos.y -= currJumpPower;
+        pos.y -= currJumpPower * DELETA_TIME;
     }
 }
 
-void PlayerCharacter::AnimationFrameChanger()
+void PlayerCharacter::ChagneAnimationFrame()
 {
     // 방향 애니메이션
     if (currSpeed < 0)
@@ -207,6 +205,13 @@ void PlayerCharacter::AnimationFrameChanger()
         elapsedTime = 0;
     }
 
+    // 점프
+    if (isGround == false)
+    {
+        frameX = PlayerAnimation::Jump;
+        return;
+    }
+
     // 방향전환 애니메이션
     if (currSpeed > 0) // 오른쪽 가는 중인데
     {
@@ -234,12 +239,6 @@ void PlayerCharacter::AnimationFrameChanger()
         }
     }
 
-    // 점프
-    if (isGround == false)
-    {
-        frameX = PlayerAnimation::Jump;
-    }
-
     // 죽기
     if (isDead == true)
     {
@@ -258,7 +257,7 @@ void PlayerCharacter::AnimationFrameChanger()
     // 깃발 잡기
 }
 
-void PlayerCharacter::AnimationFrameChanger(int frameX, int frameY)
+void PlayerCharacter::ChagneAnimationFrame(int frameX, int frameY)
 {
     this->frameX = frameX;
     this->frameY = frameY;
@@ -321,26 +320,28 @@ void PlayerCharacter::Update()
 
 
 
-    UpdateCollider();
 
-    nowTileIndexX = (pos.x / mapWid + GLOBAL_POS / mapWid) + 0.5f;//MAP_WIDTH;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
 
-    if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
-    {
-        isDead = true;
-        AnimationFrameChanger();
-        return;
-    }
+    //if (Input::GetButtonDown(VK_SPACE)) // TODO : 죽는 조건 변경, 죽을 때 바닥으로 떨어지도록 구현
+    //{
+    //    isDead = true;
+    //    ChagneAnimationFrame();
+    //    return;
+    //}
 
 
     Jump();
 
     Move();
 
-    AnimationFrameChanger();
+    ChagneAnimationFrame();
 
     PositionUpdater();
+
+    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
+
+    UpdateCollider();
 }
 
 void PlayerCharacter::Render(HDC hdc)
@@ -396,7 +397,7 @@ void PlayerCharacter::LevelUp()
             case PlayerAnimation::Grow3:
                 break;
             default:
-                AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+                ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
                 break;
             }
             elapsedTime = 0.0f;
@@ -458,7 +459,7 @@ void PlayerCharacter::Smalling()
         case PlayerAnimation::Grow3:
             break;
         default:
-            AnimationFrameChanger(PlayerAnimation::Grow1, frameY);
+            ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
             break;
         }
         elapsedTime = 0.0f;
@@ -472,7 +473,7 @@ void PlayerCharacter::Hit()
     if (level < 1)
     {
         isDead = true;
-        AnimationFrameChanger();
+        ChagneAnimationFrame();
         return;
     }
 
