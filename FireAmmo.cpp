@@ -70,6 +70,38 @@ void FireAmmo::UpdatePosition()
 
 }
 
+void FireAmmo::Explosion()
+{
+    // 4 5 6 후 삭제
+    elapsedTime += DELETA_TIME;
+
+    if (frameX == 6)
+    {
+        if (elapsedTime > 0.1f)
+        {
+            isDead = true;
+            isExploding = false;
+            pos = { 0, 0 };
+        }
+        return;
+    }
+
+    if (elapsedTime > 0.1f)
+    {
+        switch (frameX)
+        {
+        case 4:
+        case 5:
+            ++frameX;
+            break;
+        default:
+            frameX = 4;
+            break;
+        }
+        elapsedTime = 0.0f;
+    }
+}
+
 HRESULT FireAmmo::Init()
 {
     pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };
@@ -93,6 +125,13 @@ void FireAmmo::Update()
     {
         return;
     }
+
+    if (isExploding == true)
+    {
+        Explosion();
+        return;
+    }
+
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
     
@@ -102,7 +141,8 @@ void FireAmmo::Update()
         (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
             OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc)))
     {
-        isDead = true;
+        isExploding = true;
+        return;
     }
 
     // 위에서 아래 방향으로 가다 충돌

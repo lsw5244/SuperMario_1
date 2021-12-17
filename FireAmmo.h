@@ -17,6 +17,7 @@ private:
 	int nowTileIndexY = 0;
 
 	bool isDead = false;
+	bool isExploding = false;
 
 	float speed = 30.0f;
 
@@ -33,6 +34,7 @@ private:
 	void ChangeAnimationFrame();
 	void ChangeBoundDirection();
 	void UpdatePosition();
+	void Explosion();
 
 public:
 	virtual HRESULT Init() override;
