@@ -112,7 +112,7 @@ void FireAmmo::Explosion()
 
 HRESULT FireAmmo::Init()
 {
-    pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };
+    pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };           /// !!
 
     frameX = 0;
 
@@ -122,7 +122,7 @@ HRESULT FireAmmo::Init()
     boundDirection = BoundDirection::Down;
     moveDirection = MoveDirection::Right;
 
-    isDead = false;
+    isDead = false;         /// !!
     isExploding = false;
 
     jumpHeight = 0.0f;
@@ -147,12 +147,13 @@ void FireAmmo::Update()
     {
         return;
     }
-
-    if (pos.y < 0)
+    // 화면 밖으로 안나가도록 처리
+    if (pos.x < 0 || pos.x > WIN_SIZE_X || pos.y < 0 || pos.y > WIN_SIZE_Y)
     {
-        isDead = true;
+        Init();
         return;
     }
+
 
     if (isExploding == true)
     {
@@ -182,11 +183,7 @@ void FireAmmo::Update()
 
     UpdatePosition();
 
-    // 화면 밖으로 안나가도록 처리
-    if (pos.x < 0 || pos.x > WIN_SIZE_X)
-    {
-        isDead = true;
-    }
+
 
     ChangeAnimationFrame();
     
