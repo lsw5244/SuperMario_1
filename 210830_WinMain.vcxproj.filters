@@ -96,6 +96,9 @@
     <ClCompile Include="FireAmmo.cpp">
       <Filter>MainGame\Character\Ammo</Filter>
     </ClCompile>
+    <ClCompile Include="AmmoManger.cpp">
+      <Filter>MainGame\Character\Ammo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h">
@@ -168,6 +171,9 @@
       <Filter>MainGame\Character</Filter>
     </ClInclude>
     <ClInclude Include="FireAmmo.h">
+      <Filter>MainGame\Character\Ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="AmmoManger.h">
       <Filter>MainGame\Character\Ammo</Filter>
     </ClInclude>
   </ItemGroup>

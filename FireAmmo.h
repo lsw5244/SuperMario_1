@@ -21,7 +21,7 @@ private:
 
 	float speed = 250.0f;
 
-	const float maxJumpHeight = 5.0f;
+	const float maxJumpHeight = 30.0f;
 	float jumpHeight = 0.0f;
 
 	float elapsedTime = 0.0f;

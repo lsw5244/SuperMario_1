@@ -41,6 +41,7 @@ void FireAmmo::ChangeBoundDirection()
     if (boundDirection == BoundDirection::Down)
     {
         boundDirection = BoundDirection::Up;
+        jumpHeight = 0.0f;
     }
     else
     {
@@ -154,7 +155,6 @@ void FireAmmo::Update()
         return;
     }
 
-
     if (isExploding == true)
     {
         Explosion();
@@ -163,7 +163,8 @@ void FireAmmo::Update()
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
-    
+    /*------------------------*/
+
     // 위에서 아래 방향으로 가다 충돌
     if (TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true &&
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX].rc) &&
@@ -181,9 +182,15 @@ void FireAmmo::Update()
         return;
     }
 
+    if (jumpHeight > maxJumpHeight)
+    {
+        boundDirection = BoundDirection::Down;
+        jumpHeight = 0.0f;
+    }
+
     UpdatePosition();
 
-
+    jumpHeight += speed * DELETA_TIME;
 
     ChangeAnimationFrame();
     
