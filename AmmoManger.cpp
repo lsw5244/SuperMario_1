@@ -2,6 +2,7 @@
 #include "FireAmmo.h"
 #include "MacroCollection.h"
 
+
 HRESULT AmmoManger::Init()
 {
 	ammos.resize(MAX_AMMO_COUNT);
@@ -36,4 +37,18 @@ void AmmoManger::Release()
 		SAFE_RELEASE((*it));
 	}
 	ammos.clear();
+}
+
+bool AmmoManger::PlayerFire(POINTFLOAT pos, MoveDirection direction)
+{
+	for (int i = 0; i < MAX_AMMO_COUNT; i++)
+	{
+		if (ammos[i]->GetIsDead() == false)
+		{
+			ammos[i]->Fire(pos, direction);
+			return true;
+		}
+	}
+
+	return false;
 }

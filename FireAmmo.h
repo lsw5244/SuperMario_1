@@ -42,5 +42,12 @@ public:
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
 	virtual ~FireAmmo() = default;
+
+	bool GetIsDead()
+	{
+		return isDead;
+	}
+
+	void Fire(POINTFLOAT pos, MoveDirection direction);
 };
 

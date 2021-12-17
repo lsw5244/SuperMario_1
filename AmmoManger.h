@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEntity.h"
+#include "EnumClassCollection.h"
 #include <vector>
 
 #define MAX_AMMO_COUNT 2
@@ -15,5 +16,7 @@ public:
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
 	virtual ~AmmoManger() = default;
+
+	bool PlayerFire(POINTFLOAT pos, MoveDirection direction);
 };
 

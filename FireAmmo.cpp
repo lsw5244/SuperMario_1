@@ -113,8 +113,8 @@ void FireAmmo::Explosion()
 
 HRESULT FireAmmo::Init()
 {
-    pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };           /// !!
-
+    //pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };           /// !!
+    pos = { 0.0f, 0.0f };
     frameX = 0;
 
     nowTileIndexX = 0;
@@ -123,7 +123,7 @@ HRESULT FireAmmo::Init()
     boundDirection = BoundDirection::Down;
     moveDirection = MoveDirection::Right;
 
-    isDead = false;         /// !!
+    isDead = true;         /// !!
     isExploding = false;
 
     jumpHeight = 0.0f;
@@ -215,4 +215,13 @@ void FireAmmo::Render(HDC hdc)
 
 void FireAmmo::Release()
 {
+}
+
+void FireAmmo::Fire(POINTFLOAT pos, MoveDirection direction)
+{
+    isDead = false;
+    isExploding = false;
+    this->pos = pos;
+    UpdateCollider();
+    this->moveDirection = direction;
 }
