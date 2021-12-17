@@ -19,7 +19,7 @@ private:
 	bool isDead = false;
 	bool isExploding = false;
 
-	float speed = 30.0f;
+	float speed = 50.0f;
 
 	const float maxJumpHeight = 5.0f;
 	float jumpHeight = 0.0f;

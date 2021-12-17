@@ -135,22 +135,22 @@ void FireAmmo::Update()
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
     
-    // 앞, 뒤의 타일과 충돌했을 때
-    if ((TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
-        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc)) ||
-        (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
-            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc)))
-    {
-        isExploding = true;
-        return;
-    }
-
     // 위에서 아래 방향으로 가다 충돌
     if (TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true &&
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX].rc) &&
         pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top)
     {
         ChangeBoundDirection();
+    }else 
+
+    // 앞, 뒤의 타일과 충돌했을 때
+    if ((TILE_DATA[nowTileIndexY][nowTileIndexX/* + 1*/].isCollider == true &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX/* + 1*/].rc)) ||
+        (TILE_DATA[nowTileIndexY][nowTileIndexX/* - 1*/].isCollider == true &&
+            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX/* - 1*/].rc)))
+    {
+        isExploding = true;
+        return;
     }
 
     UpdatePosition();
