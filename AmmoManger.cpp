@@ -25,7 +25,7 @@ void AmmoManger::Render(HDC hdc)
 {
 	for (int i = 0; i < MAX_AMMO_COUNT; i++)
 	{
-		ammos[i]->Render();
+		ammos[i]->Render(hdc);
 	}
 }
 
