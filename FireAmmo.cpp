@@ -77,16 +77,17 @@ void FireAmmo::Explosion()
 
     if (frameX == 6)
     {
-        if (elapsedTime > 0.1f)
+        if (elapsedTime > 0.05f)
         {
-            isDead = true;
+            /*isDead = true;
             isExploding = false;
-            pos = { 0, 0 };
+            pos = { 0, 0 };*/
+            Init();
         }
         return;
     }
 
-    if (elapsedTime > 0.1f)
+    if (elapsedTime > 0.05f)
     {
         switch (frameX)
         {
@@ -105,6 +106,20 @@ void FireAmmo::Explosion()
 HRESULT FireAmmo::Init()
 {
     pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };
+
+    frameX = 0;
+
+    nowTileIndexX = 0;
+    nowTileIndexY = 0;
+
+    boundDirection = BoundDirection::Down;
+    moveDirection = MoveDirection::Right;
+
+    isDead = false;
+    isExploding = false;
+
+    jumpHeight = 0.0f;
+    elapsedTime = 0.0f;
 
     UpdateCollider();
 
@@ -141,10 +156,9 @@ void FireAmmo::Update()
         pos.y < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top)
     {
         ChangeBoundDirection();
-    }else 
-
+    }
     // 앞, 뒤의 타일과 충돌했을 때
-    if ((TILE_DATA[nowTileIndexY][nowTileIndexX/* + 1*/].isCollider == true &&
+    else if ((TILE_DATA[nowTileIndexY][nowTileIndexX/* + 1*/].isCollider == true &&
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX/* + 1*/].rc)) ||
         (TILE_DATA[nowTileIndexY][nowTileIndexX/* - 1*/].isCollider == true &&
             OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX/* - 1*/].rc)))
