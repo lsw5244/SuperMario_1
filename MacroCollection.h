@@ -27,3 +27,4 @@
 #define DELETA_TIME TimerManager::GetInstance()->GetDeltaTime()
 #define TILE_DATA GameDataContainer::GetInstance()->map
 #define GLOBAL_POS GameDataContainer::GetInstance()->GetGlobalPos()
+#define PLAYER GameDataContainer::GetInstance()->GetPlayer()

@@ -52,10 +52,17 @@ void FireAmmo::UpdatePosition()
 {
     if (moveDirection == MoveDirection::Right)
     {
-        pos.x += speed * DELETA_TIME;
-    }
-    else
-    {
+        if (PLAYER->GetPos().x + PLAYER->GetCurrSpeed() >= WIN_SIZE_X / 2)
+        {
+            pos.x += speed * DELETA_TIME - PLAYER->GetCurrSpeed();
+        }
+        else
+        {
+            pos.x += speed * DELETA_TIME;
+        }
+    }                                 
+    else                              
+    {                                 
         pos.x -= speed * DELETA_TIME;
     }
 
@@ -138,6 +145,12 @@ void FireAmmo::Update()
     /*---------------------------------------------*/
     if (isDead == true)
     {
+        return;
+    }
+
+    if (pos.y < 0)
+    {
+        isDead = true;
         return;
     }
 
