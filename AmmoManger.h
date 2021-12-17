@@ -2,6 +2,7 @@
 #include "GameEntity.h"
 #include <vector>
 
+#define MAX_AMMO_COUNT 2
 class FireAmmo;
 class AmmoManger : public GameEntity
 {
