@@ -7,6 +7,7 @@
 #include "FireAmmo.h"
 
 class Image;
+class AmmoManager;
 class TempScene : public GameEntity
 {
 private:
@@ -17,6 +18,7 @@ private:
 
 	//int globalPos = 0;
 	FireAmmo ammo;
+	AmmoManager* ammoManger;
 
 public:
 	virtual HRESULT Init() override;

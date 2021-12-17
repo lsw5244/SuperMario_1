@@ -1,9 +1,8 @@
-#include "AmmoManger.h"
+#include "AmmoManager.h"
 #include "FireAmmo.h"
 #include "MacroCollection.h"
 
-
-HRESULT AmmoManger::Init()
+HRESULT AmmoManager::Init()
 {
 	ammos.resize(MAX_AMMO_COUNT);
 	for (int i = 0; i < MAX_AMMO_COUNT; i++)
@@ -14,7 +13,7 @@ HRESULT AmmoManger::Init()
 	return S_OK;
 }
 
-void AmmoManger::Update()
+void AmmoManager::Update()
 {
 	for (int i = 0; i < MAX_AMMO_COUNT; i++)
 	{
@@ -22,7 +21,7 @@ void AmmoManger::Update()
 	}
 }
 
-void AmmoManger::Render(HDC hdc)
+void AmmoManager::Render(HDC hdc)
 {
 	for (int i = 0; i < MAX_AMMO_COUNT; i++)
 	{
@@ -30,7 +29,7 @@ void AmmoManger::Render(HDC hdc)
 	}
 }
 
-void AmmoManger::Release()
+void AmmoManager::Release()
 {
 	for (vector<FireAmmo*>::iterator it = ammos.begin(); it != ammos.end(); ++it)
 	{
@@ -39,7 +38,7 @@ void AmmoManger::Release()
 	ammos.clear();
 }
 
-bool AmmoManger::PlayerFire(POINTFLOAT pos, MoveDirection direction)
+bool AmmoManager::PlayerFire(POINTFLOAT pos, MoveDirection direction)
 {
 	for (int i = 0; i < MAX_AMMO_COUNT; i++)
 	{

@@ -5,7 +5,7 @@
 
 #define MAX_AMMO_COUNT 2
 class FireAmmo;
-class AmmoManger : public GameEntity
+class AmmoManager : public GameEntity
 {
 private:
 	std::vector<FireAmmo*> ammos;
@@ -15,7 +15,7 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
-	virtual ~AmmoManger() = default;
+	virtual ~AmmoManager() = default;
 
 	bool PlayerFire(POINTFLOAT pos, MoveDirection direction);
 };
