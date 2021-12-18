@@ -28,3 +28,4 @@
 #define TILE_DATA GameDataContainer::GetInstance()->map
 #define GLOBAL_POS GameDataContainer::GetInstance()->GetGlobalPos()
 #define PLAYER GameDataContainer::GetInstance()->GetPlayer()
+#define AMMO_MANAGER GameDataContainer::GetInstance()->GetAmmoManager()

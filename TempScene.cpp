@@ -21,6 +21,7 @@ HRESULT TempScene::Init()
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
     ammoManger.Init();
+    GameDataContainer::GetInstance()->SetAmmoManager(&ammoManger);
 
     return S_OK;
 }
