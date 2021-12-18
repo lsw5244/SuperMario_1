@@ -69,6 +69,7 @@ void TempScene::Release()
     //delete[] GameDataContainer::GetSingleton()->map;
     //GameDataContainer::GetSingleton()->Release();
     //GameDataContainer::GetSingleton()->ReleaseSingleton();
+    ammoManger.Release();
 }
 
 void TempScene::Load(int loadIndex)

@@ -8,6 +8,7 @@ HRESULT AmmoManager::Init()
 	for (int i = 0; i < MAX_AMMO_COUNT; i++)
 	{
 		ammos[i] = new FireAmmo;
+		ammos[i]->Init();
 	}
 
 	return S_OK;
@@ -42,7 +43,7 @@ bool AmmoManager::PlayerFire(POINTFLOAT pos, MoveDirection direction)
 {
 	for (int i = 0; i < MAX_AMMO_COUNT; i++)
 	{
-		if (ammos[i]->GetIsDead() == false)
+		if (ammos[i]->GetIsDead() == true)
 		{
 			ammos[i]->Fire(pos, direction);
 			return true;

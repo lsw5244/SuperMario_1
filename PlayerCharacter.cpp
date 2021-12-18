@@ -116,6 +116,14 @@ void PlayerCharacter::Move()
     }
 }
 
+void PlayerCharacter::Attack()
+{
+    if (Input::GetButtonDown('X'))
+    {
+        AMMO_MANAGER->PlayerFire(pos, (MoveDirection)frameY);
+    }
+}
+
 void PlayerCharacter::PositionUpdater()
 {
     bool canMove = true;
@@ -318,6 +326,8 @@ void PlayerCharacter::Update()
         Smalling();
         return;
     }
+
+    Attack();
 
     Jump();
 

@@ -52,6 +52,7 @@ private:
 	bool OnCollisionEnter(RECT plyaerRect, RECT tileRect);
 	void Jump();
 	void Move();
+	void Attack();
 	void PositionUpdater();
 
 	void ChagneAnimationFrame();
