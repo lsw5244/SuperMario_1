@@ -3,6 +3,7 @@
 #include "Image.h"
 #include "Input.h"
 #include "GameDataContainer.h"
+#include "AmmoManager.h"
 
 HRESULT TempScene::Init()
 {
@@ -19,7 +20,8 @@ HRESULT TempScene::Init()
 
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
-    ammo.Init();
+    ammoManger.Init();
+
     return S_OK;
 }
 
@@ -27,7 +29,7 @@ void TempScene::Update()
 {
     mario.Update();
     mushroom.Update();
-    ammo.Update();
+    ammoManger.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -58,7 +60,7 @@ void TempScene::Render(HDC hdc)
 
     mario.Render(hdc);
     mushroom.Render(hdc);  
-    ammo.Render(hdc);
+    ammoManger.Render(hdc);
 }
 
 void TempScene::Release()

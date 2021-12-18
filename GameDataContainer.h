@@ -1,6 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "PlayerCharacter.h"
+#include "AmmoManager.h"
 #include "StructCollection.h"
 #include "MacroCollection.h"
 
@@ -9,6 +10,7 @@ class GameDataContainer : public Singleton<GameDataContainer>
 private:
 	PlayerCharacter* player = nullptr;
 	int globalPos			= 0;
+	AmmoManager* ammoManger = nullptr;
 
 public:
 	TILE(*map)[MAP_WIDTH] = {};
@@ -43,6 +45,16 @@ public:
 	int GetGlobalPos()
 	{
 		return this->globalPos;
+	}
+
+	void SetAmmoManager(AmmoManager* ammoManager)
+	{
+		this->ammoManger = ammoManager;
+	}
+
+	AmmoManager* GetAmmoManager()
+	{
+		return this->ammoManger;
 	}
 };
 
