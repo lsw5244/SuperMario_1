@@ -21,7 +21,7 @@ private:
 
 	float speed = 250.0f;
 
-	const float maxJumpHeight = 30.0f;
+	const float maxJumpHeight = 20.0f;
 	float jumpHeight = 0.0f;
 
 	float elapsedTime = 0.0f;
@@ -35,6 +35,8 @@ private:
 	void ChangeBoundDirection();
 	void UpdatePosition();
 	void Explosion();
+	void ReSpawn();
+	void Destroy();
 
 public:
 	virtual HRESULT Init() override;

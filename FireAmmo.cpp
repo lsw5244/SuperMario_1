@@ -111,6 +111,30 @@ void FireAmmo::Explosion()
     }
 }
 
+void FireAmmo::ReSpawn()
+{
+}
+
+void FireAmmo::Destroy()
+{
+    pos = { 0.0f, 0.0f };
+    frameX = 0;
+
+    nowTileIndexX = 0;
+    nowTileIndexY = 0;
+
+    boundDirection = BoundDirection::Down;
+    moveDirection = MoveDirection::Right;
+
+    isDead = true;         /// !!
+    isExploding = false;
+
+    jumpHeight = 0.0f;
+    elapsedTime = 0.0f;
+
+    UpdateCollider();
+}
+
 HRESULT FireAmmo::Init()
 {
     //pos = { WIN_SIZE_X / 5, WIN_SIZE_Y / 2 };           /// !!
@@ -152,6 +176,7 @@ void FireAmmo::Update()
     if (pos.x < 0 || pos.x > WIN_SIZE_X || pos.y < 0 || pos.y > WIN_SIZE_Y)
     {
         Init();
+        Destroy();
         return;
     }
 
@@ -199,15 +224,18 @@ void FireAmmo::Update()
 
 void FireAmmo::Render(HDC hdc)
 {
-    // 콜라이더
-    Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
-    // 현재 위치
-    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
+    //// 콜라이더
+    //Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
+    //// 현재 위치
+    //Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
 
-    img->Render(hdc, pos.x, pos.y, frameX, 0);
+    if (isDead == false)
+    {
+        img->Render(hdc, pos.x, pos.y, frameX, 0);
+    }
 
     //pos위치
     Rectangle(hdc, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
@@ -224,4 +252,5 @@ void FireAmmo::Fire(POINTFLOAT pos, MoveDirection direction)
     this->pos = pos;
     UpdateCollider();
     this->moveDirection = direction;
+    this->boundDirection = BoundDirection::Down;
 }
