@@ -72,8 +72,8 @@ void FireFlower::Update()
 
 void FireFlower::Render(HDC hdc)
 {
-    //if (isDead == true)
-    //    return;
+    if (isDead == true && isSpawning == false)
+        return;
 
     img->Render(hdc, pos.x, pos.y, frameX, 0);
 }
