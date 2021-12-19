@@ -16,5 +16,6 @@ public:
 	virtual void Render(HDC hdc);
 	virtual void Release();
 	virtual ~ItemManager() = default;
+
 };
 

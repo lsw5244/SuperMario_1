@@ -2,6 +2,25 @@
 #include "Image.h"
 #include "MacroCollection.h"
 
+void Item::Spawn(POINTFLOAT pos)
+{
+    this->pos = pos;
+    isSpawning = true;
+}
+
+void Item::SpawnAnimation()
+{
+    pos.y -= spawnSpeed * DELETA_TIME;
+
+    spawnMoveDistance += spawnSpeed * DELETA_TIME;
+    if (spawnMoveDistance > TILE_SIZE)
+    {
+        isDead = false;
+        isSpawning = false;
+        spawnMoveDistance = 0.0f;
+    }
+}
+
 void Item::UpdateCollider()
 {
     SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,

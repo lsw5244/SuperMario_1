@@ -30,3 +30,5 @@ void ItemManager::Release()
 	SAFE_RELEASE(mushroom);
 	SAFE_RELEASE(fireFlower);
 }
+
+

@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "MacroCollection.h"
 #include "GameDataContainer.h"
+#include "Input.h"
 
 void FireFlower::ChangeFrame()
 {
@@ -22,11 +23,27 @@ void FireFlower::ChangeFrame()
     elapsedTime = 0.0f;
 }
 
+void FireFlower::SpawnAnimation()
+{
+    pos.y -= spawnSpeed * DELETA_TIME;
+
+    spawnMoveDistance += spawnSpeed * DELETA_TIME;
+    cout << spawnMoveDistance << endl;
+    if (spawnMoveDistance > TILE_SIZE)
+    {
+        isDead = false;
+        isSpawning = false;
+        spawnMoveDistance = 0.0f;
+    }
+}
+
 HRESULT FireFlower::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/Item/FireFlower.bmp");
 
     pos = { WIN_SIZE_X / 2, WIN_SIZE_Y / 2 };
+
+    isDead = true;
 
     UpdateCollider();
 
@@ -35,6 +52,15 @@ HRESULT FireFlower::Init()
 
 void FireFlower::Update()
 {
+    if (Input::GetButtonDown(VK_SPACE))
+    {
+        Spawn({WIN_SIZE_X / 2, WIN_SIZE_Y / 2});
+    }
+    if (isSpawning == true)
+    {
+        SpawnAnimation();
+    }
+
     if (isDead == true)
         return;
 
@@ -46,12 +72,18 @@ void FireFlower::Update()
 
 void FireFlower::Render(HDC hdc)
 {
-    if (isDead == true)
-        return;
+    //if (isDead == true)
+    //    return;
 
     img->Render(hdc, pos.x, pos.y, frameX, 0);
 }
 
 void FireFlower::Release()
 {
+}
+
+void FireFlower::Spawn(POINTFLOAT pos)
+{
+    this->pos = pos;
+    isSpawning = true;
 }

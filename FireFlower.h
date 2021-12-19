@@ -11,11 +11,14 @@ private:
 	float animationDelay = 0.05f;
 
 	void ChangeFrame();
+	void SpawnAnimation();
 public:
 	virtual HRESULT Init();
 	virtual void Update();
 	virtual void Render(HDC hdc);
 	virtual void Release();
 	virtual ~FireFlower() = default;
+
+	void Spawn(POINTFLOAT pos);
 };
 
