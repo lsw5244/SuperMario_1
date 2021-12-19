@@ -58,6 +58,7 @@ void FireFlower::Update()
     if (CollideWithPlayer() == true)
     {
         cout << "@@@@@@@@@" << endl;
+        Destroy();
     }
 
     AutoMove();

@@ -93,6 +93,7 @@ void Mushroom::Update()
     if (CollideWithPlayer() == true)
     {
         cout << "@@@@@@@@@" << endl;
+        Destroy();
     }
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;

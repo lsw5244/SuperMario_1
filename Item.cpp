@@ -32,7 +32,7 @@ void Item::UpdateCollider()
 
 void Item::Destroy()
 {
-    if (pos.x > WIN_SIZE_X || pos.x < 0)
+    //if (pos.x > WIN_SIZE_X || pos.x < 0)
     {
         isDead = true;
         isSpawning = false;
