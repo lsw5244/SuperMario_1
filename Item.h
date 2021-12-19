@@ -15,6 +15,7 @@ public:
 
 	void UpdateCollider();
 	bool OnCollisionEnter(RECT plyaerRect, RECT tileRect);
+	void Destroy();
 public:
 
 };
