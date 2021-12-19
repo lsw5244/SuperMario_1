@@ -27,23 +27,23 @@ void Mushroom::AutoMove()
     }
 }
 
-void Mushroom::UpdateCollider()
-{
-    SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
-        pos.y - img->GetFrameWidth() / 2,
-        pos.x + img->GetFrameWidth() / 2,
-        pos.y + img->GetFrameHeight() / 2);
-}
-
-bool Mushroom::OnCollisionEnter(RECT rect, RECT tileRect)
-{
-    if (rect.left > tileRect.right - GLOBAL_POS)	return false;
-    if (rect.right < tileRect.left - GLOBAL_POS)	return false;
-    if (rect.top > tileRect.bottom)             	return false;
-    if (rect.bottom < tileRect.top)             	return false;
-
-    return true;
-}
+//void Mushroom::UpdateCollider()
+//{
+//    SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
+//        pos.y - img->GetFrameWidth() / 2,
+//        pos.x + img->GetFrameWidth() / 2,
+//        pos.y + img->GetFrameHeight() / 2);
+//}
+//
+//bool Mushroom::OnCollisionEnter(RECT rect, RECT tileRect)
+//{
+//    if (rect.left > tileRect.right - GLOBAL_POS)	return false;
+//    if (rect.right < tileRect.left - GLOBAL_POS)	return false;
+//    if (rect.top > tileRect.bottom)             	return false;
+//    if (rect.bottom < tileRect.top)             	return false;
+//
+//    return true;
+//}
 
 void Mushroom::ChangeDirection()
 {
@@ -76,6 +76,7 @@ bool Mushroom::CheckIsGround()
 
 HRESULT Mushroom::Init()
 {
+    img = ImageManager::GetInstance()->FindImage("Image/Item/Mushroom.bmp");
     pos = { WIN_SIZE_X / 2, WIN_SIZE_Y / 2 };
     UpdateCollider();
 

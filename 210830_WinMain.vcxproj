@@ -148,6 +148,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MacroCollection.h" />
     <ClInclude Include="MainGame.h" />

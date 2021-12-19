@@ -105,6 +105,9 @@
     <ClCompile Include="Mushroom.cpp">
       <Filter>MainGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h">
@@ -183,6 +186,9 @@
       <Filter>MainGame\Character\Ammo</Filter>
     </ClInclude>
     <ClInclude Include="Mushroom.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
       <Filter>MainGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
