@@ -19,6 +19,7 @@ public:
 	virtual void Release();
 	virtual ~FireFlower() = default;
 
+	void AutoMove();
 	//void Spawn(POINTFLOAT pos);
 };
 

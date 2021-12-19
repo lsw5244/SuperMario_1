@@ -52,13 +52,15 @@ void FireFlower::Update()
     if (isDead == true)
         return;
 
-    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
+    //nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    //nowTileIndexY = pos.y / MAP_HEIGHT;
 
     if (CollideWithPlayer() == true)
     {
         cout << "@@@@@@@@@" << endl;
     }
+
+    AutoMove();
 
     // 화면 나가기 방지
     if (pos.x > WIN_SIZE_X || pos.x < 0)
@@ -79,4 +81,12 @@ void FireFlower::Render(HDC hdc)
 
 void FireFlower::Release()
 {
+}
+
+void FireFlower::AutoMove()
+{
+    if (PLAYER->GetPos().x + PLAYER->GetCurrSpeed() > WIN_SIZE_X / 2)
+    {
+        pos.x -= (int)PLAYER->GetCurrSpeed();
+    }
 }
