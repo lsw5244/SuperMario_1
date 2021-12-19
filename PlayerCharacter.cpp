@@ -334,22 +334,21 @@ void PlayerCharacter::Update()
 
     Attack();
 
-    if (isAttacking == true)
-    {
-        elapsedTime += DELETA_TIME;
-        if (elapsedTime < 0.1f)
-        {
-            return;
-        }
-        isAttacking = false;
-        elapsedTime = 0.0f;
-    }
-
     Jump();
 
     Move();
 
-    ChagneAnimationFrame();
+    if (isAttacking == true) // 공격 애니메이션
+    {
+        elapsedTime += DELETA_TIME;
+        if (elapsedTime > 0.1f)
+        {
+            isAttacking = false;
+            elapsedTime = 0.0f;
+        }   
+    }
+
+    ChagneAnimationFrame();   
 
     PositionUpdater();
 
