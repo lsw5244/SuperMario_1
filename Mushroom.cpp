@@ -90,6 +90,11 @@ void Mushroom::Update()
 
     UpdateCollider();
 
+    if (CollideWithPlayer() == true)
+    {
+        cout << "@@@@@@@@@" << endl;
+    }
+
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
 

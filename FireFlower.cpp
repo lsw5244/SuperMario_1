@@ -55,6 +55,11 @@ void FireFlower::Update()
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
 
+    if (CollideWithPlayer() == true)
+    {
+        cout << "@@@@@@@@@" << endl;
+    }
+
     // 화면 나가기 방지
     if (pos.x > WIN_SIZE_X || pos.x < 0)
     {
