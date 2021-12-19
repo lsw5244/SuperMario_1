@@ -118,7 +118,7 @@ void PlayerCharacter::Move()
 
 void PlayerCharacter::Attack()
 {
-    if (Input::GetButtonDown('X'))
+    if (Input::GetButtonDown('X') && level >= 3)
     {
         AMMO_MANAGER->PlayerFire(pos, (MoveDirection)frameY);
     }
