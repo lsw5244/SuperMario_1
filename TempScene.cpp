@@ -25,6 +25,8 @@ HRESULT TempScene::Init()
 
     mushroomItem.Init();
 
+    fireFlower.Init();
+
     return S_OK;
 }
 
@@ -34,6 +36,7 @@ void TempScene::Update()
     mushroom.Update();
     ammoManger.Update();
     mushroomItem.Update();
+    fireFlower.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -55,6 +58,7 @@ void TempScene::Render(HDC hdc)
     mushroomItem.Render(hdc);
     mario.Render(hdc);
     mushroom.Render(hdc);  
+    fireFlower.Render(hdc);
     ammoManger.Render(hdc);
 }
 

@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "MacroCollection.h"
 #include "GameDataContainer.h"
+//#include "HeaderCollection.h"
 
 void Mushroom::AutoMove()
 {

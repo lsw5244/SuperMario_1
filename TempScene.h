@@ -7,7 +7,7 @@
 #include "FireAmmo.h"
 #include "AmmoManager.h"
 #include "Mushroom.h"
-
+#include "FireFlower.h"
 class Image;
 class TempScene : public GameEntity
 {
@@ -18,7 +18,7 @@ private:
 	Image* mapSpriteImg = {};
 
 	Mushroom mushroomItem;
-
+	FireFlower fireFlower;
 	//int globalPos = 0;
 	AmmoManager ammoManger;
 

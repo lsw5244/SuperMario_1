@@ -1,7 +1,6 @@
 #pragma once
 #include "Item.h"
 #include "EnumClassCollection.h"
-#include "HeaderCollection.h"
 
 class Image;
 class Mushroom : public Item

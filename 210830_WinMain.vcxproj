@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="AmmoManager.cpp" />
     <ClCompile Include="FireAmmo.cpp" />
+    <ClCompile Include="FireFlower.cpp" />
     <ClCompile Include="GameDataContainer.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="EnumClassCollection.h" />
     <ClInclude Include="FireAmmo.h" />
+    <ClInclude Include="FireFlower.h" />
     <ClInclude Include="GameDataContainer.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameObject.h" />
