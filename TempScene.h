@@ -6,6 +6,7 @@
 #include "StructCollection.h"
 #include "FireAmmo.h"
 #include "AmmoManager.h"
+#include "Mushroom.h"
 
 class Image;
 class TempScene : public GameEntity
@@ -15,6 +16,8 @@ private:
 	Gunba mushroom;
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
+
+	Mushroom mushroomItem;
 
 	//int globalPos = 0;
 	AmmoManager ammoManger;
