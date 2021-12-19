@@ -140,7 +140,7 @@ void PlayerCharacter::Attack()
     }
 }
 
-void PlayerCharacter::PositionUpdater()
+void PlayerCharacter::UpdatePosition()
 {
     bool canMove = true;
     float nextXpos = pos.x + currSpeed;
@@ -332,13 +332,13 @@ void PlayerCharacter::Update()
 
     if (isGrowing == true)
     {
-        LevelUp();
+        GrowAnimation();
         return;
     }
 
     if (isSmalling == true)
     {
-        Smalling();
+        SmallingAnimation();
         return;
     }
 
@@ -350,7 +350,7 @@ void PlayerCharacter::Update()
 
     ChagneAnimationFrame();   
 
-    PositionUpdater();
+    UpdatePosition();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -379,7 +379,7 @@ void PlayerCharacter::Release()
 {
 }
 
-void PlayerCharacter::LevelUp()
+void PlayerCharacter::GrowAnimation()
 {
     // 1 : small, 2 :  big, 3 : fire
     elapsedTime += DELETA_TIME;
@@ -447,7 +447,7 @@ void PlayerCharacter::LevelUp()
     
 }
 
-void PlayerCharacter::Smalling()
+void PlayerCharacter::SmallingAnimation()
 {
     elapsedTime += DELETA_TIME;
     if (frameX == PlayerAnimation::Grow3)
