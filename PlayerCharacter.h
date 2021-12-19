@@ -40,6 +40,7 @@ private:
 	bool isDead					 = false;
 	bool isGrowing				 = false;
 	bool isSmalling				 = false;
+	bool isAttacking			 = false;
 
 	int nowImageIdChecker		 = 0;
 

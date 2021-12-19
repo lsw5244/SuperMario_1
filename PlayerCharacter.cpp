@@ -118,9 +118,15 @@ void PlayerCharacter::Move()
 
 void PlayerCharacter::Attack()
 {
-    if (Input::GetButtonDown('X') && level >= 3)
+    if (Input::GetButtonDown('X') && level >= 3 && isAttacking == false)
     {
-        AMMO_MANAGER->PlayerFire(pos, (MoveDirection)frameY);
+        if (AMMO_MANAGER->PlayerFire(pos, (MoveDirection)frameY) == false) // 총알 없을 때
+        {
+            return;
+        }
+        isAttacking = true;
+        ChagneAnimationFrame(PlayerAnimation::Attack, frameY);
+        elapsedTime = 0.0f;
     }
 }
 
@@ -182,6 +188,14 @@ void PlayerCharacter::ChagneAnimationFrame()
     {
         frameY = MoveDirection::Right;
     }
+    
+    // 공격하기
+    if (isAttacking == true)
+    {
+        frameX = PlayerAnimation::Attack;
+        return;
+    }
+
     // 서 있는 애니메이션
     if (currSpeed == 0)
     {
@@ -254,15 +268,6 @@ void PlayerCharacter::ChagneAnimationFrame()
         frameX = PlayerAnimation::Die;
     }
 
-    // 커지기
-
-
-    // 공격하기
-    if (Input::GetButtonDown('X'))
-    {
-        frameX = PlayerAnimation::Attack;
-    }
-
     // 깃발 잡기
 }
 
@@ -328,6 +333,17 @@ void PlayerCharacter::Update()
     }
 
     Attack();
+
+    if (isAttacking == true)
+    {
+        elapsedTime += DELETA_TIME;
+        if (elapsedTime < 0.1f)
+        {
+            return;
+        }
+        isAttacking = false;
+        elapsedTime = 0.0f;
+    }
 
     Jump();
 
