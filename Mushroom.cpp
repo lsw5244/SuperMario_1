@@ -62,9 +62,10 @@ HRESULT Mushroom::Init()
     pos = { WIN_SIZE_X / 2, WIN_SIZE_Y / 2 };
     UpdateCollider();
 
-    isDead = false;
+    isDead = true;
+    isSpawning = false;
 
-    moveDirection = MoveDirection::Left;
+    moveDirection = MoveDirection::Right;
     return S_OK;
 }
 
@@ -92,7 +93,12 @@ void Mushroom::Update()
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
 
-    Destroy();
+    // 화면 나가기 방지
+    if (pos.x > WIN_SIZE_X || pos.x < 0)
+    {
+        Destroy();
+    }
+    
 }
 
 void Mushroom::Render(HDC hdc)

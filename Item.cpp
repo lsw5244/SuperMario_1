@@ -39,5 +39,8 @@ void Item::Destroy()
     if (pos.x > WIN_SIZE_X || pos.x < 0)
     {
         isDead = true;
+        isSpawning = false;
+        pos = { 0, 0 };
+        UpdateCollider();
     }
 }

@@ -23,20 +23,6 @@ void FireFlower::ChangeFrame()
     elapsedTime = 0.0f;
 }
 
-//void FireFlower::SpawnAnimation()
-//{
-//    pos.y -= spawnSpeed * DELETA_TIME;
-//
-//    spawnMoveDistance += spawnSpeed * DELETA_TIME;
-//    cout << spawnMoveDistance << endl;
-//    if (spawnMoveDistance > TILE_SIZE)
-//    {
-//        isDead = false;
-//        isSpawning = false;
-//        spawnMoveDistance = 0.0f;
-//    }
-//}
-
 HRESULT FireFlower::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/Item/FireFlower.bmp");
@@ -44,6 +30,7 @@ HRESULT FireFlower::Init()
     pos = { WIN_SIZE_X / 2, WIN_SIZE_Y / 2 };
 
     isDead = true;
+    isSpawning = false;
 
     UpdateCollider();
 
@@ -59,6 +46,7 @@ void FireFlower::Update()
     if (isSpawning == true)
     {
         SpawnAnimation();
+        ChangeFrame();
     }
 
     if (isDead == true)
@@ -66,6 +54,12 @@ void FireFlower::Update()
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
+
+    // 화면 나가기 방지
+    if (pos.x > WIN_SIZE_X || pos.x < 0)
+    {
+        Destroy();
+    }
 
     ChangeFrame();
 }
