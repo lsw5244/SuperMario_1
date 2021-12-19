@@ -6,8 +6,8 @@
 #include "StructCollection.h"
 #include "FireAmmo.h"
 #include "AmmoManager.h"
-#include "Mushroom.h"
-#include "FireFlower.h"
+#include "ItemManager.h"
+
 class Image;
 class TempScene : public GameEntity
 {
@@ -17,8 +17,7 @@ private:
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
 
-	Mushroom mushroomItem;
-	FireFlower fireFlower;
+	ItemManager itemManager;
 	//int globalPos = 0;
 	AmmoManager ammoManger;
 
