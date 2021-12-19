@@ -23,19 +23,19 @@ void FireFlower::ChangeFrame()
     elapsedTime = 0.0f;
 }
 
-void FireFlower::SpawnAnimation()
-{
-    pos.y -= spawnSpeed * DELETA_TIME;
-
-    spawnMoveDistance += spawnSpeed * DELETA_TIME;
-    cout << spawnMoveDistance << endl;
-    if (spawnMoveDistance > TILE_SIZE)
-    {
-        isDead = false;
-        isSpawning = false;
-        spawnMoveDistance = 0.0f;
-    }
-}
+//void FireFlower::SpawnAnimation()
+//{
+//    pos.y -= spawnSpeed * DELETA_TIME;
+//
+//    spawnMoveDistance += spawnSpeed * DELETA_TIME;
+//    cout << spawnMoveDistance << endl;
+//    if (spawnMoveDistance > TILE_SIZE)
+//    {
+//        isDead = false;
+//        isSpawning = false;
+//        spawnMoveDistance = 0.0f;
+//    }
+//}
 
 HRESULT FireFlower::Init()
 {
@@ -82,8 +82,8 @@ void FireFlower::Release()
 {
 }
 
-void FireFlower::Spawn(POINTFLOAT pos)
-{
-    this->pos = pos;
-    isSpawning = true;
-}
+//void FireFlower::Spawn(POINTFLOAT pos)
+//{
+//    this->pos = pos;
+//    isSpawning = true;
+//}

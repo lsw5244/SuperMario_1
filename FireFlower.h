@@ -11,7 +11,7 @@ private:
 	float animationDelay = 0.05f;
 
 	void ChangeFrame();
-	void SpawnAnimation();
+	//void SpawnAnimation();
 public:
 	virtual HRESULT Init();
 	virtual void Update();
@@ -19,6 +19,6 @@ public:
 	virtual void Release();
 	virtual ~FireFlower() = default;
 
-	void Spawn(POINTFLOAT pos);
+	//void Spawn(POINTFLOAT pos);
 };
 
