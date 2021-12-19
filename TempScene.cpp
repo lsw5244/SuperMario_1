@@ -24,6 +24,7 @@ HRESULT TempScene::Init()
     GameDataContainer::GetInstance()->SetAmmoManager(&ammoManger);
 
     itemManager.Init();
+    GameDataContainer::GetInstance()->SetItemManager(&itemManager);
 
     return S_OK;
 }
