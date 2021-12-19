@@ -23,9 +23,7 @@ HRESULT TempScene::Init()
     ammoManger.Init();
     GameDataContainer::GetInstance()->SetAmmoManager(&ammoManger);
 
-    mushroomItem.Init();
-
-    fireFlower.Init();
+    itemManager.Init();
 
     return S_OK;
 }
@@ -35,8 +33,7 @@ void TempScene::Update()
     mario.Update();
     mushroom.Update();
     ammoManger.Update();
-    mushroomItem.Update();
-    fireFlower.Update();
+    itemManager.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -55,10 +52,9 @@ void TempScene::Render(HDC hdc)
                 , map[i][j].frameX, map[i][j].frameY);     
         }
     }
-    mushroomItem.Render(hdc);
+    itemManager.Render(hdc);
     mario.Render(hdc);
     mushroom.Render(hdc);  
-    fireFlower.Render(hdc);
     ammoManger.Render(hdc);
 }
 
@@ -67,6 +63,7 @@ void TempScene::Release()
     //delete[] GameDataContainer::GetSingleton()->map;
     //GameDataContainer::GetSingleton()->Release();
     //GameDataContainer::GetSingleton()->ReleaseSingleton();
+    itemManager.Release();
     ammoManger.Release();
 }
 

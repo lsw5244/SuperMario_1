@@ -108,8 +108,11 @@
     <ClCompile Include="Item.cpp">
       <Filter>MainGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
     <ClCompile Include="FireFlower.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MainGame\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,8 +197,11 @@
     <ClInclude Include="Item.h">
       <Filter>MainGame\Item</Filter>
     </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
     <ClInclude Include="FireFlower.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MainGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

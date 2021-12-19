@@ -1,7 +1,7 @@
 #include "ItemManager.h"
 #include "Mushroom.h"
 #include "FireFlower.h"
-
+#include "MacroCollection.h"
 HRESULT ItemManager::Init()
 {
 	mushroom = new Mushroom;
@@ -27,6 +27,6 @@ void ItemManager::Render(HDC hdc)
 
 void ItemManager::Release()
 {
-	mushroom->Release();
-	fireFlower->Release();
+	SAFE_RELEASE(mushroom);
+	SAFE_RELEASE(fireFlower);
 }
