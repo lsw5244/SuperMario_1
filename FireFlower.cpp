@@ -81,9 +81,3 @@ void FireFlower::Render(HDC hdc)
 void FireFlower::Release()
 {
 }
-
-//void FireFlower::Spawn(POINTFLOAT pos)
-//{
-//    this->pos = pos;
-//    isSpawning = true;
-//}

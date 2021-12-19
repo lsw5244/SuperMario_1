@@ -11,7 +11,7 @@ void Item::Spawn(POINTFLOAT pos)
 void Item::SpawnAnimation()
 {
     pos.y -= spawnSpeed * DELETA_TIME;
-
+    UpdateCollider();
     spawnMoveDistance += spawnSpeed * DELETA_TIME;
     if (spawnMoveDistance > TILE_SIZE)
     {

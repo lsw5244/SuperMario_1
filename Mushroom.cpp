@@ -2,15 +2,14 @@
 #include "Image.h"
 #include "MacroCollection.h"
 #include "GameDataContainer.h"
-//#include "HeaderCollection.h"
-
+#include "Input.h"
 void Mushroom::AutoMove()
 {
     if(moveDirection == MoveDirection::Right)
     {
         if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
         {
-            pos.x += speed * DELETA_TIME - PLAYER->GetCurrSpeed();
+            pos.x += speed * DELETA_TIME - (int)PLAYER->GetCurrSpeed();
         }
         else
         {
@@ -71,6 +70,16 @@ HRESULT Mushroom::Init()
 
 void Mushroom::Update()
 {
+    if (Input::GetButtonDown(VK_SPACE))
+    {
+        Spawn({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
+    }
+    if (isSpawning == true)
+    {
+        SpawnAnimation();
+        return;
+    }
+
     if (isDead == true)
         return;
 
@@ -88,7 +97,7 @@ void Mushroom::Update()
 
 void Mushroom::Render(HDC hdc)
 {
-    if (isDead == true)
+    if (isDead == true && isSpawning == false)
         return;
 
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
