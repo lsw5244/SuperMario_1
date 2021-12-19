@@ -70,18 +70,11 @@ public:
 	void SmallingAnimation();
 	void Hit();
 
-	void SetPos(POINTFLOAT pos)
-	{
-		this->pos = pos;
-	}
-	POINTFLOAT GetPos()
-	{
-		return this->pos;
-	}
+	void SetPos(POINTFLOAT pos)	{ this->pos = pos; }
+	POINTFLOAT GetPos()	{ return this->pos;	}
 
-	float GetCurrSpeed()
-	{
-		return currSpeed;
-	}
+	float GetCurrSpeed() { return currSpeed; }
+
+	RECT GetRect() { return collider; }
 };
 

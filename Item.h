@@ -22,7 +22,8 @@ public:
 	void SpawnAnimation();
 
 	void UpdateCollider();
-	bool OnCollisionEnter(RECT plyaerRect, RECT tileRect);
 	void Destroy();
+
+	bool CollideWithPlayer();
 };
 

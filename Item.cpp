@@ -1,6 +1,7 @@
 #include "Item.h"
 #include "Image.h"
 #include "MacroCollection.h"
+#include "GameDataContainer.h"
 
 void Item::Spawn(POINTFLOAT pos)
 {
@@ -29,11 +30,6 @@ void Item::UpdateCollider()
         pos.y + img->GetFrameHeight() / 2);
 }
 
-bool Item::OnCollisionEnter(RECT plyaerRect, RECT tileRect)
-{
-	return false;
-}
-
 void Item::Destroy()
 {
     if (pos.x > WIN_SIZE_X || pos.x < 0)
@@ -44,3 +40,14 @@ void Item::Destroy()
         UpdateCollider();
     }
 }
+
+bool Item::CollideWithPlayer()
+{   
+    if (PLAYER->GetRect().left > collider.right)	return false;
+    if (PLAYER->GetRect().right < collider.left)	return false;
+    if (PLAYER->GetRect().top > collider.bottom)	return false;
+    if (PLAYER->GetRect().bottom < collider.top)	return false;
+
+    return true;
+}
+
