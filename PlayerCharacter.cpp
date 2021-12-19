@@ -128,6 +128,16 @@ void PlayerCharacter::Attack()
         ChagneAnimationFrame(PlayerAnimation::Attack, frameY);
         elapsedTime = 0.0f;
     }
+
+    if (isAttacking == true) // 공격 애니메이션
+    {
+        elapsedTime += DELETA_TIME;
+        if (elapsedTime > 0.1f)
+        {
+            isAttacking = false;
+            elapsedTime = 0.0f;
+        }
+    }
 }
 
 void PlayerCharacter::PositionUpdater()
@@ -295,7 +305,7 @@ void PlayerCharacter::Update()
 {
     //cout << level << endl;
     //cout << elapsedTime << endl;
-    if (Input::GetButtonDown('G'))
+    if (Input::GetButtonDown('G') && level < 3)
     {
         elapsedTime = 0.0f;
         level++;
@@ -337,16 +347,6 @@ void PlayerCharacter::Update()
     Jump();
 
     Move();
-
-    if (isAttacking == true) // 공격 애니메이션
-    {
-        elapsedTime += DELETA_TIME;
-        if (elapsedTime > 0.1f)
-        {
-            isAttacking = false;
-            elapsedTime = 0.0f;
-        }   
-    }
 
     ChagneAnimationFrame();   
 
