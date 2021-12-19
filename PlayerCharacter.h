@@ -40,6 +40,7 @@ private:
 	bool isDead					 = false;
 	bool isGrowing				 = false;
 	bool isSmalling				 = false;
+	bool isAttacking			 = false;
 
 	int nowImageIdChecker		 = 0;
 
@@ -52,7 +53,8 @@ private:
 	bool OnCollisionEnter(RECT plyaerRect, RECT tileRect);
 	void Jump();
 	void Move();
-	void PositionUpdater();
+	void Attack();
+	void UpdatePosition();
 
 	void ChagneAnimationFrame();
 	void ChagneAnimationFrame(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용
@@ -64,8 +66,8 @@ public:
 	virtual void Release() override;
 	virtual ~PlayerCharacter() = default;
 
-	void LevelUp();
-	void Smalling();
+	void GrowAnimation();
+	void SmallingAnimation();
 	void Hit();
 
 	void SetPos(POINTFLOAT pos)

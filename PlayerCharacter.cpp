@@ -82,7 +82,6 @@ void PlayerCharacter::Move()
         if (Input::GetButton(VK_RIGHT))
         {
             currSpeed += (acceleration - (jumpCorrectionSpeed * !isGround)) * DELETA_TIME;
-            cout << isGround << endl;
             //currSpeed += acceleration * DELETA_TIME;
             currSpeed = min(currSpeed, maxSpeed * DELETA_TIME);
             // 미끌어 질 때( 방향과 반대 방향 키 누를 때 ) 속도 줄이는 시간 보정
@@ -117,7 +116,31 @@ void PlayerCharacter::Move()
     }
 }
 
-void PlayerCharacter::PositionUpdater()
+void PlayerCharacter::Attack()
+{
+    if (Input::GetButtonDown('X') && level >= 3 && isAttacking == false)
+    {
+        if (AMMO_MANAGER->PlayerFire(pos, (MoveDirection)frameY) == false) // 총알 없을 때
+        {
+            return;
+        }
+        isAttacking = true;
+        ChagneAnimationFrame(PlayerAnimation::Attack, frameY);
+        elapsedTime = 0.0f;
+    }
+
+    if (isAttacking == true) // 공격 애니메이션
+    {
+        elapsedTime += DELETA_TIME;
+        if (elapsedTime > 0.1f)
+        {
+            isAttacking = false;
+            elapsedTime = 0.0f;
+        }
+    }
+}
+
+void PlayerCharacter::UpdatePosition()
 {
     bool canMove = true;
     float nextXpos = pos.x + currSpeed;
@@ -175,6 +198,14 @@ void PlayerCharacter::ChagneAnimationFrame()
     {
         frameY = MoveDirection::Right;
     }
+    
+    // 공격하기
+    if (isAttacking == true)
+    {
+        frameX = PlayerAnimation::Attack;
+        return;
+    }
+
     // 서 있는 애니메이션
     if (currSpeed == 0)
     {
@@ -247,15 +278,6 @@ void PlayerCharacter::ChagneAnimationFrame()
         frameX = PlayerAnimation::Die;
     }
 
-    // 커지기
-
-
-    // 공격하기
-    if (Input::GetButtonDown('X'))
-    {
-        frameX = PlayerAnimation::Attack;
-    }
-
     // 깃발 잡기
 }
 
@@ -283,7 +305,7 @@ void PlayerCharacter::Update()
 {
     //cout << level << endl;
     //cout << elapsedTime << endl;
-    if (Input::GetButtonDown('G'))
+    if (Input::GetButtonDown('G') && level < 3)
     {
         elapsedTime = 0.0f;
         level++;
@@ -310,23 +332,25 @@ void PlayerCharacter::Update()
 
     if (isGrowing == true)
     {
-        LevelUp();
+        GrowAnimation();
         return;
     }
 
     if (isSmalling == true)
     {
-        Smalling();
+        SmallingAnimation();
         return;
     }
+
+    Attack();
 
     Jump();
 
     Move();
 
-    ChagneAnimationFrame();
+    ChagneAnimationFrame();   
 
-    PositionUpdater();
+    UpdatePosition();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -355,7 +379,7 @@ void PlayerCharacter::Release()
 {
 }
 
-void PlayerCharacter::LevelUp()
+void PlayerCharacter::GrowAnimation()
 {
     // 1 : small, 2 :  big, 3 : fire
     elapsedTime += DELETA_TIME;
@@ -423,7 +447,7 @@ void PlayerCharacter::LevelUp()
     
 }
 
-void PlayerCharacter::Smalling()
+void PlayerCharacter::SmallingAnimation()
 {
     elapsedTime += DELETA_TIME;
     if (frameX == PlayerAnimation::Grow3)

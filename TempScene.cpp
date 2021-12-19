@@ -3,10 +3,13 @@
 #include "Image.h"
 #include "Input.h"
 #include "GameDataContainer.h"
+#include "AmmoManager.h"
 
 HRESULT TempScene::Init()
 {
     SetWindowSize(300, 20, GAME_SCENE_WIN_SIZE_X, GAME_SCENE_WIN_SIZE_Y);
+
+    GameDataContainer::GetInstance()->SetGlobalPos(0);
 
     mapSpriteImg = ImageManager::GetInstance()->FindImage("Image/mario_overwordTile.bmp");
     Load();
@@ -17,8 +20,9 @@ HRESULT TempScene::Init()
 
     mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
+    ammoManger.Init();
+    GameDataContainer::GetInstance()->SetAmmoManager(&ammoManger);
 
-    GameDataContainer::GetInstance()->SetGlobalPos(0);
     return S_OK;
 }
 
@@ -26,7 +30,7 @@ void TempScene::Update()
 {
     mario.Update();
     mushroom.Update();
-   
+    ammoManger.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -57,6 +61,7 @@ void TempScene::Render(HDC hdc)
 
     mario.Render(hdc);
     mushroom.Render(hdc);  
+    ammoManger.Render(hdc);
 }
 
 void TempScene::Release()
@@ -64,6 +69,7 @@ void TempScene::Release()
     //delete[] GameDataContainer::GetSingleton()->map;
     //GameDataContainer::GetSingleton()->Release();
     //GameDataContainer::GetSingleton()->ReleaseSingleton();
+    ammoManger.Release();
 }
 
 void TempScene::Load(int loadIndex)
