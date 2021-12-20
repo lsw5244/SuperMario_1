@@ -312,6 +312,11 @@ void PlayerCharacter::Update()
         isGrowing = true;
     }
 
+    if (Input::GetButtonDown(VK_SPACE))
+    {
+        AddJumpower(300.0f);
+    }
+
     //if (Input::GetButtonDown('H') && isSmalling == false)
     //{
 
@@ -511,4 +516,11 @@ void PlayerCharacter::LevelUp()
     elapsedTime = 0.0f;
     level++;
     isGrowing = true;
+}
+
+void PlayerCharacter::AddJumpower(float power)
+{
+    isGround = false;
+    gravity = 0.0f;// *DELETA_TIME;
+    currJumpPower += power;
 }

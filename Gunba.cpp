@@ -186,6 +186,7 @@ void Gunba::Update()
         // À§¿¡¼­ ¹âÈù°Å¸é Á×±â
         if (PLAYER->GetRect().bottom < pos.y)
         {
+            PLAYER->AddJumpower(300.0f);
             Die();
             return;
         }

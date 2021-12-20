@@ -81,5 +81,7 @@ public:
 	float GetCurrSpeed() { return currSpeed; }
 
 	RECT GetRect() { return collider; }
+
+	void AddJumpower(float power);
 };
 
