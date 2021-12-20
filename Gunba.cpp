@@ -10,7 +10,6 @@ void Gunba::ChangeDirection()
    if (frameY == 1 &&
        TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].isCollider == true &&
        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].rc) == true)
-       /*collider.left < TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].rc.right)*/
    {
        speed *= -1.0f;
        if (frameY == 0)

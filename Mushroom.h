@@ -15,7 +15,7 @@ private:
 	void AutoMove();
 	void ChangeDirection();
 	bool CheckIsGround();
-
+	bool OnCollisionEnter(RECT rect, RECT tileRect);
 public:
 	virtual HRESULT Init();
 	virtual void Update();
