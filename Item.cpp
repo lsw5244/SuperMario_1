@@ -15,7 +15,7 @@ void Item::SpawnAnimation()
     pos.y -= spawnSpeed * DELETA_TIME;
     UpdateCollider();
     spawnMoveDistance += spawnSpeed * DELETA_TIME;
-    if (spawnMoveDistance > TILE_SIZE)
+    if (spawnMoveDistance > TILE_SIZE - 2) // 2를 뺀 이유는 생성 될 때 보정치가 있기 때문
     {
         isDead = false;
         isSpawning = false;
