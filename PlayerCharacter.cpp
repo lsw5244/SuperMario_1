@@ -290,10 +290,12 @@ void PlayerCharacter::ChagneAnimationFrame(int frameX, int frameY)
 
 void PlayerCharacter::CheckBlockTypeAndCallItemManager(TILE& hitTile)
 {
-    POINTFLOAT temp = { hitTile.rc.left + TILE_SIZE / 2 - GLOBAL_POS, hitTile.rc.top + TILE_SIZE / 2 - 1 }; // 1을 뺀 이유는 생성과 동시에 아이템을 먹는 것을 방지하기 위함
+    // 1을 뺀 이유는 생성과 동시에 아이템을 먹는 것을 방지하기 위함
+    POINTFLOAT spawnPos = { hitTile.rc.left + TILE_SIZE / 2 - GLOBAL_POS, hitTile.rc.top + TILE_SIZE / 2 - 1 };
+
     if (hitTile.type == BlockType::ItemBlock)
     {
-        ITEM_MANAGER->SpawnItem(temp);
+        ITEM_MANAGER->SpawnItem(spawnPos);
 
         // 아이템 빠진 블럭으로 바꾸기
         hitTile.type = BlockType::CanDestroyBrick;
@@ -302,7 +304,7 @@ void PlayerCharacter::CheckBlockTypeAndCallItemManager(TILE& hitTile)
     }
     if (hitTile.type == BlockType::CoinBlock || hitTile.type == BlockType::HiddenCoinBlcok)
     {
-        ITEM_MANAGER->SpawnCoin(temp);
+        ITEM_MANAGER->SpawnCoin(spawnPos);
         hitTile.type = BlockType::CanDestroyBrick;
         hitTile.frameX = 10;
         hitTile.frameY = 6;
