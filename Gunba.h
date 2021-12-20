@@ -37,6 +37,8 @@ private:
 	void CheckIsGround();
 	void CheckOutWindow();
 
+	bool CollideWithPlayer();	
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

@@ -107,6 +107,16 @@ void Gunba::CheckOutWindow()
     }
 }
 
+bool Gunba::CollideWithPlayer()
+{
+    if (PLAYER->GetRect().left > collider.right)	return false;
+    if (PLAYER->GetRect().right < collider.left)	return false;
+    if (PLAYER->GetRect().top > collider.bottom)	return false;
+    if (PLAYER->GetRect().bottom < collider.top)	return false;
+
+    return true;
+}
+
 HRESULT Gunba::Init()
 {
     pos = { 0, 0 };
@@ -137,7 +147,7 @@ void Gunba::Update()
  
     if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
     {
-        pos.x += speed * DELETA_TIME;// -(int)PLAYER->GetCurrSpeed();
+        pos.x += speed * DELETA_TIME - (int)PLAYER->GetCurrSpeed();
     }
     else
     {
@@ -150,10 +160,13 @@ void Gunba::Update()
     }
 
     UpdateCollider();
+
     ChangeDirection();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
+
+    CheckOutWindow();
 }
 
 void Gunba::Render(HDC hdc)
@@ -165,8 +178,6 @@ void Gunba::Render(HDC hdc)
         TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top,
         TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.right - GLOBAL_POS,
         TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.bottom);
-
-
 
     img->Render(hdc, pos.x, pos.y, frameX, frameY);
 
