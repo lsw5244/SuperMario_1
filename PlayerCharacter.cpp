@@ -25,11 +25,16 @@ bool PlayerCharacter::OnCollisionEnter(RECT plyaerRect, RECT tileRect)
 void PlayerCharacter::Jump()
 {
     // 점프하다 머리 박았을 때 처리
-    if (TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].isCollider == true &&
+    if (isGround == false &&
+        TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].isCollider == true &&
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc))
     {
         jumpEnd = true;
         currJumpPower = 0.0f;
+        if (TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].type == BlockType::ItemBlock)
+        {
+            cout << "@@@@@@@" << endl;
+        }
     }
 
     if (isGround == false)
@@ -316,7 +321,6 @@ void PlayerCharacter::Update()
         POINTFLOAT temp = { TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.left + TILE_SIZE / 2 ,
          TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.top + TILE_SIZE / 2 };
         ITEM_MANAGER->SpawnItem(temp);
-        //ITEM_MANAGER->SpawnItem({pos.x, pos.y + 8});
     }
 
     //if (Input::GetButtonDown('H') && isSmalling == false)
