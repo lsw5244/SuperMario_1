@@ -224,14 +224,6 @@ void FireAmmo::Update()
 
 void FireAmmo::Render(HDC hdc)
 {
-    //// 콜라이더
-    //Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
-    //// 현재 위치
-    //Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
-    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
-    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
-    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
-
     if (isDead == false)
     {
         img->Render(hdc, pos.x, pos.y, frameX, 0);

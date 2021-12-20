@@ -125,9 +125,7 @@ void Gunba::CheckOutWindow()
 
 bool Gunba::CheckFireHit()
 {
-    AMMO_MANAGER;
-
-    return false;
+    return AMMO_MANAGER->CheckCollideWithAmmo(collider);
 }
 
 bool Gunba::CollideWithPlayer()

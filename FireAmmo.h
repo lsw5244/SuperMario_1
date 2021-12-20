@@ -49,5 +49,10 @@ public:
 	RECT GetCollider() { return collider; }
 
 	void Fire(POINTFLOAT pos, MoveDirection direction);
+
+	void SetIsExploding(bool isExploding)
+	{
+		this->isExploding = isExploding;
+	}
 };
 
