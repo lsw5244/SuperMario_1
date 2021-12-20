@@ -27,9 +27,9 @@ HRESULT SpinCoin::Init()
     img = ImageManager::GetInstance()->FindImage("Image/Item/SpinCoin.bmp");
     pos = { WIN_SIZE_X / 2, WIN_SIZE_Y / 2 };
 
-    isDead = false;
+    isDead = true;
 
-    spawnSpeed = 300.0f;
+    spawnSpeed = 100.0f;
 
     return S_OK;
 }
@@ -38,17 +38,20 @@ void SpinCoin::Update()
 {
     if (isSpawning == true)
     {
+        ChangeFrame();
         SpawnAnimation();
+        if (isSpawning == false)
+        {
+            isDead = true;
+            isSpawning = false;
+        }
     }
 
-    if (isDead == true)
-        return;
-
-    ChangeFrame();
 
     if (Input::GetButtonDown('J'))
     {
-        Spawn({WIN_SIZE_X / 2, WIN_SIZE_Y / 2});
+        Spawn({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
+        frameX = 0;
     }
 }
 
