@@ -312,6 +312,14 @@ void PlayerCharacter::Update()
         isGrowing = true;
     }
 
+    if (Input::GetButtonDown('S'))
+    {
+        POINTFLOAT temp = { TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left + TILE_SIZE / 2 ,
+         TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top + TILE_SIZE / 2 };
+        ITEM_MANAGER->SpawnItem(temp);
+        //ITEM_MANAGER->SpawnItem({pos.x, pos.y + 8});
+    }
+
     //if (Input::GetButtonDown('H') && isSmalling == false)
     //{
 
