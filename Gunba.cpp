@@ -123,6 +123,13 @@ void Gunba::CheckOutWindow()
     }
 }
 
+bool Gunba::CheckFireHit()
+{
+    AMMO_MANAGER;
+
+    return false;
+}
+
 bool Gunba::CollideWithPlayer()
 {
     if (PLAYER->GetRect().left > collider.right)	return false;
@@ -188,6 +195,11 @@ void Gunba::Update()
         {
             PLAYER->GetDamage();
         }
+    }
+    if (CheckFireHit() == true)
+    {
+        Die();
+        return;
     }
 
     CheckIsGround();

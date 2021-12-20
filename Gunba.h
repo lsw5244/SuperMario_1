@@ -38,7 +38,7 @@ private:
 	bool OnCollisionEnter(RECT rect, RECT tileRect);
 	void CheckIsGround();
 	void CheckOutWindow();
-
+	bool CheckFireHit();
 	bool CollideWithPlayer();	
 
 	void Trampled();
