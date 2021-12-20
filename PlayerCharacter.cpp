@@ -25,9 +25,8 @@ bool PlayerCharacter::OnCollisionEnter(RECT plyaerRect, RECT tileRect)
 void PlayerCharacter::Jump()
 {
     // 점프하다 머리 박았을 때 처리
-    if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
-        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc)
-        )
+    if (TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].isCollider == true &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc))
     {
         jumpEnd = true;
         currJumpPower = 0.0f;
@@ -314,8 +313,8 @@ void PlayerCharacter::Update()
 
     if (Input::GetButtonDown('S'))
     {
-        POINTFLOAT temp = { TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left + TILE_SIZE / 2 ,
-         TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top + TILE_SIZE / 2 };
+        POINTFLOAT temp = { TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.left + TILE_SIZE / 2 ,
+         TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.top + TILE_SIZE / 2 };
         ITEM_MANAGER->SpawnItem(temp);
         //ITEM_MANAGER->SpawnItem({pos.x, pos.y + 8});
     }
@@ -370,10 +369,10 @@ void PlayerCharacter::Render(HDC hdc)
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
     // 현재 위치 타일
-    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
+    //Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
 
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
 
