@@ -13,14 +13,20 @@ private:
 	int frameX = 0;
 	int frameY = 1;	// 기본적으로 왼쪽을 향함
 
-	float gravity = 0.1f;
-	float resistance = 0.02f;
-	float moveSpeed = -1.0f;
+	float speed = -120.0f; // 기본적으로 왼쪽을 향함
+
+	float gravity = 300.0f;
+	float maxGravity = 500.0f;
+	float gravityAcceleration = 5000.0f;//5500.0f;
 
 	bool isDead = false;
 
-	void AutoMove();
-	void AnimationFrameChanger();
+	int nowTileIndexX = 0;
+	int nowTileIndexY = 0;
+
+	void ChangeDirection();
+	void ChangeAnimationFrame();
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

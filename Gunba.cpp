@@ -1,10 +1,12 @@
 #include "Gunba.h"
 #include "Image.h"
 #include "Input.h"
+#include "MacroCollection.h"
+#include "GameDataContainer.h"
 
-void Gunba::AutoMove()
+void Gunba::ChangeDirection()
 {
-    moveSpeed *= -1.0f;
+    speed *= -1.0f;
     if (frameY == 0)
     {
         ++frameY;
@@ -15,7 +17,7 @@ void Gunba::AutoMove()
     }
 }
 
-void Gunba::AnimationFrameChanger()
+void Gunba::ChangeAnimationFrame()
 {
     /*
         FrameX          FrameY
@@ -43,14 +45,22 @@ HRESULT Gunba::Init()
 
 void Gunba::Update()
 {
-    AnimationFrameChanger();
     if (Input::GetButtonDown('C') && isDead == false)
     {
-        AutoMove();
+        ChangeDirection();
     }
-    /*cout << moveSpeed << endl;
-    cout << frameY << endl;*/
-    pos.x += moveSpeed;
+    /*---------------------*/
+    if (isDead == true)
+    {
+        return;
+    }
+
+    ChangeAnimationFrame();
+ 
+    pos.x += speed;
+
+    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
 }
 
 void Gunba::Render(HDC hdc)
