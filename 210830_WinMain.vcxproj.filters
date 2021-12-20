@@ -40,6 +40,9 @@
     <Filter Include="MainGame\Character\Ammo">
       <UniqueIdentifier>{7bbcdf2d-38ad-4a01-beb5-3d088b2c1f87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Item">
+      <UniqueIdentifier>{b84fff37-1a45-495e-bd56-6aeda908dc7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +101,18 @@
     </ClCompile>
     <ClCompile Include="AmmoManager.cpp">
       <Filter>MainGame\Character\Ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="FireFlower.cpp">
+      <Filter>MainGame\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +190,18 @@
     </ClInclude>
     <ClInclude Include="AmmoManager.h">
       <Filter>MainGame\Character\Ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="FireFlower.h">
+      <Filter>MainGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

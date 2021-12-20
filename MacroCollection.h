@@ -29,3 +29,4 @@
 #define GLOBAL_POS GameDataContainer::GetInstance()->GetGlobalPos()
 #define PLAYER GameDataContainer::GetInstance()->GetPlayer()
 #define AMMO_MANAGER GameDataContainer::GetInstance()->GetAmmoManager()
+#define ITEM_MANAGER GameDataContainer::GetInstance()->GetItemManager()

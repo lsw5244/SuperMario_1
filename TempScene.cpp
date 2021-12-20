@@ -23,6 +23,9 @@ HRESULT TempScene::Init()
     ammoManger.Init();
     GameDataContainer::GetInstance()->SetAmmoManager(&ammoManger);
 
+    itemManager.Init();
+    GameDataContainer::GetInstance()->SetItemManager(&itemManager);
+
     return S_OK;
 }
 
@@ -31,6 +34,7 @@ void TempScene::Update()
     mario.Update();
     mushroom.Update();
     ammoManger.Update();
+    itemManager.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -44,21 +48,12 @@ void TempScene::Render(HDC hdc)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            //if (map[i][j].isCollider == true)
-            //{
-            //    mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
-            //        , map[i][j].rc.top + TILE_SIZE / 2
-            //        , 0, 4);
-            //}
-            //else
-            {
-                mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
-                    , map[i][j].rc.top + TILE_SIZE / 2
-                    , map[i][j].frameX, map[i][j].frameY); 
-            }
+            mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
+                , map[i][j].rc.top + TILE_SIZE / 2
+                , map[i][j].frameX, map[i][j].frameY);     
         }
     }
-
+    itemManager.Render(hdc);
     mario.Render(hdc);
     mushroom.Render(hdc);  
     ammoManger.Render(hdc);
@@ -69,6 +64,7 @@ void TempScene::Release()
     //delete[] GameDataContainer::GetSingleton()->map;
     //GameDataContainer::GetSingleton()->Release();
     //GameDataContainer::GetSingleton()->ReleaseSingleton();
+    itemManager.Release();
     ammoManger.Release();
 }
 

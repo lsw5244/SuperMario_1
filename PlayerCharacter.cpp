@@ -497,3 +497,10 @@ void PlayerCharacter::Hit()
         isSmalling = true;
     }
 }
+
+void PlayerCharacter::LevelUp()
+{
+    elapsedTime = 0.0f;
+    level++;
+    isGrowing = true;
+}

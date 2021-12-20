@@ -6,6 +6,7 @@
 #include "StructCollection.h"
 #include "FireAmmo.h"
 #include "AmmoManager.h"
+#include "ItemManager.h"
 
 class Image;
 class TempScene : public GameEntity
@@ -16,6 +17,7 @@ private:
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
 
+	ItemManager itemManager;
 	//int globalPos = 0;
 	AmmoManager ammoManger;
 

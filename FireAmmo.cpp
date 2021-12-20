@@ -160,13 +160,13 @@ HRESULT FireAmmo::Init()
 
 void FireAmmo::Update()
 {
-    if (Input::GetButtonDown(VK_SPACE))
-    {
-        //ChangeBoundDirection();
-        Init();
-        boundDirection = BoundDirection::Down;
-        isDead = false;
-    }
+    //if (Input::GetButtonDown(VK_SPACE))
+    //{
+    //    //ChangeBoundDirection();
+    //    Init();
+    //    boundDirection = BoundDirection::Down;
+    //    isDead = false;
+    //}
     /*---------------------------------------------*/
     if (isDead == true)
     {
