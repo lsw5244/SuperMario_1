@@ -7,7 +7,6 @@
 #include "FireAmmo.h"
 #include "AmmoManager.h"
 #include "ItemManager.h"
-#include "SpinCoin.h"
 
 class Image;
 class TempScene : public GameEntity
@@ -21,8 +20,6 @@ private:
 	ItemManager itemManager;
 	//int globalPos = 0;
 	AmmoManager ammoManger;
-
-	SpinCoin spcoin;
 
 public:
 	virtual HRESULT Init() override;

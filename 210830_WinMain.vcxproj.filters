@@ -115,7 +115,7 @@
       <Filter>MainGame\Item</Filter>
     </ClCompile>
     <ClCompile Include="SpinCoin.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MainGame\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +207,7 @@
       <Filter>MainGame\Item</Filter>
     </ClInclude>
     <ClInclude Include="SpinCoin.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MainGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

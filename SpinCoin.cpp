@@ -48,11 +48,11 @@ void SpinCoin::Update()
     }
 
 
-    if (Input::GetButtonDown('J'))
-    {
-        Spawn({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
-        frameX = 0;
-    }
+    //if (Input::GetButtonDown('J'))
+    //{
+    //    Spawn({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
+    //    frameX = 0;
+    //}
 }
 
 void SpinCoin::Render(HDC hdc)
