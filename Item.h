@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEntity.h"
+#include "MacroCollection.h"
 class Image;
 class Item : public GameEntity
 {
@@ -17,6 +18,7 @@ public:
 
 	float spawnSpeed = 30.0f;
 	float spawnMoveDistance = 0.0f;
+	float maxSpawnMoveHeight = TILE_SIZE - 2;
 
 	void Spawn(POINTFLOAT pos);
 	void SpawnAnimation();

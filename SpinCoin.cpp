@@ -30,6 +30,7 @@ HRESULT SpinCoin::Init()
     isDead = true;
 
     spawnSpeed = 100.0f;
+    maxSpawnMoveHeight = TILE_SIZE * 2;
 
     return S_OK;
 }

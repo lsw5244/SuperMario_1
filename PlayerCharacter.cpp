@@ -43,6 +43,16 @@ void PlayerCharacter::Jump()
             TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].frameX = 10;
             TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].frameY = 6;
         }
+        if (TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].type == BlockType::CoinBlock)
+        {
+            POINTFLOAT temp = { TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.left
+                + TILE_SIZE / 2 - GLOBAL_POS,
+             TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.top + TILE_SIZE / 2 - 1 }; // 1을 뺀 이유는 생성과 동시에 아이템을 먹는 것을 방지하기 위함
+            ITEM_MANAGER->SpawnCoin(temp);
+            TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].type = BlockType::CanDestroyBrick;
+            TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].frameX = 10;
+            TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].frameY = 6;
+        }
     }
 
     if (isGround == false)
