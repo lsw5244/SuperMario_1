@@ -33,7 +33,10 @@ void PlayerCharacter::Jump()
         currJumpPower = 0.0f;
         if (TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].type == BlockType::ItemBlock)
         {
-            cout << "@@@@@@@" << endl;
+            POINTFLOAT temp = { TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.left 
+                + TILE_SIZE / 2  - GLOBAL_POS,
+             TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.top + TILE_SIZE / 2 };
+            ITEM_MANAGER->SpawnItem(temp);
         }
     }
 
