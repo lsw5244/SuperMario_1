@@ -57,7 +57,7 @@ void FireFlower::Update()
 
     if (CollideWithPlayer() == true)
     {
-        cout << "@@@@@@@@@" << endl;
+        PLAYER->LevelUp();
         Destroy();
     }
 

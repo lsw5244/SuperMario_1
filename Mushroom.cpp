@@ -92,7 +92,7 @@ void Mushroom::Update()
 
     if (CollideWithPlayer() == true)
     {
-        cout << "@@@@@@@@@" << endl;
+        PLAYER->LevelUp();
         Destroy();
     }
 

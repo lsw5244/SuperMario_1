@@ -69,6 +69,7 @@ public:
 	void GrowAnimation();
 	void SmallingAnimation();
 	void Hit();
+	void LevelUp();
 
 	void SetPos(POINTFLOAT pos)	{ this->pos = pos; }
 	POINTFLOAT GetPos()	{ return this->pos;	}
