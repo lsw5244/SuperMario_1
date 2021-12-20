@@ -56,6 +56,9 @@ private:
 	void Attack();
 	void UpdatePosition();
 
+	void GrowAnimation();
+	void SmallingAnimation();
+
 	void ChagneAnimationFrame();
 	void ChagneAnimationFrame(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용
 
@@ -66,10 +69,10 @@ public:
 	virtual void Release() override;
 	virtual ~PlayerCharacter() = default;
 
-	void GrowAnimation();
-	void SmallingAnimation();
 	void Hit();
 	void LevelUp();
+
+	int GetLevel() { return level; }
 
 	void SetPos(POINTFLOAT pos)	{ this->pos = pos; }
 	POINTFLOAT GetPos()	{ return this->pos;	}

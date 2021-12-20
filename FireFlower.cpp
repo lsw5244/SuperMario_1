@@ -57,7 +57,10 @@ void FireFlower::Update()
 
     if (CollideWithPlayer() == true)
     {
-        PLAYER->LevelUp();
+        if (PLAYER->GetLevel() < 3)
+        {
+            PLAYER->LevelUp();
+        }
         Destroy();
     }
 
