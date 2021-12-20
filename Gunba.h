@@ -35,6 +35,7 @@ private:
 
 	bool OnCollisionEnter(RECT rect, RECT tileRect);
 	void CheckIsGround();
+	void CheckOutWindow();
 
 public:
 	virtual HRESULT Init() override;

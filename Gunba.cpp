@@ -6,15 +6,39 @@
 
 void Gunba::ChangeDirection()
 {
-    speed *= -1.0f;
-    if (frameY == 0)
-    {
-        ++frameY;
-    }
-    else
-    {
-        frameY = 0;
-    }
+   // 왼쪽 가다 충돌
+   if (frameY == 1 &&
+       TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].isCollider == true &&
+       OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].rc) == true)
+       /*collider.left < TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].rc.right)*/
+   {
+       speed *= -1.0f;
+       if (frameY == 0)
+       {
+           ++frameY;
+       }
+       else
+       {
+           frameY = 0;
+       }
+       return;
+   }
+   // 오른쪽 가다가 충돌
+   if (frameY == 0 &&
+       TILE_DATA[nowTileIndexY - 1][nowTileIndexX + 1].isCollider == true &&
+       OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX + 1].rc) == true)      
+   {
+       speed *= -1.0f;
+       if (frameY == 0)
+       {
+           ++frameY;
+       }
+       else
+       {
+           frameY = 0;
+       }
+       return;
+   }
 }
 
 void Gunba::ChangeAnimationFrame()
@@ -45,7 +69,7 @@ void Gunba::ChangeAnimationFrame()
 
 void Gunba::UpdateCollider()
 {
-    SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
+    SetRect(&collider, pos.x - img->GetFrameWidth() / 2,
         pos.y - img->GetFrameWidth() / 2,
         pos.x + img->GetFrameWidth() / 2,
         pos.y + img->GetFrameHeight() / 2);
@@ -74,6 +98,15 @@ void Gunba::CheckIsGround()
     }
 }
 
+void Gunba::CheckOutWindow()
+{
+    if (pos.x < 0 || pos.x > WIN_SIZE_X || pos.y < 0 || pos.y > WIN_SIZE_Y)
+    {
+        isDead = true;
+        cout << "@@@@@@@@@" << endl;
+    }
+}
+
 HRESULT Gunba::Init()
 {
     pos = { 0, 0 };
@@ -81,7 +114,7 @@ HRESULT Gunba::Init()
 
     isDead = false;
 
-    frameY = MoveDirection::Right;
+    frameY = 1;     // 왼쪽 향함
 
     return S_OK;
 }
@@ -98,21 +131,26 @@ void Gunba::Update()
         return;
     }
 
-    //if(frameY == 0 && // 오른쪽 향할 때
-    //    TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true// &&
-    //    
-    //    )
-
     CheckIsGround();
 
     ChangeAnimationFrame();
  
-    pos.x += speed * DELETA_TIME;
+    if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+    {
+        pos.x += speed * DELETA_TIME;// -(int)PLAYER->GetCurrSpeed();
+    }
+    else
+    {
+        pos.x += speed * DELETA_TIME;
+    }
+    
     if (isGround == false)
     {
         pos.y += gravity * DELETA_TIME;
     }
+
     UpdateCollider();
+    ChangeDirection();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -123,15 +161,16 @@ void Gunba::Render(HDC hdc)
     if (isDead == true)
         return;
 
-    
+    Rectangle(hdc, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left - GLOBAL_POS,
+        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top,
+        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.right - GLOBAL_POS,
+        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.bottom);
 
-    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
 
-    Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
     img->Render(hdc, pos.x, pos.y, frameX, frameY);
 
-    Rectangle(hdc, pos.x - 3, pos.y - 3, pos.x + 3, pos.y + 3);
+    //Rectangle(hdc, pos.x - 3, pos.y - 3, pos.x + 3, pos.y + 3);
 
 }
 
