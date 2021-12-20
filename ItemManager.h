@@ -17,5 +17,6 @@ public:
 	virtual void Release();
 	virtual ~ItemManager() = default;
 
+	void SpawnItem(POINTFLOAT pos);
 };
 

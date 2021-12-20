@@ -2,6 +2,8 @@
 #include "Mushroom.h"
 #include "FireFlower.h"
 #include "MacroCollection.h"
+#include "GameDataContainer.h"
+
 HRESULT ItemManager::Init()
 {
 	mushroom = new Mushroom;
@@ -29,4 +31,16 @@ void ItemManager::Release()
 {
 	SAFE_RELEASE(mushroom);
 	SAFE_RELEASE(fireFlower);
+}
+
+void ItemManager::SpawnItem(POINTFLOAT pos)
+{
+	if (PLAYER->GetLevel() == 1)
+	{
+		mushroom->Spawn(pos);
+	}
+	else
+	{
+		fireFlower->Spawn(pos);
+	}
 }
