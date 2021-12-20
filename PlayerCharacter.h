@@ -70,6 +70,7 @@ public:
 	virtual ~PlayerCharacter() = default;
 
 	void Hit();
+	void GetDamage();
 	void LevelUp();
 
 	int GetLevel() { return level; }

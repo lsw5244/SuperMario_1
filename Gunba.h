@@ -25,6 +25,7 @@ private:
 
 	bool isGround = false;
 	bool isDead = false;
+	bool isDying = false;
 
 	int nowTileIndexX = 0;
 	int nowTileIndexY = 0;
@@ -32,6 +33,7 @@ private:
 	void ChangeDirection();
 	void ChangeAnimationFrame();
 	void UpdateCollider();
+	void UpdatePosition();
 
 	bool OnCollisionEnter(RECT rect, RECT tileRect);
 	void CheckIsGround();
@@ -39,6 +41,7 @@ private:
 
 	bool CollideWithPlayer();	
 
+	void Trampled();
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;
@@ -48,5 +51,7 @@ public:
 
 	void SetPos(POINTFLOAT pos) { this->pos = pos; }
 	POINTFLOAT GetPos() { return pos; }
+
+	void Die();
 };
 

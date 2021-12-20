@@ -75,6 +75,23 @@ void Gunba::UpdateCollider()
         pos.y + img->GetFrameHeight() / 2);
 }
 
+void Gunba::UpdatePosition()
+{
+    if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+    {
+        pos.x += speed * DELETA_TIME - (int)PLAYER->GetCurrSpeed();
+    }
+    else
+    {
+        pos.x += speed * DELETA_TIME;
+    }
+
+    if (isGround == false)
+    {
+        pos.y += gravity * DELETA_TIME;
+    }
+}
+
 bool Gunba::OnCollisionEnter(RECT rect, RECT tileRect)
 {
     if (rect.left > tileRect.right - GLOBAL_POS)	return false;
@@ -103,7 +120,6 @@ void Gunba::CheckOutWindow()
     if (pos.x < 0 || pos.x > WIN_SIZE_X || pos.y < 0 || pos.y > WIN_SIZE_Y)
     {
         isDead = true;
-        cout << "@@@@@@@@@" << endl;
     }
 }
 
@@ -117,12 +133,23 @@ bool Gunba::CollideWithPlayer()
     return true;
 }
 
+void Gunba::Trampled()
+{
+    elapsedTime += DELETA_TIME;
+    if (elapsedTime > 1.0f)
+    {
+        isDead = true;
+    }
+    frameX = 2; // ¹âÈ÷±â  
+}
+
 HRESULT Gunba::Init()
 {
     pos = { 0, 0 };
     UpdateCollider();
 
     isDead = false;
+    isDying = false;
 
     frameY = 1;     // ¿ÞÂÊ ÇâÇÔ
 
@@ -133,31 +160,41 @@ void Gunba::Update()
 {
     if (Input::GetButtonDown('C') && isDead == false)
     {
-        ChangeDirection();
+        Die();
     }
     /*---------------------*/
+
+    if (isDying == true)
+    {
+        Trampled();
+        return;
+    }
+
     if (isDead == true)
     {
         return;
     }
 
+    // ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹
+    if (CollideWithPlayer() == true)
+    {
+        // À§¿¡¼­ ¹âÈù°Å¸é Á×±â
+        if (PLAYER->GetRect().bottom < pos.y)
+        {
+            Die();
+            return;
+        }
+        else
+        {
+            PLAYER->GetDamage();
+        }
+    }
+
     CheckIsGround();
 
     ChangeAnimationFrame();
- 
-    if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
-    {
-        pos.x += speed * DELETA_TIME - (int)PLAYER->GetCurrSpeed();
-    }
-    else
-    {
-        pos.x += speed * DELETA_TIME;
-    }
-    
-    if (isGround == false)
-    {
-        pos.y += gravity * DELETA_TIME;
-    }
+
+    UpdatePosition();
 
     UpdateCollider();
 
@@ -187,4 +224,10 @@ void Gunba::Render(HDC hdc)
 
 void Gunba::Release()
 {
+}
+
+void Gunba::Die()
+{
+    elapsedTime = 0.0f;
+    isDying = true;
 }

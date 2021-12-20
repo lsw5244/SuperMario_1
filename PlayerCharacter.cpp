@@ -312,14 +312,12 @@ void PlayerCharacter::Update()
         isGrowing = true;
     }
 
-    if (Input::GetButtonDown('H') && isSmalling == false)
-    {
-        elapsedTime = 0.0f;
-        --level;
-        Hit();
-        return;
-    }
+    //if (Input::GetButtonDown('H') && isSmalling == false)
+    //{
 
+    //    return;
+    //}
+/*--------------------------*/
     if (pos.y < 15)
     {
         return;
@@ -496,6 +494,16 @@ void PlayerCharacter::Hit()
         level = 1;
         isSmalling = true;
     }
+}
+
+void PlayerCharacter::GetDamage()
+{
+    if (isSmalling == true || isGrowing == true)
+        return;
+
+    elapsedTime = 0.0f;
+    --level;
+    Hit();
 }
 
 void PlayerCharacter::LevelUp()
