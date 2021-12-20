@@ -312,11 +312,6 @@ void PlayerCharacter::Update()
         isGrowing = true;
     }
 
-    if (Input::GetButtonDown(VK_SPACE))
-    {
-        AddJumpower(300.0f);
-    }
-
     //if (Input::GetButtonDown('H') && isSmalling == false)
     //{
 
