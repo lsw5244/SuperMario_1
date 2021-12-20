@@ -2,7 +2,7 @@
 #include "MacroCollection.h"
 #include "GameDataContainer.h"
 #include "Image.h"
-
+#include "Input.h"
 void SpinCoin::ChangeFrame()
 {
     elapsedTime += DELETA_TIME;
@@ -29,15 +29,27 @@ HRESULT SpinCoin::Init()
 
     isDead = false;
 
+    spawnSpeed = 300.0f;
+
     return S_OK;
 }
 
 void SpinCoin::Update()
 {
+    if (isSpawning == true)
+    {
+        SpawnAnimation();
+    }
+
     if (isDead == true)
         return;
 
     ChangeFrame();
+
+    if (Input::GetButtonDown('J'))
+    {
+        Spawn({WIN_SIZE_X / 2, WIN_SIZE_Y / 2});
+    }
 }
 
 void SpinCoin::Render(HDC hdc)
