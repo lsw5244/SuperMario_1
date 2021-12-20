@@ -25,12 +25,16 @@ bool PlayerCharacter::OnCollisionEnter(RECT plyaerRect, RECT tileRect)
 void PlayerCharacter::Jump()
 {
     // 점프하다 머리 박았을 때 처리
-    if (TILE_DATA[nowTileIndexY - 1][nowTileIndexX].isCollider == true &&
-        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc)
-        )
+    if (isGround == false &&
+        TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].isCollider == true &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc))
     {
         jumpEnd = true;
         currJumpPower = 0.0f;
+        if (TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].type == BlockType::ItemBlock)
+        {
+            cout << "@@@@@@@" << endl;
+        }
     }
 
     if (isGround == false)
@@ -312,14 +316,19 @@ void PlayerCharacter::Update()
         isGrowing = true;
     }
 
-    if (Input::GetButtonDown('H') && isSmalling == false)
+    if (Input::GetButtonDown('S'))
     {
-        elapsedTime = 0.0f;
-        --level;
-        Hit();
-        return;
+        POINTFLOAT temp = { TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.left + TILE_SIZE / 2 ,
+         TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.top + TILE_SIZE / 2 };
+        ITEM_MANAGER->SpawnItem(temp);
     }
 
+    //if (Input::GetButtonDown('H') && isSmalling == false)
+    //{
+
+    //    return;
+    //}
+/*--------------------------*/
     if (pos.y < 15)
     {
         return;
@@ -364,10 +373,10 @@ void PlayerCharacter::Render(HDC hdc)
     Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
     // 현재 위치 타일
-    Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
-        TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
+    //Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
 
     img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
 
@@ -498,9 +507,26 @@ void PlayerCharacter::Hit()
     }
 }
 
+void PlayerCharacter::GetDamage()
+{
+    if (isSmalling == true || isGrowing == true)
+        return;
+
+    elapsedTime = 0.0f;
+    --level;
+    Hit();
+}
+
 void PlayerCharacter::LevelUp()
 {
     elapsedTime = 0.0f;
     level++;
     isGrowing = true;
+}
+
+void PlayerCharacter::AddJumpower(float power)
+{
+    isGround = false;
+    gravity = 0.0f;// *DELETA_TIME;
+    currJumpPower += power;
 }

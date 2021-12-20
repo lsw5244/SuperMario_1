@@ -70,6 +70,7 @@ public:
 	virtual ~PlayerCharacter() = default;
 
 	void Hit();
+	void GetDamage();
 	void LevelUp();
 
 	int GetLevel() { return level; }
@@ -80,5 +81,7 @@ public:
 	float GetCurrSpeed() { return currSpeed; }
 
 	RECT GetRect() { return collider; }
+
+	void AddJumpower(float power);
 };
 

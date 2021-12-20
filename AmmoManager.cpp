@@ -52,3 +52,30 @@ bool AmmoManager::PlayerFire(POINTFLOAT pos, MoveDirection direction)
 
 	return false;
 }
+
+bool AmmoManager::CheckCollideWithAmmo(RECT rect)
+{
+	for (int i = 0; i < MAX_AMMO_COUNT; i++)
+	{
+		if (ammos[i]->GetIsDead() == true)
+		{
+			continue;
+		}
+		if (OnCollisionEnter(rect, ammos[i]->GetCollider()) == true)
+		{
+			ammos[i]->SetIsExploding(true);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool AmmoManager::OnCollisionEnter(RECT rc1, RECT rc2)
+{
+	if (rc1.left > rc2.right)	return false;
+	if (rc1.right < rc2.left)	return false;
+	if (rc1.top > rc2.bottom)	return false;
+	if (rc1.bottom < rc2.top)	return false;
+
+	return true;
+}

@@ -18,5 +18,7 @@ public:
 	virtual ~AmmoManager() = default;
 
 	bool PlayerFire(POINTFLOAT pos, MoveDirection direction);
+	bool CheckCollideWithAmmo(RECT rect);
+	bool OnCollisionEnter(RECT rc1, RECT rc2);
 };
 

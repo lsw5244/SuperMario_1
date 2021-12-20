@@ -10,32 +10,48 @@ private:
 
 	POINTFLOAT pos = { 0,0 };
 
+	RECT collider = {};
+
 	int frameX = 0;
 	int frameY = 1;	// 기본적으로 왼쪽을 향함
 
-	float gravity = 0.1f;
-	float resistance = 0.02f;
-	float moveSpeed = -1.0f;
+	float speed = -60.0f; // 기본적으로 왼쪽을 향함
 
+	float gravity = 100.0f;
+	float maxGravity = 500.0f;
+	float gravityAcceleration = 5000.0f;//5500.0f;
+
+	float elapsedTime = 0.0f;
+
+	bool isGround = false;
 	bool isDead = false;
+	bool isDying = false;
 
-	void AutoMove();
-	void AnimationFrameChanger();
+	int nowTileIndexX = 0;
+	int nowTileIndexY = 0;
+
+	void ChangeDirection();
+	void ChangeAnimationFrame();
+	void UpdateCollider();
+	void UpdatePosition();
+
+	bool OnCollisionEnter(RECT rect, RECT tileRect);
+	void CheckIsGround();
+	void CheckOutWindow();
+	bool CheckFireHit();
+	bool CollideWithPlayer();	
+
+	void Trampled();
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
-	Gunba() = default;
 	virtual ~Gunba() = default;
 
-	void SetPos(POINTFLOAT pos)
-	{
-		this->pos = pos;
-	}
-	POINTFLOAT GetPos()
-	{
-		return pos;
-	}
+	void SetPos(POINTFLOAT pos) { this->pos = pos; }
+	POINTFLOAT GetPos() { return pos; }
+
+	void Die();
 };
 

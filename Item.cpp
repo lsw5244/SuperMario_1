@@ -7,6 +7,7 @@ void Item::Spawn(POINTFLOAT pos)
 {
     this->pos = pos;
     isSpawning = true;
+    isDead = false;
 }
 
 void Item::SpawnAnimation()

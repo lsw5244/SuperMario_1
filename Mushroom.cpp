@@ -29,20 +29,20 @@ void Mushroom::AutoMove()
 
 void Mushroom::ChangeDirection()
 {
-    if (moveDirection == MoveDirection::Right &&
-        TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true &&
-        collider.right > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left
-        )
-    {
-        moveDirection = MoveDirection::Left;
-    }
-    
     if (moveDirection == MoveDirection::Left &&
-        TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true &&
-        collider.left < TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right
-        )
+        TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].isCollider == true &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].rc) == true)
     {
         moveDirection = MoveDirection::Right;
+        return;
+    }
+
+    if (moveDirection == MoveDirection::Right &&
+        TILE_DATA[nowTileIndexY - 1][nowTileIndexX + 1].isCollider == true &&
+        OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX + 1].rc) == true)
+    {
+        moveDirection = MoveDirection::Left;
+        rethrow_exception;
     }
 }
 
@@ -54,6 +54,16 @@ bool Mushroom::CheckIsGround()
         return true;
     }
     return false;
+}
+
+bool Mushroom::OnCollisionEnter(RECT rect, RECT tileRect)
+{
+    if (rect.left > tileRect.right - GLOBAL_POS)	return false;
+    if (rect.right < tileRect.left - GLOBAL_POS)	return false;
+    if (rect.top > tileRect.bottom)             	return false;
+    if (rect.bottom < tileRect.top)             	return false;
+
+    return true;
 }
 
 HRESULT Mushroom::Init()

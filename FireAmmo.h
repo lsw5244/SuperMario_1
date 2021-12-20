@@ -45,11 +45,14 @@ public:
 	virtual void Release() override;
 	virtual ~FireAmmo() = default;
 
-	bool GetIsDead()
-	{
-		return isDead;
-	}
+	bool GetIsDead() { return isDead; }
+	RECT GetCollider() { return collider; }
 
 	void Fire(POINTFLOAT pos, MoveDirection direction);
+
+	void SetIsExploding(bool isExploding)
+	{
+		this->isExploding = isExploding;
+	}
 };
 
