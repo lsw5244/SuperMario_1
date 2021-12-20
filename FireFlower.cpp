@@ -66,6 +66,8 @@ void FireFlower::Update()
 
     AutoMove();
 
+    UpdateCollider();
+
     // 화면 나가기 방지
     if (pos.x > WIN_SIZE_X || pos.x < 0)
     {
