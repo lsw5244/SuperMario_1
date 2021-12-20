@@ -114,6 +114,9 @@
     <ClCompile Include="FireFlower.cpp">
       <Filter>MainGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="SpinCoin.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="FireFlower.h">
       <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SpinCoin.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

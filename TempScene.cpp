@@ -27,6 +27,7 @@ HRESULT TempScene::Init()
     itemManager.Init();
     GameDataContainer::GetInstance()->SetItemManager(&itemManager);
 
+    spcoin.Init();
     return S_OK;
 }
 
@@ -36,6 +37,7 @@ void TempScene::Update()
     mushroom.Update();
     ammoManger.Update();
     itemManager.Update();
+    spcoin.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -58,6 +60,7 @@ void TempScene::Render(HDC hdc)
     mario.Render(hdc);
     mushroom.Render(hdc);  
     ammoManger.Render(hdc);
+    spcoin.Render(hdc);
 }
 
 void TempScene::Release()
