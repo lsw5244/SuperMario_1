@@ -311,9 +311,16 @@ void PlayerCharacter::CheckBlockTypeAndCallItemManager(TILE& hitTile)
     }
 }
 
-void PlayerCharacter::CheckCatchFlag(TILE& hitTile)
+void PlayerCharacter::CheckCatchFlag()
 {
-    cout << "@@@@" << endl;
+    /*Flag, FlagPole, FlagTop,*/
+    if (TILE_DATA[nowTileIndexY][nowTileIndexX].type == BlockType::Flag ||
+        TILE_DATA[nowTileIndexY][nowTileIndexX].type == BlockType::FlagPole ||
+        TILE_DATA[nowTileIndexY][nowTileIndexX].type == BlockType::FlagTop)
+    {
+        isClear = true;
+        elapsedTime = 0.0f;
+    }
 }
 
 
@@ -365,6 +372,12 @@ void PlayerCharacter::Update()
         return;
     }
 
+    if (isClear == true)
+    {
+        ClearAnimation();
+        return;
+    }
+
     if (isGrowing == true)
     {
         GrowAnimation();
@@ -387,7 +400,7 @@ void PlayerCharacter::Update()
 
     UpdatePosition();
 
-    CheckCatchFlag(TILE_DATA[nowTileIndexY][nowTileIndexY]);
+    CheckCatchFlag();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -515,6 +528,27 @@ void PlayerCharacter::SmallingAnimation()
         }
         elapsedTime = 0.0f;
     }
+}
+
+void PlayerCharacter::ClearAnimation()
+{
+    elapsedTime += DELETA_TIME;
+
+    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
+
+    cout << "Clear !!!" << endl;
+
+    frameX = PlayerAnimation::Flag1;
+
+    // 바닥에 닿을 때 까지 내려가기
+    if (!(TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
+        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.top < collider.bottom))
+    {
+        pos.y += 50.0f * DELETA_TIME;
+    }
+
+    UpdateCollider();
 }
 
 void PlayerCharacter::Hit()
