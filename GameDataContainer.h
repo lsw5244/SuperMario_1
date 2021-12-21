@@ -10,7 +10,7 @@ class GameDataContainer : public Singleton<GameDataContainer>
 {
 private:
 	PlayerCharacter* player = nullptr;
-	int globalPos			= 0;
+	float globalPos			= 0.0f;
 	AmmoManager* ammoManger = nullptr;
 	ItemManager* itemManager = nullptr;
 
@@ -25,8 +25,8 @@ public:
 
 	void SetMap(TILE(*map)[MAP_WIDTH]) { this->map = map; }
 
-	void SetGlobalPos(int pos) { this->globalPos = pos;	}
-	int GetGlobalPos() { return this->globalPos; }
+	void SetGlobalPos(float pos) { this->globalPos = pos;	}
+	float GetGlobalPos() { return this->globalPos; }
 
 	void SetAmmoManager(AmmoManager* ammoManager) { this->ammoManger = ammoManager;	}
 	AmmoManager* GetAmmoManager() {	return this->ammoManger; }
