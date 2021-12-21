@@ -123,6 +123,9 @@
     <ClCompile Include="ClearScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="DeadScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h">
@@ -219,6 +222,9 @@
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="ClearScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
   </ItemGroup>

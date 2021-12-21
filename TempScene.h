@@ -13,7 +13,7 @@ class TempScene : public GameEntity
 {
 private:
 	PlayerCharacter* mario;
-	//Gunba mushroom;
+	Gunba mushroom;
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
 

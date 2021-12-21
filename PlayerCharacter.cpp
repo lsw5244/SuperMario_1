@@ -126,7 +126,7 @@ void PlayerCharacter::Attack()
             return;
         }
         isAttacking = true;
-        ChagneAnimationFrame(PlayerAnimation::Attack, frameY);
+        ChangeAnimationFrame(PlayerAnimation::Attack, frameY);
         elapsedTime = 0.0f;
     }
 
@@ -188,7 +188,7 @@ void PlayerCharacter::UpdatePosition()
     }
 }
 
-void PlayerCharacter::ChagneAnimationFrame()
+void PlayerCharacter::ChangeAnimationFrame()
 {
     // 방향 애니메이션
     if (currSpeed < 0)
@@ -203,14 +203,14 @@ void PlayerCharacter::ChagneAnimationFrame()
     // 공격하기
     if (isAttacking == true)
     {
-        frameX = PlayerAnimation::Attack;
+        ChangeAnimationFrame(PlayerAnimation::Attack, frameY);
         return;
     }
 
     // 서 있는 애니메이션
     if (currSpeed == 0)
     {
-        frameX = PlayerAnimation::Idle;
+        ChangeAnimationFrame(PlayerAnimation::Idle, frameY);
     }
 
     // 달리는 애니메이션
@@ -223,11 +223,11 @@ void PlayerCharacter::ChagneAnimationFrame()
             {
             case PlayerAnimation::Run1:
             case PlayerAnimation::Run2:
-                ++frameX;
+                ChangeAnimationFrame(++frameX, frameY);
                 break;
             case PlayerAnimation::Run3:
             default:
-                frameX = PlayerAnimation::Run1;
+                ChangeAnimationFrame(PlayerAnimation::Run1, frameY);
                 break;
             }
             elapsedTime = 0;
@@ -242,7 +242,7 @@ void PlayerCharacter::ChagneAnimationFrame()
     // 점프
     if (isGround == false)
     {
-        frameX = PlayerAnimation::Jump;
+        ChangeAnimationFrame(PlayerAnimation::Jump, frameY);
         return;
     }
 
@@ -251,7 +251,7 @@ void PlayerCharacter::ChagneAnimationFrame()
     {
         if (Input::GetButton(VK_LEFT))
         {
-            frameX = PlayerAnimation::ChangeDirection;
+            ChangeAnimationFrame(PlayerAnimation::ChangeDirection, frameY);
             return;
         }
     }
@@ -259,7 +259,7 @@ void PlayerCharacter::ChagneAnimationFrame()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            frameX = PlayerAnimation::ChangeDirection;
+            ChangeAnimationFrame(PlayerAnimation::ChangeDirection, frameY);
             return;
         }
     }
@@ -269,20 +269,20 @@ void PlayerCharacter::ChagneAnimationFrame()
     {
         if (level != 1)
         {
-            frameX = PlayerAnimation::Sit;
+            ChangeAnimationFrame(PlayerAnimation::Sit, frameY);
         }
     }
 
-    // 죽기
-    if (isDead == true)
-    {
-        frameX = PlayerAnimation::Die;
-    }
+    //// 죽기
+    //if (isDead == true)
+    //{
+    //    ChangeAnimationFrame(PlayerAnimation::Die, frameY);
+    //}
 
     // 깃발 잡기
 }
 
-void PlayerCharacter::ChagneAnimationFrame(int frameX, int frameY)
+void PlayerCharacter::ChangeAnimationFrame(int frameX, int frameY)
 {
     this->frameX = frameX;
     this->frameY = frameY;
@@ -320,7 +320,15 @@ void PlayerCharacter::CheckCatchFlag()
     {
         isClear = true;
         elapsedTime = 0.0f;
-        frameX = PlayerAnimation::Flag1;
+        ChangeAnimationFrame(PlayerAnimation::Flag1, frameY);
+    }
+}
+
+void PlayerCharacter::CheckIsDead()
+{
+    if (pos.y > WIN_SIZE_Y || level < 1)
+    {
+        isDead = true;
     }
 }
 
@@ -329,6 +337,7 @@ HRESULT PlayerCharacter::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/SamllRedMario.bmp");
     isGround = true;
+    isDead = false;
 
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
@@ -362,13 +371,9 @@ void PlayerCharacter::Update()
     //    return;
     //}
 /*--------------------------*/
-    if (pos.y < 15)
-    {
-        return;
-    }
-
     if (isDead == true)
     {
+        DeadAnimation();
         return;
     }
 
@@ -396,11 +401,13 @@ void PlayerCharacter::Update()
 
     Move();
 
-    ChagneAnimationFrame();   
+    ChangeAnimationFrame();
 
     UpdatePosition();
 
     CheckCatchFlag();
+
+    CheckIsDead();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -461,7 +468,7 @@ void PlayerCharacter::GrowAnimation()
             case PlayerAnimation::Grow3:
                 break;
             default:
-                ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
+                ChangeAnimationFrame(PlayerAnimation::Grow1, frameY);
                 break;
             }
             elapsedTime = 0.0f;
@@ -523,7 +530,7 @@ void PlayerCharacter::SmallingAnimation()
         case PlayerAnimation::Grow3:
             break;
         default:
-            ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
+            ChangeAnimationFrame(PlayerAnimation::Grow1, frameY);
             break;
         }
         elapsedTime = 0.0f;
@@ -553,11 +560,11 @@ void PlayerCharacter::ClearAnimation()
     {
         if (frameX == PlayerAnimation::Flag1)
         {
-            frameX = PlayerAnimation::Flag2;
+            ChangeAnimationFrame(PlayerAnimation::Flag2, frameY);
         }
         else
         {
-            frameX = PlayerAnimation::Flag1;
+            ChangeAnimationFrame(PlayerAnimation::Flag1, frameY);
         }
         elapsedTime = 0.0f;
     }
@@ -577,6 +584,17 @@ void PlayerCharacter::ClearAnimation()
     UpdateCollider();
 }
 
+void PlayerCharacter::DeadAnimation()
+{
+    elapsedTime += DELETA_TIME;
+    ChangeAnimationFrame(PlayerAnimation::Die, frameY);
+    if (elapsedTime > 1.0f)
+    {
+        SceneManager::GetInstance()->ChangeScene("DeadScene");
+    }
+
+}
+
 void PlayerCharacter::Hit()
 {
     // 1 : small, 2 :  big, 3 : fire
@@ -584,7 +602,7 @@ void PlayerCharacter::Hit()
     if (level < 1)
     {
         isDead = true;
-        ChagneAnimationFrame();
+        ChangeAnimationFrame();
         return;
     }
 
