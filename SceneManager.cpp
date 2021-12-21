@@ -3,7 +3,7 @@
 #include "TempScene.h"
 #include "MyTileMapTool.h"
 #include "TitleScene.h"
-
+#include "ClearScene.h"
 GameEntity* SceneManager::currScene = nullptr;
 GameEntity* SceneManager::readyScene = nullptr;
 GameEntity* SceneManager::loadingScene = nullptr;
@@ -26,6 +26,7 @@ void SceneManager::Init()
 	SceneManager::GetInstance()->AddScene("TempScene", new TempScene());
 	SceneManager::GetInstance()->AddScene("MyTileMapTool", new MyTileMapTool());
 	SceneManager::GetInstance()->AddScene("TitleScene", new TitleScene());
+	SceneManager::GetInstance()->AddScene("ClearScene", new ClearScene());
 }
 
 void SceneManager::Release()
