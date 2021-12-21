@@ -4,11 +4,14 @@
 
 class Mushroom;
 class FireFlower;
+class SpinCoin;
+
 class ItemManager : public GameEntity
 {
 private:
 	Mushroom* mushroom;
 	FireFlower* fireFlower;
+	SpinCoin* spinCoin;
 
 public:
 	virtual HRESULT Init();
@@ -18,5 +21,6 @@ public:
 	virtual ~ItemManager() = default;
 
 	void SpawnItem(POINTFLOAT pos);
+	void SpawnCoin(POINTFLOAT pos);
 };
 

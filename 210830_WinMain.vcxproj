@@ -159,6 +159,7 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SpinCoin.cpp" />
     <ClCompile Include="TempScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="PlayerCharacter.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SpinCoin.h" />
     <ClInclude Include="StructCollection.h" />
     <ClInclude Include="TempScene.h" />
     <ClInclude Include="Timer.h" />

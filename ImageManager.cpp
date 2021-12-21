@@ -16,6 +16,7 @@ void ImageManager::Init()
 
 	ImageManager::GetInstance()->AddImage("Image/Item/FireFlower.bmp", 64, 16, 4, 1, true, RGB(255, 0, 255));
 	ImageManager::GetInstance()->AddImage("Image/Item/Mushroom.bmp", 16, 16, 1, 1, true, RGB(255, 0, 255));
+	ImageManager::GetInstance()->AddImage("Image/Item/SpinCoin.bmp", 64, 16, 4, 1, true, RGB(255, 0, 255));
 
 }
 
