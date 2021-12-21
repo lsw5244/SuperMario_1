@@ -126,7 +126,7 @@ void PlayerCharacter::Attack()
             return;
         }
         isAttacking = true;
-        ChagneAnimationFrame(PlayerAnimation::Attack, frameY);
+        ChangeAnimationFrame(PlayerAnimation::Attack, frameY);
         elapsedTime = 0.0f;
     }
 
@@ -188,7 +188,7 @@ void PlayerCharacter::UpdatePosition()
     }
 }
 
-void PlayerCharacter::ChagneAnimationFrame()
+void PlayerCharacter::ChangeAnimationFrame()
 {
     // 방향 애니메이션
     if (currSpeed < 0)
@@ -282,7 +282,7 @@ void PlayerCharacter::ChagneAnimationFrame()
     // 깃발 잡기
 }
 
-void PlayerCharacter::ChagneAnimationFrame(int frameX, int frameY)
+void PlayerCharacter::ChangeAnimationFrame(int frameX, int frameY)
 {
     this->frameX = frameX;
     this->frameY = frameY;
@@ -401,7 +401,7 @@ void PlayerCharacter::Update()
 
     Move();
 
-    ChagneAnimationFrame();   
+    ChangeAnimationFrame();
 
     UpdatePosition();
 
@@ -468,7 +468,7 @@ void PlayerCharacter::GrowAnimation()
             case PlayerAnimation::Grow3:
                 break;
             default:
-                ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
+                ChangeAnimationFrame(PlayerAnimation::Grow1, frameY);
                 break;
             }
             elapsedTime = 0.0f;
@@ -530,7 +530,7 @@ void PlayerCharacter::SmallingAnimation()
         case PlayerAnimation::Grow3:
             break;
         default:
-            ChagneAnimationFrame(PlayerAnimation::Grow1, frameY);
+            ChangeAnimationFrame(PlayerAnimation::Grow1, frameY);
             break;
         }
         elapsedTime = 0.0f;
@@ -587,10 +587,9 @@ void PlayerCharacter::ClearAnimation()
 void PlayerCharacter::DeadAnimation()
 {
     elapsedTime += DELETA_TIME;
-    ChagneAnimationFrame(PlayerAnimation::Die, frameY);
+    ChangeAnimationFrame(PlayerAnimation::Die, frameY);
     if (elapsedTime > 1.0f)
     {
-        elapsedTime = 0.0f;
         SceneManager::GetInstance()->ChangeScene("DeadScene");
     }
 
@@ -603,7 +602,7 @@ void PlayerCharacter::Hit()
     if (level < 1)
     {
         isDead = true;
-        ChagneAnimationFrame();
+        ChangeAnimationFrame();
         return;
     }
 
