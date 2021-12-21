@@ -8,7 +8,12 @@ private:
 	Image* backGround = nullptr;
 	Image* selectImage = nullptr;
 
-	POINTFLOAT selectImagePos = {};
+	POINT selectImagePos = {};
+	const int selectImagePosX = 76;
+	const int selectImageTopPosY = 148;
+	const int selectImageBottomPosY = 164;
+
+
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

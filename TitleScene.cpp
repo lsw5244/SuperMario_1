@@ -11,14 +11,28 @@ HRESULT TitleScene::Init()
 	backGround = ImageManager::GetInstance()->FindImage("Image/Title/TitleImage.bmp");
 	selectImage = ImageManager::GetInstance()->FindImage("Image/Title/SelectMushroom.bmp");
 
-	selectImagePos = { 76, 148 }; // À§ ÁÂÇ¥
-	selectImagePos = { 76, 164 }; // ¾Æ·¡ ÁÂÇ¥
+	selectImagePos = { selectImagePosX, selectImageTopPosY }; // À§ ÁÂÇ¥
+	//selectImagePos = { 76, 164 }; // ¾Æ·¡+ ÁÂÇ¥
 
 	return S_OK;
 }
 
 void TitleScene::Update()
 {
+	if (Input::GetButtonDown(VK_DOWN))
+	{
+		selectImagePos = { selectImagePosX, selectImageBottomPosY };
+	}
+	
+	if (Input::GetButtonDown(VK_UP))
+	{
+		selectImagePos = { selectImagePosX, selectImageTopPosY };
+	}
+
+	if (Input::GetButtonDown('X'))
+	{
+		SceneManager::GetInstance()->ChangeScene("TempScene");
+	}
 }
 
 void TitleScene::Render(HDC hdc)
