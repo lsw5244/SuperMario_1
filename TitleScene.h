@@ -5,14 +5,13 @@ class Image;
 class TitleScene : public GameEntity
 {
 private:
-	Image* backGround = nullptr;
-	Image* selectImage = nullptr;
+	Image* backGround	 = nullptr;
+	Image* selectImage	 = nullptr;
 
-	POINT selectImagePos = {};
-	const int selectImagePosX = 76;
-	const int selectImageTopPosY = 148;
-	const int selectImageBottomPosY = 164;
-
+	POINT selectImagePos			 = {};
+	const int selectImagePosX		 = 76;
+	const int selectImageTopPosY	 = 148;
+	const int selectImageBottomPosY	 = 164;
 
 public:
 	virtual HRESULT Init() override;
