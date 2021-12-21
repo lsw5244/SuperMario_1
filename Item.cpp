@@ -25,10 +25,10 @@ void Item::SpawnAnimation()
 
 void Item::UpdateCollider()
 {
-    SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
-        pos.y - img->GetFrameWidth() / 2,
-        pos.x + img->GetFrameWidth() / 2,
-        pos.y + img->GetFrameHeight() / 2);
+    SetRect(&collider, (int)pos.x - img->GetFrameWidth() / 2,
+        (int)pos.y - img->GetFrameWidth() / 2,
+        (int)pos.x + img->GetFrameWidth() / 2,
+        (int)pos.y + img->GetFrameHeight() / 2);
 }
 
 void Item::Destroy()

@@ -309,8 +309,8 @@ void MyTileMapTool::Render(HDC hdc)
             if (MAP_WIDTH_PER_PAGE * page + j < MAP_WIDTH)
             {
                 mapSpriteImg->Render(hdc,
-                    map[i][j].rc.left + TILE_SIZE / 2,
-                    map[i][j].rc.top + TILE_SIZE / 2,
+                    (float)map[i][j].rc.left + TILE_SIZE / 2,
+                    (float)map[i][j].rc.top + TILE_SIZE / 2,
                     map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameX,
                     map[i][j + (page * MAP_WIDTH_PER_PAGE)].frameY
                 );
