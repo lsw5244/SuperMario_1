@@ -9,7 +9,7 @@ private:
 	float elapsedTime = 0.0f;
 	float animationDelay = 0.05f;
 
-
+	void Move();
 	void ChangeFrame();
 public:
 	virtual HRESULT Init();
