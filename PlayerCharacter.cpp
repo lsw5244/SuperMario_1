@@ -532,14 +532,15 @@ void PlayerCharacter::SmallingAnimation()
 
 void PlayerCharacter::ClearAnimation()
 {
-    static bool hitFloor = false;
+    static bool landFloor = false;
 
     elapsedTime += DELETA_TIME;
 
-    if (hitFloor == true)
+    if (landFloor == true)
     {
         if (elapsedTime > 2.0f)
         {
+            landFloor = false;
             SceneManager::GetInstance()->ChangeScene("ClearScene");
         }
         return;
@@ -570,7 +571,7 @@ void PlayerCharacter::ClearAnimation()
     else // 다 내려왔을 때
     {
         elapsedTime = 0.0f;
-        hitFloor = true;
+        landFloor = true;
     }
 
     UpdateCollider();
