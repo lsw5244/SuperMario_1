@@ -203,14 +203,14 @@ void PlayerCharacter::ChangeAnimationFrame()
     // 공격하기
     if (isAttacking == true)
     {
-        frameX = PlayerAnimation::Attack;
+        ChangeAnimationFrame(PlayerAnimation::Attack, frameY);
         return;
     }
 
     // 서 있는 애니메이션
     if (currSpeed == 0)
     {
-        frameX = PlayerAnimation::Idle;
+        ChangeAnimationFrame(PlayerAnimation::Idle, frameY);
     }
 
     // 달리는 애니메이션
@@ -223,11 +223,11 @@ void PlayerCharacter::ChangeAnimationFrame()
             {
             case PlayerAnimation::Run1:
             case PlayerAnimation::Run2:
-                ++frameX;
+                ChangeAnimationFrame(++frameX, frameY);
                 break;
             case PlayerAnimation::Run3:
             default:
-                frameX = PlayerAnimation::Run1;
+                ChangeAnimationFrame(PlayerAnimation::Run1, frameY);
                 break;
             }
             elapsedTime = 0;
@@ -242,7 +242,7 @@ void PlayerCharacter::ChangeAnimationFrame()
     // 점프
     if (isGround == false)
     {
-        frameX = PlayerAnimation::Jump;
+        ChangeAnimationFrame(PlayerAnimation::Jump, frameY);
         return;
     }
 
@@ -251,7 +251,7 @@ void PlayerCharacter::ChangeAnimationFrame()
     {
         if (Input::GetButton(VK_LEFT))
         {
-            frameX = PlayerAnimation::ChangeDirection;
+            ChangeAnimationFrame(PlayerAnimation::ChangeDirection, frameY);
             return;
         }
     }
@@ -259,7 +259,7 @@ void PlayerCharacter::ChangeAnimationFrame()
     {
         if (Input::GetButton(VK_RIGHT))
         {
-            frameX = PlayerAnimation::ChangeDirection;
+            ChangeAnimationFrame(PlayerAnimation::ChangeDirection, frameY);
             return;
         }
     }
@@ -269,15 +269,15 @@ void PlayerCharacter::ChangeAnimationFrame()
     {
         if (level != 1)
         {
-            frameX = PlayerAnimation::Sit;
+            ChangeAnimationFrame(PlayerAnimation::Sit, frameY);
         }
     }
 
-    // 죽기
-    if (isDead == true)
-    {
-        frameX = PlayerAnimation::Die;
-    }
+    //// 죽기
+    //if (isDead == true)
+    //{
+    //    ChangeAnimationFrame(PlayerAnimation::Die, frameY);
+    //}
 
     // 깃발 잡기
 }
@@ -320,7 +320,7 @@ void PlayerCharacter::CheckCatchFlag()
     {
         isClear = true;
         elapsedTime = 0.0f;
-        frameX = PlayerAnimation::Flag1;
+        ChangeAnimationFrame(PlayerAnimation::Flag1, frameY);
     }
 }
 
@@ -560,11 +560,11 @@ void PlayerCharacter::ClearAnimation()
     {
         if (frameX == PlayerAnimation::Flag1)
         {
-            frameX = PlayerAnimation::Flag2;
+            ChangeAnimationFrame(PlayerAnimation::Flag2, frameY);
         }
         else
         {
-            frameX = PlayerAnimation::Flag1;
+            ChangeAnimationFrame(PlayerAnimation::Flag1, frameY);
         }
         elapsedTime = 0.0f;
     }
