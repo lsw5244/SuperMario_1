@@ -18,7 +18,14 @@ void Mushroom::AutoMove()
     }
     else
     {
-        pos.x -= speed * DELETA_TIME;
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+        {
+            pos.x -= speed * DELETA_TIME + PLAYER->GetCurrSpeed();
+        }
+        else
+        {
+            pos.x -= speed * DELETA_TIME;
+        }
     }
 
     if (CheckIsGround() == false)
@@ -42,7 +49,7 @@ void Mushroom::ChangeDirection()
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX + 1].rc) == true)
     {
         moveDirection = MoveDirection::Left;
-        rethrow_exception;
+        return;
     }
 }
 
@@ -109,8 +116,8 @@ void Mushroom::Update()
         Destroy();
     }
 
-    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
+    nowTileIndexX = (int)(pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = (int)pos.y / MAP_HEIGHT;
 
     // 화면 나가기 방지
     if (pos.x > WIN_SIZE_X || pos.x < 0)

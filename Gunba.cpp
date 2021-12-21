@@ -68,10 +68,10 @@ void Gunba::ChangeAnimationFrame()
 
 void Gunba::UpdateCollider()
 {
-    SetRect(&collider, pos.x - img->GetFrameWidth() / 2,
-        pos.y - img->GetFrameWidth() / 2,
-        pos.x + img->GetFrameWidth() / 2,
-        pos.y + img->GetFrameHeight() / 2);
+    SetRect(&collider, (int)pos.x - img->GetFrameWidth() / 2,
+        (int)pos.y - img->GetFrameWidth() / 2,
+        (int)pos.x + img->GetFrameWidth() / 2,
+        (int)pos.y + img->GetFrameHeight() / 2);
 }
 
 void Gunba::UpdatePosition()
@@ -210,8 +210,8 @@ void Gunba::Update()
 
     ChangeDirection();
 
-    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
+    nowTileIndexX = (int)(pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = (int)pos.y / MAP_HEIGHT;
 
     CheckOutWindow();
 }
@@ -221,9 +221,9 @@ void Gunba::Render(HDC hdc)
     if (isDead == true)
         return;
 
-    Rectangle(hdc, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left - GLOBAL_POS,
+    Rectangle(hdc, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left - (int)GLOBAL_POS,
         TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top,
-        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.right - GLOBAL_POS,
+        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.right - (int)GLOBAL_POS,
         TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.bottom);
 
     img->Render(hdc, pos.x, pos.y, frameX, frameY);

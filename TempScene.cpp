@@ -48,7 +48,7 @@ void TempScene::Render(HDC hdc)
             if (map[i][j].type == BlockType::Background)
             {
                 mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
-                    , map[i][j].rc.top + TILE_SIZE / 2
+                    , (float)map[i][j].rc.top + TILE_SIZE / 2
                     , map[i][j].frameX, map[i][j].frameY);
             }
         }
@@ -61,7 +61,7 @@ void TempScene::Render(HDC hdc)
             if (map[i][j].type != BlockType::Background)
             {
                 mapSpriteImg->Render(hdc, map[i][j].rc.left + TILE_SIZE / 2 - GLOBAL_POS
-                    , map[i][j].rc.top + TILE_SIZE / 2
+                    , (float)map[i][j].rc.top + TILE_SIZE / 2
                     , map[i][j].frameX, map[i][j].frameY);
             }
         }

@@ -6,10 +6,10 @@
 
 void PlayerCharacter::UpdateCollider()
 {
-    SetRect(&collider, pos.x - (float)img->GetFrameWidth() / 2,
-        pos.y - (img->GetFrameWidth() * min(level - 1 , 1)),  // 레벨이 오르면 top의 위치가 변경됨
-        pos.x + img->GetFrameWidth() / 2,
-        pos.y + img->GetFrameHeight() / 2);
+    SetRect(&collider, (int)pos.x - img->GetFrameWidth() / 2,
+        (int)pos.y - (img->GetFrameWidth() * min(level - 1 , 1)),  // 레벨이 오르면 top의 위치가 변경됨
+        (int)pos.x + img->GetFrameWidth() / 2,
+        (int)pos.y + img->GetFrameHeight() / 2);
 }
 
 bool PlayerCharacter::OnCollisionEnter(RECT plyaerRect, RECT tileRect)
@@ -193,11 +193,11 @@ void PlayerCharacter::ChangeAnimationFrame()
     // 방향 애니메이션
     if (currSpeed < 0)
     {
-        frameY = MoveDirection::Left;
+        frameY = (int)MoveDirection::Left;
     }
     else if (currSpeed > 0)
     {
-        frameY = MoveDirection::Right;
+        frameY = (int)MoveDirection::Right;
     }
     
     // 공격하기
@@ -291,7 +291,8 @@ void PlayerCharacter::ChangeAnimationFrame(int frameX, int frameY)
 void PlayerCharacter::CheckBlockTypeAndCallItemManager(TILE& hitTile)
 {
     // 1을 뺀 이유는 생성과 동시에 아이템을 먹는 것을 방지하기 위함
-    POINTFLOAT spawnPos = { hitTile.rc.left + TILE_SIZE / 2 - GLOBAL_POS, hitTile.rc.top + TILE_SIZE / 2 - 1 };
+    POINTFLOAT spawnPos = { (float)hitTile.rc.left + TILE_SIZE / 2 - GLOBAL_POS,
+        (float)hitTile.rc.top + TILE_SIZE / 2 - 1 };
 
     if (hitTile.type == BlockType::ItemBlock)
     {
@@ -360,8 +361,8 @@ void PlayerCharacter::Update()
 
     if (Input::GetButtonDown('S'))
     {
-        POINTFLOAT temp = { TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.left + TILE_SIZE / 2 ,
-         TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.top + TILE_SIZE / 2 };
+        POINTFLOAT temp = { (float)TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.left + TILE_SIZE / 2 ,
+         (float)TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc.top + TILE_SIZE / 2 };
         ITEM_MANAGER->SpawnItem(temp);
     }
 
@@ -409,8 +410,8 @@ void PlayerCharacter::Update()
 
     CheckIsDead();
 
-    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
+    nowTileIndexX = (int)(pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = (int)pos.y / MAP_HEIGHT;
 
     UpdateCollider();
 }
@@ -426,10 +427,10 @@ void PlayerCharacter::Render(HDC hdc)
     //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.right - GLOBAL_POS,
     //    TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom);
 
-    img->Render(hdc, (int)pos.x, (int)pos.y, frameX, frameY);
+    img->Render(hdc, pos.x, pos.y, frameX, frameY);
 
     //pos위치
-    Rectangle(hdc, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+    Rectangle(hdc, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 }
 
 void PlayerCharacter::Release()
@@ -553,8 +554,8 @@ void PlayerCharacter::ClearAnimation()
         return;
     }
 
-    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
+    nowTileIndexX = (int)(pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = (int)pos.y / MAP_HEIGHT;
 
     if (elapsedTime > 0.15f)
     {
