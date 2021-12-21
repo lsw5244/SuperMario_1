@@ -15,11 +15,12 @@ HRESULT TempScene::Init()
     Load();
     GameDataContainer::GetInstance()->map = map;
     
-    mario.SetPos({ WIN_SIZE_X / 3, WIN_SIZE_Y / 2 });
-    GameDataContainer::GetInstance()->SetPlayer(&mario);
+    mario = new PlayerCharacter;
+    mario->SetPos({ WIN_SIZE_X / 3, WIN_SIZE_Y / 2 });
+    GameDataContainer::GetInstance()->SetPlayer(mario);
 
-    mushroom.Init();
-    mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
+    //mushroom.Init();
+    //mushroom.SetPos({ WIN_SIZE_X / 2, WIN_SIZE_Y / 2 });
 
     ammoManger.Init();
     GameDataContainer::GetInstance()->SetAmmoManager(&ammoManger);
@@ -32,10 +33,15 @@ HRESULT TempScene::Init()
 
 void TempScene::Update()
 {
-    mario.Update();
-    mushroom.Update();
+    //if (Input::GetButtonDown(VK_ESCAPE))
+    //{
+    //    SceneManager::GetInstance()->ChangeScene("TitleScene");
+    //    return;
+    //}
+    //mushroom.Update();
     ammoManger.Update();
     itemManager.Update();
+    mario->Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{
@@ -70,8 +76,8 @@ void TempScene::Render(HDC hdc)
             }
         }
     }
-    mario.Render(hdc);
-    mushroom.Render(hdc);  
+    mario->Render(hdc);
+    //mushroom.Render(hdc);  
     ammoManger.Render(hdc);
 }
 
@@ -82,6 +88,8 @@ void TempScene::Release()
     //GameDataContainer::GetSingleton()->ReleaseSingleton();
     itemManager.Release();
     ammoManger.Release();
+    //SAFE_RELEASE(mario);
+    SAFE_RELEASE(mario);
 }
 
 void TempScene::Load(int loadIndex)

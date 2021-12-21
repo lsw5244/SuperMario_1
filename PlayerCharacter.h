@@ -41,6 +41,7 @@ private:
 	bool isGrowing				 = false;
 	bool isSmalling				 = false;
 	bool isAttacking			 = false;
+	bool isClear				 = false;
 
 	int nowImageIdChecker		 = 0;
 
@@ -58,11 +59,13 @@ private:
 
 	void GrowAnimation();
 	void SmallingAnimation();
+	void ClearAnimation();
 
 	void ChagneAnimationFrame();
 	void ChagneAnimationFrame(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용
 
 	void CheckBlockTypeAndCallItemManager(TILE& hitTile);
+	void CheckCatchFlag();
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;

@@ -12,8 +12,8 @@ class Image;
 class TempScene : public GameEntity
 {
 private:
-	PlayerCharacter mario;
-	Gunba mushroom;
+	PlayerCharacter* mario;
+	//Gunba mushroom;
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
 

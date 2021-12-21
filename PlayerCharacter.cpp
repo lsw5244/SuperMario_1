@@ -311,11 +311,23 @@ void PlayerCharacter::CheckBlockTypeAndCallItemManager(TILE& hitTile)
     }
 }
 
+void PlayerCharacter::CheckCatchFlag()
+{
+    /*Flag, FlagPole, FlagTop,*/
+    if (TILE_DATA[nowTileIndexY][nowTileIndexX].type == BlockType::Flag ||
+        TILE_DATA[nowTileIndexY][nowTileIndexX].type == BlockType::FlagPole ||
+        TILE_DATA[nowTileIndexY][nowTileIndexX].type == BlockType::FlagTop)
+    {
+        isClear = true;
+        elapsedTime = 0.0f;
+        frameX = PlayerAnimation::Flag1;
+    }
+}
+
 
 HRESULT PlayerCharacter::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/SamllRedMario.bmp");
-
     isGround = true;
 
     pos.x = WIN_SIZE_X / 2;
@@ -360,6 +372,12 @@ void PlayerCharacter::Update()
         return;
     }
 
+    if (isClear == true)
+    {
+        ClearAnimation();
+        return;
+    }
+
     if (isGrowing == true)
     {
         GrowAnimation();
@@ -381,6 +399,8 @@ void PlayerCharacter::Update()
     ChagneAnimationFrame();   
 
     UpdatePosition();
+
+    CheckCatchFlag();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -508,6 +528,53 @@ void PlayerCharacter::SmallingAnimation()
         }
         elapsedTime = 0.0f;
     }
+}
+
+void PlayerCharacter::ClearAnimation()
+{
+    static bool landFloor = false;
+
+    elapsedTime += DELETA_TIME;
+
+    if (landFloor == true)
+    {
+        if (elapsedTime > 2.0f)
+        {
+            landFloor = false;
+            SceneManager::GetInstance()->ChangeScene("ClearScene");
+        }
+        return;
+    }
+
+    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = pos.y / MAP_HEIGHT;
+
+    if (elapsedTime > 0.15f)
+    {
+        if (frameX == PlayerAnimation::Flag1)
+        {
+            frameX = PlayerAnimation::Flag2;
+        }
+        else
+        {
+            frameX = PlayerAnimation::Flag1;
+        }
+        elapsedTime = 0.0f;
+    }
+
+    // 바닥에 닿을 때 까지 내려가기
+    if (!(TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
+        TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.top < collider.bottom))
+    {
+        pos.y += 50.0f * DELETA_TIME;
+    }
+    else // 다 내려왔을 때
+    {
+        elapsedTime = 0.0f;
+        landFloor = true;
+    }
+
+    UpdateCollider();
 }
 
 void PlayerCharacter::Hit()
