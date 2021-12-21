@@ -93,6 +93,6 @@ void FireFlower::AutoMove()
 {
     if (PLAYER->GetPos().x + PLAYER->GetCurrSpeed() > WIN_SIZE_X / 2)
     {
-        pos.x -= (int)PLAYER->GetCurrSpeed();
+        pos.x -= PLAYER->GetCurrSpeed();
     }
 }

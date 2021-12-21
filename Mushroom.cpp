@@ -9,7 +9,7 @@ void Mushroom::AutoMove()
     {
         if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
         {
-            pos.x += speed * DELETA_TIME - (int)PLAYER->GetCurrSpeed();
+            pos.x += speed * DELETA_TIME - PLAYER->GetCurrSpeed();
         }
         else
         {

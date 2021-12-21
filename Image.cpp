@@ -157,7 +157,7 @@ void Image::Render(HDC hdc, int destX, int destY)
 
 }
 
-void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, int width, int height, float scale/* = 1.0f*/)
+void Image::Render(HDC hdc, float destX, float destY, int frameX, int frameY, int width, int height, float scale/* = 1.0f*/)
 {
 	// frameX : 0, frameY : 0 => 시작 (68 * 0, 0) 얼마나 복사할건가 (68, 104)
 	// frameX : 1, frameY : 0 => 시작 (68 * 1, 0)  (68, 104)
