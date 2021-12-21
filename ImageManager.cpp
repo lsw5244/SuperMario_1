@@ -20,6 +20,7 @@ void ImageManager::Init()
 
 	ImageManager::GetInstance()->AddImage("Image/Title/TitleImage.bmp", 256, 240, 1, 1, true, RGB(255, 0, 255));
 	ImageManager::GetInstance()->AddImage("Image/Title/SelectMushroom.bmp", 8, 8, 1, 1, true, RGB(255, 0, 255));
+	ImageManager::GetInstance()->AddImage("Image/Clear/ClearSceneImage.bmp", 256, 240, 1, 1, true, RGB(255, 0, 255));
 }
 
 void ImageManager::Release()
