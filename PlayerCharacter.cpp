@@ -320,6 +320,7 @@ void PlayerCharacter::CheckCatchFlag()
     {
         isClear = true;
         elapsedTime = 0.0f;
+        frameX = PlayerAnimation::Flag1;
     }
 }
 
@@ -539,7 +540,19 @@ void PlayerCharacter::ClearAnimation()
 
     cout << "Clear !!!" << endl;
 
-    frameX = PlayerAnimation::Flag1;
+    if (elapsedTime > 0.15f)
+    {
+        if (frameX == PlayerAnimation::Flag1)
+        {
+            frameX = PlayerAnimation::Flag2;
+        }
+        else
+        {
+            frameX = PlayerAnimation::Flag1;
+        }
+        elapsedTime = 0.0f;
+    }
+    
 
     // 바닥에 닿을 때 까지 내려가기
     if (!(TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
