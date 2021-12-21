@@ -6,10 +6,10 @@
 
 void FireAmmo::UpdateCollider()
 {
-    SetRect(&collider, pos.x - img->GetFrameWidth() / 2,
-        pos.y - img->GetFrameHeight() / 2,
-        pos.x + img->GetFrameWidth() / 2,
-        pos.y + img->GetFrameHeight() / 2);
+    SetRect(&collider, (int)pos.x - img->GetFrameWidth() / 2,
+        (int)pos.y - img->GetFrameHeight() / 2,
+        (int)pos.x + img->GetFrameWidth() / 2,
+        (int)pos.y + img->GetFrameHeight() / 2);
 }
 
 bool FireAmmo::OnCollisionEnter(RECT rc1, RECT rc2)
@@ -186,8 +186,8 @@ void FireAmmo::Update()
         return;
     }
 
-    nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
-    nowTileIndexY = pos.y / MAP_HEIGHT;
+    nowTileIndexX = (int)(pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
+    nowTileIndexY = (int)pos.y / MAP_HEIGHT;
     /*------------------------*/
 
     // 위에서 아래 방향으로 가다 충돌
@@ -230,7 +230,7 @@ void FireAmmo::Render(HDC hdc)
     }
 
     //pos위치
-    Rectangle(hdc, pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1);
+    Rectangle(hdc, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 }
 
 void FireAmmo::Release()
