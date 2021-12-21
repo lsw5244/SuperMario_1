@@ -33,7 +33,7 @@ HRESULT TempScene::Init()
 void TempScene::Update()
 {
     mario.Update();
-    mushroom.Update();
+    //mushroom.Update();
     ammoManger.Update();
     itemManager.Update();
     //if (Input::GetButton(VK_RIGHT) &&

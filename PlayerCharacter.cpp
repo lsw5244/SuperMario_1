@@ -311,6 +311,11 @@ void PlayerCharacter::CheckBlockTypeAndCallItemManager(TILE& hitTile)
     }
 }
 
+void PlayerCharacter::CheckCatchFlag(TILE& hitTile)
+{
+    cout << "@@@@" << endl;
+}
+
 
 HRESULT PlayerCharacter::Init()
 {
@@ -381,6 +386,8 @@ void PlayerCharacter::Update()
     ChagneAnimationFrame();   
 
     UpdatePosition();
+
+    CheckCatchFlag(TILE_DATA[nowTileIndexY][nowTileIndexY]);
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
