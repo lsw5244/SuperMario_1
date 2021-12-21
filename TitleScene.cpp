@@ -28,9 +28,10 @@ void TitleScene::Update()
 		selectImagePos = { selectImagePosX, selectImageTopPosY };
 	}
 
-	if (Input::GetButtonDown(VK_RETURN))
+	if (Input::GetButtonDown('Z'))
 	{
 		SceneManager::GetInstance()->ChangeScene("TempScene");
+		
 	}
 }
 

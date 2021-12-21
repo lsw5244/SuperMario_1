@@ -32,10 +32,15 @@ HRESULT TempScene::Init()
 
 void TempScene::Update()
 {
-    mario.Update();
+    //if (Input::GetButtonDown(VK_ESCAPE))
+    //{
+    //    SceneManager::GetInstance()->ChangeScene("TitleScene");
+    //    return;
+    //}
     //mushroom.Update();
     ammoManger.Update();
     itemManager.Update();
+    mario.Update();
     //if (Input::GetButton(VK_RIGHT) &&
     //    GameDataContainer::GetInstance()->GetPlayer()->GetPos().x > WIN_SIZE_X / 2)
     //{

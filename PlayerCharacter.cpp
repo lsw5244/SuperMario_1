@@ -328,7 +328,6 @@ void PlayerCharacter::CheckCatchFlag()
 HRESULT PlayerCharacter::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/SamllRedMario.bmp");
-
     isGround = true;
 
     pos.x = WIN_SIZE_X / 2;
@@ -533,12 +532,21 @@ void PlayerCharacter::SmallingAnimation()
 
 void PlayerCharacter::ClearAnimation()
 {
+    static bool hitFloor = false;
+
     elapsedTime += DELETA_TIME;
+
+    if (hitFloor == true)
+    {
+        if (elapsedTime > 2.0f)
+        {
+            SceneManager::GetInstance()->ChangeScene("ClearScene");
+        }
+        return;
+    }
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
-
-    cout << "Clear !!!" << endl;
 
     if (elapsedTime > 0.15f)
     {
@@ -552,13 +560,17 @@ void PlayerCharacter::ClearAnimation()
         }
         elapsedTime = 0.0f;
     }
-    
 
     // 바닥에 닿을 때 까지 내려가기
     if (!(TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
         TILE_DATA[nowTileIndexY + 1][nowTileIndexX].rc.top < collider.bottom))
     {
         pos.y += 50.0f * DELETA_TIME;
+    }
+    else // 다 내려왔을 때
+    {
+        elapsedTime = 0.0f;
+        hitFloor = true;
     }
 
     UpdateCollider();
