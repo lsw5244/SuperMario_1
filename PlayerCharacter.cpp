@@ -324,11 +324,20 @@ void PlayerCharacter::CheckCatchFlag()
     }
 }
 
+void PlayerCharacter::CheckIsDead()
+{
+    if (pos.y > WIN_SIZE_Y || level < 1)
+    {
+        isDead = true;
+    }
+}
+
 
 HRESULT PlayerCharacter::Init()
 {
     img = ImageManager::GetInstance()->FindImage("Image/SamllRedMario.bmp");
     isGround = true;
+    isDead = false;
 
     pos.x = WIN_SIZE_X / 2;
     pos.y = WIN_SIZE_Y / 2;
@@ -362,13 +371,9 @@ void PlayerCharacter::Update()
     //    return;
     //}
 /*--------------------------*/
-    if (pos.y < 15)
-    {
-        return;
-    }
-
     if (isDead == true)
     {
+        DeadAnimation();
         return;
     }
 
@@ -401,6 +406,8 @@ void PlayerCharacter::Update()
     UpdatePosition();
 
     CheckCatchFlag();
+
+    CheckIsDead();
 
     nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
     nowTileIndexY = pos.y / MAP_HEIGHT;
@@ -575,6 +582,18 @@ void PlayerCharacter::ClearAnimation()
     }
 
     UpdateCollider();
+}
+
+void PlayerCharacter::DeadAnimation()
+{
+    elapsedTime += DELETA_TIME;
+    ChagneAnimationFrame(PlayerAnimation::Die, frameY);
+    if (elapsedTime > 1.0f)
+    {
+        elapsedTime = 0.0f;
+        SceneManager::GetInstance()->ChangeScene("DeadScene");
+    }
+
 }
 
 void PlayerCharacter::Hit()

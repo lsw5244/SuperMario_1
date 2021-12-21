@@ -60,12 +60,14 @@ private:
 	void GrowAnimation();
 	void SmallingAnimation();
 	void ClearAnimation();
+	void DeadAnimation();
 
 	void ChagneAnimationFrame();
 	void ChagneAnimationFrame(int frameX, int frameY);	// 애니메이션 직접 변경할 때 사용
 
 	void CheckBlockTypeAndCallItemManager(TILE& hitTile);
 	void CheckCatchFlag();
+	void CheckIsDead();
 public:
 	virtual HRESULT Init() override;
 	virtual void Update() override;
