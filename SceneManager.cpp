@@ -2,6 +2,7 @@
 #include "GameEntity.h"
 #include "TempScene.h"
 #include "MyTileMapTool.h"
+#include "TitleScene.h"
 
 GameEntity* SceneManager::currScene = nullptr;
 GameEntity* SceneManager::readyScene = nullptr;
@@ -24,6 +25,7 @@ void SceneManager::Init()
 {
 	SceneManager::GetInstance()->AddScene("TempScene", new TempScene());
 	SceneManager::GetInstance()->AddScene("MyTileMapTool", new MyTileMapTool());
+	SceneManager::GetInstance()->AddScene("TitleScene", new TitleScene());
 }
 
 void SceneManager::Release()
