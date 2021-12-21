@@ -18,7 +18,14 @@ void Mushroom::AutoMove()
     }
     else
     {
-        pos.x -= speed * DELETA_TIME;
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+        {
+            pos.x -= speed * DELETA_TIME + PLAYER->GetCurrSpeed();
+        }
+        else
+        {
+            pos.x -= speed * DELETA_TIME;
+        }
     }
 
     if (CheckIsGround() == false)
