@@ -25,7 +25,7 @@
 #define INGAME_RENDER_TILE_WIDHT_COUNT 16
 
 #define DELETA_TIME TimerManager::GetInstance()->GetDeltaTime()
-#define TILE_DATA GameDataContainer::GetInstance()->map
+#define TILE_DATA GameDataContainer::GetInstance()->GetMap()
 #define GLOBAL_POS GameDataContainer::GetInstance()->GetGlobalPos()
 #define PLAYER GameDataContainer::GetInstance()->GetPlayer()
 #define AMMO_MANAGER GameDataContainer::GetInstance()->GetAmmoManager()

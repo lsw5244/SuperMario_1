@@ -13,7 +13,7 @@ HRESULT GameScene::Init()
 
     mapSpriteImg = ImageManager::GetInstance()->FindImage("Image/mario_overwordTile.bmp");
     Load();
-    GameDataContainer::GetInstance()->map = map;
+    GameDataContainer::GetInstance()->SetMap(map);
     
     mario = new PlayerCharacter;
     mario->SetPos({ WIN_SIZE_X / 3, WIN_SIZE_Y / 2 });
