@@ -94,6 +94,11 @@ void Mushroom::Update()
     }
     if (isSpawning == true)
     {
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+        {
+            pos.x -= PLAYER->GetCurrSpeed();
+        }
+
         SpawnAnimation();
         return;
     }
