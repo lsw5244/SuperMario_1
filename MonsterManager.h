@@ -15,6 +15,6 @@ public:
 	virtual void Release();
 	virtual ~MonsterManager() = default;
 
-	void SpawnMonster();
+	void SpawnMonster(POINTFLOAT pos);
 };
 

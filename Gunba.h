@@ -51,6 +51,10 @@ public:
 
 	void SetPos(POINTFLOAT pos) { this->pos = pos; }
 	POINTFLOAT GetPos() { return pos; }
+	
+	bool GetIsDead() { return isDead; }
+
+	void Spawn(POINTFLOAT pos);
 
 	void Die();
 };

@@ -22,7 +22,7 @@ void MonsterManager::Update()
 {
 	if (GLOBAL_POS > 5.0f)
 	{
-		SpawnMonster();
+		SpawnMonster( {WIN_SIZE_X / 2, WIN_SIZE_Y / 2} );
 	}
 
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
@@ -49,11 +49,17 @@ void MonsterManager::Release()
 	monsters.clear();
 }
 
-void MonsterManager::SpawnMonster()
+void MonsterManager::SpawnMonster(POINTFLOAT pos)
 {
-	cout << "@@@" << endl;
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
 	{
-		
+
+		if (monsters[i]->GetIsDead() == false)
+		{
+			continue;
+		}
+
+		monsters[i]->Spawn(pos);
+		return;
 	}
 }

@@ -236,6 +236,11 @@ void Gunba::Release()
 {
 }
 
+void Gunba::Spawn(POINTFLOAT pos)
+{
+    cout << "!!!!" << endl;
+}
+
 void Gunba::Die()
 {
     elapsedTime = 0.0f;
