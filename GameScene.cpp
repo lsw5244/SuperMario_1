@@ -33,6 +33,7 @@ HRESULT GameScene::Init()
 
 void GameScene::Update()
 {
+    cout << GLOBAL_POS << endl;
     ammoManger.Update();
     itemManager.Update();
     mario->Update();
