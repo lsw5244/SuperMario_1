@@ -1,11 +1,11 @@
-#include "TempScene.h"
+#include "GameScene.h"
 #include "CommonFunction.h"
 #include "Image.h"
 #include "Input.h"
 #include "GameDataContainer.h"
 #include "AmmoManager.h"
 
-HRESULT TempScene::Init()
+HRESULT GameScene::Init()
 {
     SetWindowSize(300, 20, GAME_SCENE_WIN_SIZE_X, GAME_SCENE_WIN_SIZE_Y);
 
@@ -31,7 +31,7 @@ HRESULT TempScene::Init()
     return S_OK;
 }
 
-void TempScene::Update()
+void GameScene::Update()
 {
     ammoManger.Update();
     itemManager.Update();
@@ -39,7 +39,7 @@ void TempScene::Update()
     mushroom.Update();
 }
 
-void TempScene::Render(HDC hdc)
+void GameScene::Render(HDC hdc)
 {   
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
@@ -71,7 +71,7 @@ void TempScene::Render(HDC hdc)
     ammoManger.Render(hdc);
 }
 
-void TempScene::Release()
+void GameScene::Release()
 {
     //delete[] GameDataContainer::GetSingleton()->map;
     //GameDataContainer::GetSingleton()->Release();
@@ -82,7 +82,7 @@ void TempScene::Release()
     SAFE_RELEASE(mario);
 }
 
-void TempScene::Load(int loadIndex)
+void GameScene::Load(int loadIndex)
 {
     string loadFileName = "Save/saveMapData_" + to_string(loadIndex);
     loadFileName += ".map";

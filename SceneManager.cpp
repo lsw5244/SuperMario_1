@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 #include "GameEntity.h"
-#include "TempScene.h"
+#include "GameScene.h"
 #include "MyTileMapTool.h"
 #include "TitleScene.h"
 #include "ClearScene.h"
@@ -25,7 +25,7 @@ DWORD CALLBACK LoadingThread(LPVOID pvParam)
 
 void SceneManager::Init()
 {
-	SceneManager::GetInstance()->AddScene("TempScene", new TempScene());
+	SceneManager::GetInstance()->AddScene("GameScene", new GameScene());
 	SceneManager::GetInstance()->AddScene("MyTileMapTool", new MyTileMapTool());
 	SceneManager::GetInstance()->AddScene("TitleScene", new TitleScene());
 	SceneManager::GetInstance()->AddScene("ClearScene", new ClearScene());

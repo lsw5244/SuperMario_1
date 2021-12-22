@@ -9,7 +9,7 @@
 #include "ItemManager.h"
 
 class Image;
-class TempScene : public GameEntity
+class GameScene : public GameEntity
 {
 private:
 	PlayerCharacter* mario;
@@ -26,7 +26,7 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
-	virtual ~TempScene() = default;
+	virtual ~GameScene() = default;
 
 	void Load(int loadIndex = 0);
 

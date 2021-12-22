@@ -19,7 +19,7 @@ void DeadScene::Update()
 
 	if (elapsedTime > changeSceneDelay)
 	{
-		SceneManager::GetInstance()->ChangeScene("TempScene");
+		SceneManager::GetInstance()->ChangeScene("GameScene");
 	}
 }
 

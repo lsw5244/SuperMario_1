@@ -30,7 +30,7 @@ void TitleScene::Update()
 
 	if (Input::GetButtonDown('Z'))
 	{
-		SceneManager::GetInstance()->ChangeScene("TempScene");
+		SceneManager::GetInstance()->ChangeScene("GameScene");
 		
 	}
 }

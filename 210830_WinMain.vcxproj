@@ -162,7 +162,7 @@
     <ClCompile Include="PlayerCharacter.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpinCoin.cpp" />
-    <ClCompile Include="TempScene.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -197,7 +197,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpinCoin.h" />
     <ClInclude Include="StructCollection.h" />
-    <ClInclude Include="TempScene.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
