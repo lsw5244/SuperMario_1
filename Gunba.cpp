@@ -152,7 +152,7 @@ HRESULT Gunba::Init()
     pos = { 0, 0 };
     UpdateCollider();
 
-    isDead = false;
+    isDead = true;
     isDying = false;
 
     frameY = 1;     // ¿ÞÂÊ ÇâÇÔ
