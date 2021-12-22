@@ -14,5 +14,7 @@ public:
 	virtual void Render(HDC hdc);
 	virtual void Release();
 	virtual ~MonsterManager() = default;
+
+	void SpawnMonster();
 };
 

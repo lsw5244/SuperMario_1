@@ -18,7 +18,7 @@
 POINT		g_ptMouse;
 HINSTANCE	g_hInstance;
 HWND		g_hWnd;
-LPSTR		g_lpszClass = (LPSTR)TEXT("윈메인의 시작");
+LPSTR		g_lpszClass = (LPSTR)TEXT("Mario");
 MainGame	g_mainGame;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,

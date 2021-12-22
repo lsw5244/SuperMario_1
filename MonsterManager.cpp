@@ -1,5 +1,7 @@
 #include "MonsterManager.h"
 #include "Gunba.h"
+#include "MacroCollection.h"
+#include "GameDataContainer.h"
 
 #define MONSTER_MAX_COUNT 10
 
@@ -18,6 +20,11 @@ HRESULT MonsterManager::Init()
 
 void MonsterManager::Update()
 {
+	if (GLOBAL_POS > 5.0f)
+	{
+		SpawnMonster();
+	}
+
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
 	{
 		monsters[i]->Update();
@@ -34,11 +41,19 @@ void MonsterManager::Render(HDC hdc)
 
 void MonsterManager::Release()
 {
-	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
+	for (vector<Gunba*>::iterator it = monsters.begin(); it != monsters.end(); ++it)
 	{
-		delete monsters[i];
-		monsters[i] = nullptr;
+		SAFE_RELEASE((*it));
 	}
 
 	monsters.clear();
+}
+
+void MonsterManager::SpawnMonster()
+{
+	cout << "@@@" << endl;
+	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
+	{
+		
+	}
 }

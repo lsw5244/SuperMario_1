@@ -156,6 +156,7 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MonsterManager.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="MyTileMapTool.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MacroCollection.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MonsterManager.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="MyTileMapTool.h" />
     <ClInclude Include="Physics.h" />
