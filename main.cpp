@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include "CommonFunction.h"
 #include "MainGame.h"
-//#define _CRTDBG_MAP_ALLOC
 #include <stdio.h>
 #include <crtdbg.h>
 #include "Input.h"
@@ -23,8 +22,6 @@ MainGame	g_mainGame;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
 	WPARAM wParam, LPARAM lParam);
-
-
 
 int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 	LPSTR _lpszCmdParam, int nCmdShow)
@@ -61,18 +58,9 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 	// 메인게임 초기화
 	g_mainGame.Init();
 
-
 	// 윈도우 출력
 	ShowWindow(g_hWnd, nCmdShow);
 
-
-	// 메시지 큐에 있는 메시지 처리
-	//MSG message;
-	//while (GetMessage(&message, 0, 0, 0))
-	//{
-	//	TranslateMessage(&message);
-	//	DispatchMessage(&message);
-	//}
 	MSG message;
 	HDC hdc;
 	PAINTSTRUCT ps;
@@ -118,41 +106,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-
-	static bool isUpdate = true;
-
 	switch (iMessage)
 	{
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_RETURN:
-			isUpdate = !isUpdate;
-			break;
-		}
-		break;
-	case WM_TIMER:
-		//if (isUpdate)
-		//{
-		//	g_mainGame.Update();		
-		//	Input::Update();
-		//}
-
-		break;
-	case WM_PAINT:		// 윈도우 화면이 다시 그려지는 경우 발생하는 메시지
-		/*hdc = BeginPaint(g_hWnd, &ps);
-		RECT rect;
-		SetMapMode(hdc, MM_ANISOTROPIC); //표준화면으로
-
-		SetWindowExtEx(hdc, WIN_SIZE_X, WIN_SIZE_Y, NULL); //화면에 맞춰주고 내가 조절해준다.
-
-		GetClientRect(g_hWnd, &rect);
-		SetViewportExtEx(hdc, rect.right, rect.bottom, NULL);
-
-		g_mainGame.Render(hdc);
-
-		EndPaint(g_hWnd, &ps);*/
-		break;
 	case WM_DESTROY:	// 닫기 버튼 메시지처리 (프로그램 종료)
 		PostQuitMessage(0);
 		break;
