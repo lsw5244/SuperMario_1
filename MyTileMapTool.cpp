@@ -1,7 +1,7 @@
 #include "MyTileMapTool.h"
 #include "CommonFunction.h"
 #include "Image.h"
-
+#include "Input.h"
 #define SPRITE_START_Y 500
 
 void MyTileMapTool::InputTileInfo(int r, int c)
@@ -340,6 +340,20 @@ void MyTileMapTool::Render(HDC hdc)
         WIN_SIZE_Y / 2,
         selectTile.frameX,
         selectTile.frameY);
+
+    if (Input::GetButton(VK_SPACE))
+    {
+        for (int i = 0; i < MAP_HEIGHT; i++)
+        {
+            for (int j = 0; j < MAP_WIDTH_PER_PAGE; j++)
+            {
+                Rectangle(hdc, map[i][j].rc.left
+                    , map[i][j].rc.top
+                    , map[i][j].rc.right
+                    , map[i][j].rc.bottom);
+            }
+        }
+    }
 }
 
 void MyTileMapTool::Release()
