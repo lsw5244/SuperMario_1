@@ -13,9 +13,10 @@ private:
 	float globalPos			= 0.0f;
 	AmmoManager* ammoManger = nullptr;
 	ItemManager* itemManager = nullptr;
+	TILE(*map)[MAP_WIDTH] = {};
 
 public:
-	TILE(*map)[MAP_WIDTH] = {};
+	//TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 
 	void Init();
 	void Release();
@@ -24,6 +25,8 @@ public:
 	PlayerCharacter* GetPlayer() { return this->player;	}
 
 	void SetMap(TILE(*map)[MAP_WIDTH]) { this->map = map; }
+	auto GetMap() { return map; }
+	//TILE** GetMap() { return map; }
 
 	void SetGlobalPos(float pos) { this->globalPos = pos;	}
 	float GetGlobalPos() { return this->globalPos; }
