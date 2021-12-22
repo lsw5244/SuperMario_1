@@ -37,7 +37,7 @@ void MainGame::Update()
 
 	SceneManager::GetInstance()->Update();
 
-	InvalidateRect(g_hWnd, NULL, false);
+	//InvalidateRect(g_hWnd, NULL, false);
 }
 
 void MainGame::Render(HDC hdc)
