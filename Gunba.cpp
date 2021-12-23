@@ -76,7 +76,8 @@ void Gunba::UpdateCollider()
 
 void Gunba::UpdatePosition()
 {
-    if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+    if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2 &&
+        PLAYER->GetIsGrowOrIsSmalling() == false)
     {
         pos.x += speed * DELETA_TIME - PLAYER->GetCurrSpeed();
     }
@@ -172,7 +173,8 @@ void Gunba::Update()
 
     if (isDying == true)
     {
-        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2
+            && PLAYER->GetIsGrowOrIsSmalling() == false)
         {
             pos.x -= PLAYER->GetCurrSpeed();
         }
