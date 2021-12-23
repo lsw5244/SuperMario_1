@@ -63,7 +63,6 @@ void Gunba::ChangeAnimationFrame()
         }
         elapsedTime = 0.0f;
     }
-    
 }
 
 void Gunba::UpdateCollider()
@@ -246,11 +245,10 @@ void Gunba::Release()
 
 void Gunba::Spawn(POINTFLOAT pos)
 {
-    cout << "!!!!" << endl;
     this->pos = pos;
     UpdateCollider();
-    elapsedTime = 0.0f;
 
+    elapsedTime = 0.0f;
     isDying = false;
     isDead = false;
     speed = -60.0f;
