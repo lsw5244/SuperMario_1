@@ -206,6 +206,12 @@ void PlayerCharacter::UpdatePosition()
     if (isGround == false)
     {
         pos.y -= currJumpPower * DELETA_TIME;
+        // ¹Ù´Ú ¶Õ¾úÀ» ¶§ º¸Á¤
+        if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
+            collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom)
+        {
+            pos.y = TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - TILE_SIZE;
+        }
     }
 }
 
@@ -293,14 +299,6 @@ void PlayerCharacter::ChangeAnimationFrame()
             ChangeAnimationFrame(PlayerAnimation::Sit, frameY);
         }
     }
-
-    //// Á×±â
-    //if (isDead == true)
-    //{
-    //    ChangeAnimationFrame(PlayerAnimation::Die, frameY);
-    //}
-
-    // ±ê¹ß Àâ±â
 }
 
 void PlayerCharacter::ChangeAnimationFrame(int frameX, int frameY)
