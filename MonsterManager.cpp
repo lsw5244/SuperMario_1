@@ -6,6 +6,7 @@
 
 HRESULT MonsterManager::Init()
 {
+	monsterWave = 0;
 	monsters.resize(MONSTER_MAX_COUNT);
 
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
@@ -19,17 +20,10 @@ HRESULT MonsterManager::Init()
 
 void MonsterManager::Update()
 {
-	//if (GLOBAL_POS > 5.0f)
-	//{
-	//	SpawnMonster( {WIN_SIZE_X, WIN_SIZE_Y / 2} );
-	//}
-
-	if (spawnGlobalPos[monsterWave] < GLOBAL_POS)
+	if (spawnGlobalPos[monsterWave] < GLOBAL_POS && monsterWave < MAX_MONSTER_WAVE_COUNT - 1)
 	{
-		cout << "Spawn!!!" << endl;
 		SpawnMonster({ WIN_SIZE_X - 10, spawnYpos[monsterWave] });
 		++monsterWave;
-		cout << "mosterWave : " << monsterWave << endl;
 	}
 
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
@@ -60,13 +54,10 @@ void MonsterManager::SpawnMonster(POINTFLOAT pos)
 {
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
 	{
-
 		if (monsters[i]->GetIsDead() == true)
 		{
 			monsters[i]->Spawn(pos);
 			return;
-		}
-
-		
+		}	
 	}
 }
