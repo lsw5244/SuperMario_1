@@ -28,15 +28,20 @@ HRESULT GameScene::Init()
     itemManager.Init();
     GameDataContainer::GetInstance()->SetItemManager(&itemManager);
 
+    monsterManager.Init();
+
     return S_OK;
 }
 
 void GameScene::Update()
 {
+    //cout << GLOBAL_POS << endl;
     ammoManger.Update();
     itemManager.Update();
-    mario->Update();
+    monsterManager.Update();
     mushroom.Update();
+    mario->Update();
+
 }
 
 void GameScene::Render(HDC hdc)
@@ -66,9 +71,11 @@ void GameScene::Render(HDC hdc)
             }
         }
     }
+    ammoManger.Render(hdc);
+    monsterManager.Render(hdc);
     mario->Render(hdc);
     mushroom.Render(hdc);  
-    ammoManger.Render(hdc);
+
 }
 
 void GameScene::Release()
@@ -78,7 +85,7 @@ void GameScene::Release()
     //GameDataContainer::GetSingleton()->ReleaseSingleton();
     itemManager.Release();
     ammoManger.Release();
-    //SAFE_RELEASE(mario);
+    monsterManager.Release();
     SAFE_RELEASE(mario);
 }
 

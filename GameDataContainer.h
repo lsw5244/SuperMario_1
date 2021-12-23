@@ -25,10 +25,10 @@ public:
 	PlayerCharacter* GetPlayer() { return this->player;	}
 
 	void SetMap(TILE(*map)[MAP_WIDTH]) { this->map = map; }
-	auto GetMap() { return map; }
+	decltype(map) GetMap() { return map; }
 	//TILE** GetMap() { return map; }
 
-	void SetGlobalPos(float pos) { this->globalPos = pos;	}
+	void SetGlobalPos(float pos) { this->globalPos = pos; }
 	float GetGlobalPos() { return this->globalPos; }
 
 	void SetAmmoManager(AmmoManager* ammoManager) { this->ammoManger = ammoManager;	}

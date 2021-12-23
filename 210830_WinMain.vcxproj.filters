@@ -126,6 +126,9 @@
     <ClCompile Include="DeadScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MonsterManager.cpp">
+      <Filter>MainGame\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="DeadScene.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterManager.h">
+      <Filter>MainGame\Monster</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

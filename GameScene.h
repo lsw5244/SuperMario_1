@@ -7,6 +7,7 @@
 #include "FireAmmo.h"
 #include "AmmoManager.h"
 #include "ItemManager.h"
+#include "MonsterManager.h"
 
 class Image;
 class GameScene : public GameEntity
@@ -17,15 +18,15 @@ private:
 	TILE map[MAP_HEIGHT][MAP_WIDTH] = {};
 	Image* mapSpriteImg = {};
 
-	ItemManager itemManager;
-	//int globalPos = 0;
-	AmmoManager ammoManger;
+	ItemManager itemManager		 = {};
+	AmmoManager ammoManger		 = {};
+	MonsterManager monsterManager = {};
 
 public:
-	virtual HRESULT Init() override;
-	virtual void Update() override;
+	virtual HRESULT Init()		 override;
+	virtual void Update()		 override;
 	virtual void Render(HDC hdc) override;
-	virtual void Release() override;
+	virtual void Release()		 override;
 	virtual ~GameScene() = default;
 
 	void Load(int loadIndex = 0);

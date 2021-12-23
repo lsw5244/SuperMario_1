@@ -97,12 +97,12 @@ bool Gunba::OnCollisionEnter(RECT rect, RECT tileRect)
     if (rect.right < tileRect.left - GLOBAL_POS)	return false;
     if (rect.top > tileRect.bottom)             	return false;
     if (rect.bottom < tileRect.top)             	return false;
-
+    
     return true;
 }
 
 void Gunba::CheckIsGround()
-{
+{ 
     if (TILE_DATA[nowTileIndexY][nowTileIndexX].isCollider == true &&
         collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.top)
     {
@@ -118,6 +118,8 @@ void Gunba::CheckOutWindow()
 {
     if (pos.x < 0 || pos.x > WIN_SIZE_X || pos.y < 0 || pos.y > WIN_SIZE_Y)
     {
+        elapsedTime = 0.0f;
+        isDying = true;
         isDead = true;
     }
 }
@@ -152,7 +154,7 @@ HRESULT Gunba::Init()
     pos = { 0, 0 };
     UpdateCollider();
 
-    isDead = false;
+    isDead = true;
     isDying = false;
 
     frameY = 1;     // ¿ÞÂÊ ÇâÇÔ
@@ -234,6 +236,18 @@ void Gunba::Render(HDC hdc)
 
 void Gunba::Release()
 {
+}
+
+void Gunba::Spawn(POINTFLOAT pos)
+{
+    cout << "!!!!" << endl;
+    this->pos = pos;
+    UpdateCollider();
+    elapsedTime = 0.0f;
+
+    isDying = false;
+    isDead = false;
+    speed = -60.0f;
 }
 
 void Gunba::Die()
