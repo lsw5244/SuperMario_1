@@ -162,20 +162,41 @@ void PlayerCharacter::UpdatePosition()
     }
 
     // 옆 쪽 타일이 콜라이더 타일이고 그 타일과 일정 거리 이상 가까워지면 pos를 업데이트 하지 않음
-    if (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+    if (level == 1 &&
+        TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true &&
         currSpeed > 0)
     {
         currSpeed = 0;
         canMove = false;
     }
-    else if (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+    else if (level == 1 &&
+        TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc) == true &&
         currSpeed < 0)
     {
         currSpeed = 0;
         canMove = false;
     }
+    else if (((TILE_DATA[nowTileIndexY - 1][nowTileIndexX + 1].isCollider == true &&
+            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX + 1].rc) == true) ||
+            (TILE_DATA[nowTileIndexY][nowTileIndexX + 1].isCollider == true &&
+            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX + 1].rc) == true)) &&
+            currSpeed > 0)
+    {
+        currSpeed = 0;
+        canMove = false;
+    }
+    else if (((TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].isCollider == true &&
+            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - 1][nowTileIndexX - 1].rc) == true) ||
+            (TILE_DATA[nowTileIndexY][nowTileIndexX - 1].isCollider == true &&
+            OnCollisionEnter(collider, TILE_DATA[nowTileIndexY][nowTileIndexX - 1].rc) == true)) &&
+            currSpeed < 0)
+    {
+        currSpeed = 0;
+        canMove = false;
+    }
+
 
     if (canMove == true)
     {
@@ -185,6 +206,12 @@ void PlayerCharacter::UpdatePosition()
     if (isGround == false)
     {
         pos.y -= currJumpPower * DELETA_TIME;
+        // 바닥 뚫었을 때 보정
+        if (TILE_DATA[nowTileIndexY + 1][nowTileIndexX].isCollider == true &&
+            collider.bottom > TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom)
+        {
+            pos.y = TILE_DATA[nowTileIndexY][nowTileIndexX].rc.bottom - TILE_SIZE;
+        }
     }
 }
 
@@ -272,14 +299,6 @@ void PlayerCharacter::ChangeAnimationFrame()
             ChangeAnimationFrame(PlayerAnimation::Sit, frameY);
         }
     }
-
-    //// 죽기
-    //if (isDead == true)
-    //{
-    //    ChangeAnimationFrame(PlayerAnimation::Die, frameY);
-    //}
-
-    // 깃발 잡기
 }
 
 void PlayerCharacter::ChangeAnimationFrame(int frameX, int frameY)
