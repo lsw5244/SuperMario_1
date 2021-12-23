@@ -24,7 +24,7 @@ private:
 		1500.0f,
 		1648.0f, 1648.0f + TILE_SIZE,
 		1789.0f, 1789.0f + TILE_SIZE,
-		1877.0f, 1877.0f + TILE_SIZE,
+		1847.0f, 1847.0f + TILE_SIZE,
 		2497.0f, 2497.0f + TILE_SIZE
 	};
 
