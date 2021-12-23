@@ -63,7 +63,6 @@ void Gunba::ChangeAnimationFrame()
         }
         elapsedTime = 0.0f;
     }
-    
 }
 
 void Gunba::UpdateCollider()
@@ -76,7 +75,8 @@ void Gunba::UpdateCollider()
 
 void Gunba::UpdatePosition()
 {
-    if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+    if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2 &&
+        PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
     {
         pos.x += speed * DELETA_TIME - PLAYER->GetCurrSpeed();
     }
@@ -172,6 +172,11 @@ void Gunba::Update()
 
     if (isDying == true)
     {
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2
+            && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
+        {
+            pos.x -= PLAYER->GetCurrSpeed();
+        }
         Trampled();
         return;
     }
@@ -185,7 +190,7 @@ void Gunba::Update()
     if (CollideWithPlayer() == true)
     {
         // À§¿¡¼­ ¹âÈù°Å¸é Á×±â
-        if (PLAYER->GetRect().bottom < pos.y)
+        if (PLAYER->GetRect().bottom < pos.y && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
         {
             PLAYER->AddJumpower(300.0f);
             Die();
@@ -240,11 +245,10 @@ void Gunba::Release()
 
 void Gunba::Spawn(POINTFLOAT pos)
 {
-    cout << "!!!!" << endl;
     this->pos = pos;
     UpdateCollider();
-    elapsedTime = 0.0f;
 
+    elapsedTime = 0.0f;
     isDying = false;
     isDead = false;
     speed = -60.0f;

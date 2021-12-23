@@ -88,6 +88,8 @@ public:
 
 	RECT GetRect() { return collider; }
 
+	bool GetIsGrowOrIsSmallingOrIsDead() { return isGrowing || isSmalling || isDead; }
+
 	void AddJumpower(float power);
 };
 

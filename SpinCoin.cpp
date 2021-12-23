@@ -5,7 +5,8 @@
 #include "Input.h"
 void SpinCoin::Move()
 {
-    if (PLAYER->GetPos().x + PLAYER->GetCurrSpeed() > WIN_SIZE_X / 2)
+    if (PLAYER->GetPos().x + PLAYER->GetCurrSpeed() > WIN_SIZE_X / 2
+        && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
     {
         pos.x -= PLAYER->GetCurrSpeed();
     }

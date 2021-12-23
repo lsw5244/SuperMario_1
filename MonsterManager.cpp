@@ -22,7 +22,7 @@ void MonsterManager::Update()
 {
 	if (spawnGlobalPos[monsterWave] < GLOBAL_POS && monsterWave < MAX_MONSTER_WAVE_COUNT - 1)
 	{
-		SpawnMonster({ WIN_SIZE_X - 10, spawnYpos[monsterWave] });
+		SpawnMonster({ WIN_SIZE_X - 1, spawnYpos[monsterWave] });
 		++monsterWave;
 	}
 
