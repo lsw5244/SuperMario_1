@@ -52,9 +52,6 @@ void FireFlower::Update()
     if (isDead == true)
         return;
 
-    //nowTileIndexX = (pos.x + GLOBAL_POS) / INGAME_RENDER_TILE_WIDHT_COUNT;
-    //nowTileIndexY = pos.y / MAP_HEIGHT;
-
     if (CollideWithPlayer() == true)
     {
         if (PLAYER->GetLevel() < 3)
@@ -91,7 +88,8 @@ void FireFlower::Release()
 
 void FireFlower::AutoMove()
 {
-    if (PLAYER->GetPos().x + PLAYER->GetCurrSpeed() > WIN_SIZE_X / 2)
+    if (PLAYER->GetPos().x + PLAYER->GetCurrSpeed() > WIN_SIZE_X / 2
+        && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
     {
         pos.x -= PLAYER->GetCurrSpeed();
     }

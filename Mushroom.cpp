@@ -7,7 +7,8 @@ void Mushroom::AutoMove()
 {
     if(moveDirection == MoveDirection::Right)
     {
-        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2
+            && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
         {
             pos.x += speed * DELETA_TIME - PLAYER->GetCurrSpeed();
         }
@@ -18,7 +19,8 @@ void Mushroom::AutoMove()
     }
     else
     {
-        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2
+            && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
         {
             pos.x -= speed * DELETA_TIME + PLAYER->GetCurrSpeed();
         }
@@ -94,7 +96,8 @@ void Mushroom::Update()
     }
     if (isSpawning == true)
     {
-        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2)
+        if (PLAYER->GetCurrSpeed() + PLAYER->GetPos().x > WIN_SIZE_X / 2
+            && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
         {
             pos.x -= PLAYER->GetCurrSpeed();
         }
