@@ -1,6 +1,5 @@
 #include "MonsterManager.h"
 #include "Gunba.h"
-#include "MacroCollection.h"
 #include "GameDataContainer.h"
 
 #define MONSTER_MAX_COUNT 10
@@ -20,9 +19,17 @@ HRESULT MonsterManager::Init()
 
 void MonsterManager::Update()
 {
-	if (GLOBAL_POS > 5.0f)
+	//if (GLOBAL_POS > 5.0f)
+	//{
+	//	SpawnMonster( {WIN_SIZE_X, WIN_SIZE_Y / 2} );
+	//}
+
+	if (spawnGlobalPos[monsterWave] < GLOBAL_POS)
 	{
-		SpawnMonster( {WIN_SIZE_X, WIN_SIZE_Y / 2} );
+		cout << "Spawn!!!" << endl;
+		SpawnMonster({ WIN_SIZE_X - 10, spawnYpos[monsterWave] });
+		++monsterWave;
+		cout << "mosterWave : " << monsterWave << endl;
 	}
 
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
@@ -54,12 +61,12 @@ void MonsterManager::SpawnMonster(POINTFLOAT pos)
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)
 	{
 
-		if (monsters[i]->GetIsDead() == false)
+		if (monsters[i]->GetIsDead() == true)
 		{
-			continue;
+			monsters[i]->Spawn(pos);
+			return;
 		}
 
-		monsters[i]->Spawn(pos);
-		return;
+		
 	}
 }

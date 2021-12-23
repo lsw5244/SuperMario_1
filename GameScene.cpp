@@ -35,7 +35,7 @@ HRESULT GameScene::Init()
 
 void GameScene::Update()
 {
-    cout << GLOBAL_POS << endl;
+    //cout << GLOBAL_POS << endl;
     ammoManger.Update();
     itemManager.Update();
     monsterManager.Update();
