@@ -22,7 +22,7 @@ void MonsterManager::Update()
 {
 	if (GLOBAL_POS > 5.0f)
 	{
-		SpawnMonster( {WIN_SIZE_X / 2, WIN_SIZE_Y / 2} );
+		SpawnMonster( {WIN_SIZE_X, WIN_SIZE_Y / 2} );
 	}
 
 	for (int i = 0; i < MONSTER_MAX_COUNT; i++)

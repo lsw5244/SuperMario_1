@@ -241,6 +241,7 @@ void Gunba::Spawn(POINTFLOAT pos)
     cout << "!!!!" << endl;
     this->pos = pos;
     isDead = false;
+    speed = -60.0f;
 }
 
 void Gunba::Die()
