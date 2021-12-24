@@ -655,5 +655,5 @@ void PlayerCharacter::AddJumpower(float power)
 {
     isGround = false;
     gravity = 0.0f;// *DELETA_TIME;
-    currJumpPower += power;
+    currJumpPower = min(power, maxJumpPower);
 }
