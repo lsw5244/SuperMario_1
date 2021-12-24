@@ -50,9 +50,7 @@ public:
 
 	void Fire(POINTFLOAT pos, MoveDirection direction);
 
-	void SetIsExploding(bool isExploding)
-	{
-		this->isExploding = isExploding;
-	}
+	void SetIsExploding(bool isExploding) {	this->isExploding = isExploding; }
+	bool GetIsExploding() { return this->isExploding; }
 };
 
