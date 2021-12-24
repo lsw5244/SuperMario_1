@@ -192,7 +192,7 @@ void Gunba::Update()
         // À§¿¡¼­ ¹âÈù°Å¸é Á×±â
         if (PLAYER->GetRect().bottom < pos.y && PLAYER->GetIsGrowOrIsSmallingOrIsDead() == false)
         {
-            PLAYER->AddJumpower(300.0f);
+            PLAYER->AddJumpower(220.0f);
             Die();
             return;
         }

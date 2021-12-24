@@ -30,7 +30,8 @@ void PlayerCharacter::Jump()
         OnCollisionEnter(collider, TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX].rc))
     {
         jumpEnd = true;
-        currJumpPower *= -1.0f;
+
+        currJumpPower = abs(currJumpPower) * -1.0f;
         CheckBlockTypeAndCallItemManager(TILE_DATA[nowTileIndexY - min(level, 2)][nowTileIndexX]);
     }
 
@@ -654,5 +655,5 @@ void PlayerCharacter::AddJumpower(float power)
 {
     isGround = false;
     gravity = 0.0f;// *DELETA_TIME;
-    currJumpPower += power;
+    currJumpPower = min(power, maxJumpPower);
 }

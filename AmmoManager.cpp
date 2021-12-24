@@ -61,7 +61,7 @@ bool AmmoManager::CheckCollideWithAmmo(RECT rect)
 		{
 			continue;
 		}
-		if (OnCollisionEnter(rect, ammos[i]->GetCollider()) == true)
+		if (OnCollisionEnter(rect, ammos[i]->GetCollider()) == true && ammos[i]->GetIsExploding() == false)
 		{
 			ammos[i]->SetIsExploding(true);
 			return true;
