@@ -140,7 +140,7 @@ void Mushroom::Render(HDC hdc)
     if (isDead == true && isSpawning == false)
         return;
 
-    Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
+    //Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
     img->Render(hdc, pos.x, pos.y, 0, 0);
 }

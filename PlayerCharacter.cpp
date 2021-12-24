@@ -439,7 +439,7 @@ void PlayerCharacter::Update()
 void PlayerCharacter::Render(HDC hdc)
 {
     //현재 콜라이더
-    Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
+    //Rectangle(hdc, collider.left, collider.top, collider.right, collider.bottom);
 
     // 현재 위치 타일
     //Rectangle(hdc, TILE_DATA[nowTileIndexY][nowTileIndexX].rc.left - GLOBAL_POS,
@@ -450,7 +450,7 @@ void PlayerCharacter::Render(HDC hdc)
     img->Render(hdc, pos.x, pos.y, frameX, frameY);
 
     //pos위치
-    Rectangle(hdc, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
+    //Rectangle(hdc, (int)pos.x - 1, (int)pos.y - 1, (int)pos.x + 1, (int)pos.y + 1);
 }
 
 void PlayerCharacter::Release()

@@ -228,10 +228,10 @@ void Gunba::Render(HDC hdc)
     if (isDead == true)
         return;
 
-    Rectangle(hdc, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left - (int)GLOBAL_POS,
-        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top,
-        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.right - (int)GLOBAL_POS,
-        TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.bottom);
+    //Rectangle(hdc, TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.left - (int)GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.top,
+    //    TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.right - (int)GLOBAL_POS,
+    //    TILE_DATA[nowTileIndexY - 1][nowTileIndexX].rc.bottom);
 
     img->Render(hdc, pos.x, pos.y, frameX, frameY);
 
@@ -248,6 +248,7 @@ void Gunba::Spawn(POINTFLOAT pos)
     this->pos = pos;
     UpdateCollider();
 
+    frameX = 0;
     elapsedTime = 0.0f;
     isDying = false;
     isDead = false;
