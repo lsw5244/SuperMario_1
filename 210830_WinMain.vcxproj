@@ -146,7 +146,6 @@
     <ClCompile Include="FireFlower.cpp" />
     <ClCompile Include="GameDataContainer.cpp" />
     <ClCompile Include="GameEntity.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gunba.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -159,7 +158,6 @@
     <ClCompile Include="MonsterManager.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="MyTileMapTool.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpinCoin.cpp" />
@@ -178,7 +176,6 @@
     <ClInclude Include="FireFlower.h" />
     <ClInclude Include="GameDataContainer.h" />
     <ClInclude Include="GameEntity.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlobalVariableCollection.h" />
     <ClInclude Include="Gunba.h" />
     <ClInclude Include="HeaderCollection.h" />
@@ -193,7 +190,6 @@
     <ClInclude Include="MonsterManager.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="MyTileMapTool.h" />
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="PlayerCharacter.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />

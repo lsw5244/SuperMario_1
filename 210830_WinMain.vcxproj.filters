@@ -51,9 +51,6 @@
     <ClCompile Include="GameEntity.cpp">
       <Filter>2D Framework</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>2D Framework</Filter>
-    </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
@@ -77,9 +74,6 @@
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>MainGame\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MyTileMapTool.cpp">
       <Filter>MainGame\Scene</Filter>
@@ -134,9 +128,6 @@
     <ClInclude Include="GameEntity.h">
       <Filter>2D Framework</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>2D Framework</Filter>
-    </ClInclude>
     <ClInclude Include="KeyManager.h">
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
@@ -163,9 +154,6 @@
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>MainGame\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="MyTileMapTool.h">
       <Filter>MainGame\Scene</Filter>
